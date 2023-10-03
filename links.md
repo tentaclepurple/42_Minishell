@@ -4,5 +4,7 @@ https://github.com/Swoorup/mysh
 
 https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
 
+https://github.com/madebypixel02/minishell/blob/main/README.md
+
 Readline Library
 https://tiswww.case.edu/php/chet/readline/readline.html
