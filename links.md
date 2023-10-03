@@ -6,5 +6,3 @@ https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
 
 Readline Library
 https://tiswww.case.edu/php/chet/readline/readline.html
-
-por aca pasé @silvagomez
