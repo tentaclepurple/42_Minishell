@@ -9,6 +9,9 @@ https://github.com/madebypixel02/minishell/blob/main/README.md
 Readline Library
 https://tiswww.case.edu/php/chet/readline/readline.html
 
+suprimir leaks readline
+valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
+
 - [ ] Compile
 
       - USE make -n to see if compilation use -Wall -Wextra -Werror if not use invalid compilation flags
