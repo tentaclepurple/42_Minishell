@@ -6,11 +6,23 @@ https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
 
 https://github.com/madebypixel02/minishell/blob/main/README.md
 
+
+En makefile
+
+      -L/Users/$(USER)/.brew/opt/readline/lib -I/Users/$(USER)/.brew/opt/readline/include
+
 Readline Library
-https://tiswww.case.edu/php/chet/readline/readline.html
+
+      https://tiswww.case.edu/php/chet/readline/readline.html
+
+Para compilar readline
+   
+      -L/Users/$USER/.brew/opt/readline/lib 
+      -I/Users/$USER/.brew/opt/readline/include
 
 suprimir leaks readline
-valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
+
+      valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
 
 - [ ] Compile
 
