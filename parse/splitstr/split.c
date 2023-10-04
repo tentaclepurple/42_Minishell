@@ -6,29 +6,68 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/03 19:14:18 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:38:52 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../parse.h"
 
-char	*ft_expand_var(char **envp, char *var)
+size_t	ft_strlen_var(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] && s[i] != ' ')
+		i++;
+	return (i);
+}
+
+char	*ft_fill_expand(char *env, char  *str, int index)
+{
+	int		len_var;
+	int		len_post;
+	char	*res;
+	int		i;
+
+	i = 0;
+	len_var = ft_strlen(&env[ft_strlen_var(&str[index + 1])]);
+	len_post = ft_strlen(&str[index + 1 + ft_strlen_var(&str[index + 1])]);
+	res = malloc(len_var + len_post + index + 2);
+	if (!res)
+		return (NULL);
+	while (str[i] != '$')
+	{
+		res[i] = str[i];
+		i++;
+	}
+	res[i++] = '\0';
+	while (*env != '=')
+		env++;
+	env++;
+	ft_strlcat(res, env, len_var + len_post + index + 2);
+	ft_strlcat(res, &str[index + 1 + ft_strlen_var(&str[index + 1])],
+		len_var + len_post + index + 2);
+	return (res);
+}
+
+char	*ft_expand_var(char **envp, char *str, int index)
 {
 	int		i;
 	char	*res;
-
+	
 	i = 0;
 	while (envp[i])
 	{
-		if (!ft_strncmp(envp[i], var + 1, ft_strlen(var) - 1))
+		if (!ft_strncmp(envp[i], &str[index + 1], ft_strlen_var(&str[index + 1]))
+			&& envp[i][ft_strlen_var(&str[index + 1])] == '=')
 		{
-			res = ft_strdup(&envp[i][5]);
-			free(var);
+			res = ft_fill_expand(envp[i], str, index);
+			free(str);
 			return (res);
 		}
 		i++;
 	}
-	return (var);
+	return (NULL);
 }
 
 void	ft_mv_in_quotes(char const *s, unsigned int *i)
@@ -155,17 +194,84 @@ char	**ft_split_str(char const *s, char c)
 
 void	ft_check_var(char **str, char **env)
 {
+	int	i;
+
 	while (*str)
 	{
-		if (*str[0] == '$')
-			*str = ft_expand_var(env, *str);
+		i = 0;
+		while (*str && (*str)[i])
+		{
+			if ((*str)[i] == '\'')
+			{
+				i++;
+				while ((*str)[i] != '\'' && (*str)[i])
+					i++;
+			}
+			else if ((*str)[i] == '$')
+			{
+				*str = ft_expand_var(env, *str, i);
+			}
+			i++;
+		} 
 		str++;
 	}
 }
 
+int	ft_strarrlen(char **s, char *act)
+{
+	unsigned int	i;
+	int				j;
+	char			quote;
+	int				cnt;
+	
+	j = 0;
+	cnt = 0;
+	while (s && s[j])
+	{
+		i = 0;
+		while (s[j][i])
+		{
+			/* if (s[j][i] == '\'' || s[j][i] == '"')
+			{
+				quote = s[j][i];
+				i++;
+				while (s[j][i] != quote && s[j][i])
+					i++;
+			} */
+			ft_mv_in_quotes(s[j], &i);
+			if (ft_strchr(act, s[j][i]))
+			{
+				cnt++;
+				if (i > 0)
+					cnt++;
+				if (s[j][i + 1])
+					cnt++;
+			}
+			i++;
+		}
+		j++;
+	}
+	cnt += j;
+	return (cnt);
+}
+
+void	ft_free_split(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free (str[i]);
+		i++;
+	}
+	free (str);
+}
+
 int	main(int argc, char **argv, char **env)
 {
-	char	*str = "$USER -la | gre p \'Ma ke file\' $HOME";
+	//char	*str = "$USER -la | grep \"Ma$USER ke file\"da $HOME";
+	char	*str = "USER|grep $HOME";
 	char	**res;
 	int		i = 0;
 	
@@ -175,10 +281,12 @@ int	main(int argc, char **argv, char **env)
 	ft_check_var(res, env);
 	while (res[i])
 	{
-		printf("%s ", res[i]);
+		printf("%s\n", res[i]);
 		i++;
 	}
-	printf("\n");
+	printf("Here\n");
+	printf("%i\n", ft_strarrlen(res, "<|>"));
+	//ft_free_split(res);
 	/* res[0] = ft_expand_var(env, res[0]);
 	while (*res)
 	{
@@ -186,5 +294,6 @@ int	main(int argc, char **argv, char **env)
 		res++;
 	}
 	printf("\n"); */
+	//system ("leaks splitstr");
 	return (0);
 }

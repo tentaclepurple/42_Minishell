@@ -2,7 +2,7 @@ NAME = splitstr
 LIBNAME = libft.a
 SRC = split.c
 
-FLAGS = -Wall -Wextra -Werror
+#FLAGS = -Wall -Wextra -Werror
 NONE='\033[0m'
 GREEN='\033[32m'
 GRAY='\033[2;37m'
