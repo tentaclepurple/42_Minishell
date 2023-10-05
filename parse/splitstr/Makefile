@@ -1,6 +1,6 @@
 NAME = splitstr
 LIBNAME = libft.a
-SRC = split.c
+SRC = split.c check_var.c
 
 #FLAGS = -Wall -Wextra -Werror
 NONE='\033[0m'

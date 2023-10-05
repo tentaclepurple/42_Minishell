@@ -6,69 +6,11 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/04 13:38:52 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/05 13:06:15 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../parse.h"
-
-size_t	ft_strlen_var(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] && s[i] != ' ')
-		i++;
-	return (i);
-}
-
-char	*ft_fill_expand(char *env, char  *str, int index)
-{
-	int		len_var;
-	int		len_post;
-	char	*res;
-	int		i;
-
-	i = 0;
-	len_var = ft_strlen(&env[ft_strlen_var(&str[index + 1])]);
-	len_post = ft_strlen(&str[index + 1 + ft_strlen_var(&str[index + 1])]);
-	res = malloc(len_var + len_post + index + 2);
-	if (!res)
-		return (NULL);
-	while (str[i] != '$')
-	{
-		res[i] = str[i];
-		i++;
-	}
-	res[i++] = '\0';
-	while (*env != '=')
-		env++;
-	env++;
-	ft_strlcat(res, env, len_var + len_post + index + 2);
-	ft_strlcat(res, &str[index + 1 + ft_strlen_var(&str[index + 1])],
-		len_var + len_post + index + 2);
-	return (res);
-}
-
-char	*ft_expand_var(char **envp, char *str, int index)
-{
-	int		i;
-	char	*res;
-	
-	i = 0;
-	while (envp[i])
-	{
-		if (!ft_strncmp(envp[i], &str[index + 1], ft_strlen_var(&str[index + 1]))
-			&& envp[i][ft_strlen_var(&str[index + 1])] == '=')
-		{
-			res = ft_fill_expand(envp[i], str, index);
-			free(str);
-			return (res);
-		}
-		i++;
-	}
-	return (NULL);
-}
 
 void	ft_mv_in_quotes(char const *s, unsigned int *i)
 {
@@ -76,7 +18,8 @@ void	ft_mv_in_quotes(char const *s, unsigned int *i)
 
 	if (s[*i] == '\"' || s[*i] == '\'')
 	{
-		quote = s[(*i)++];
+		quote = s[*i];
+		(*i)++;
 		while (s[*i])
 		{
 			if (s[*i] == quote)
@@ -192,69 +135,6 @@ char	**ft_split_str(char const *s, char c)
 	return (split);
 }
 
-void	ft_check_var(char **str, char **env)
-{
-	int	i;
-
-	while (*str)
-	{
-		i = 0;
-		while (*str && (*str)[i])
-		{
-			if ((*str)[i] == '\'')
-			{
-				i++;
-				while ((*str)[i] != '\'' && (*str)[i])
-					i++;
-			}
-			else if ((*str)[i] == '$')
-			{
-				*str = ft_expand_var(env, *str, i);
-			}
-			i++;
-		} 
-		str++;
-	}
-}
-
-int	ft_strarrlen(char **s, char *act)
-{
-	unsigned int	i;
-	int				j;
-	char			quote;
-	int				cnt;
-	
-	j = 0;
-	cnt = 0;
-	while (s && s[j])
-	{
-		i = 0;
-		while (s[j][i])
-		{
-			/* if (s[j][i] == '\'' || s[j][i] == '"')
-			{
-				quote = s[j][i];
-				i++;
-				while (s[j][i] != quote && s[j][i])
-					i++;
-			} */
-			ft_mv_in_quotes(s[j], &i);
-			if (ft_strchr(act, s[j][i]))
-			{
-				cnt++;
-				if (i > 0)
-					cnt++;
-				if (s[j][i + 1])
-					cnt++;
-			}
-			i++;
-		}
-		j++;
-	}
-	cnt += j;
-	return (cnt);
-}
-
 void	ft_free_split(char **str)
 {
 	int	i;
@@ -268,15 +148,83 @@ void	ft_free_split(char **str)
 	free (str);
 }
 
+int	ft_strcorr_len(char	*str, char *act)
+{
+	unsigned int	i;
+	int				extra;
+
+	i = 0;
+	extra = 0;
+	while (str[i])
+	{
+		ft_mv_in_quotes(str, &i);
+		if (ft_strchr(act, str[i]))
+			extra += 2;
+		i++;
+	}
+	return (i + extra);
+}
+
+char	*ft_correct_str(char *str)
+{
+	char	*res;
+	int		i;
+	int		lim;
+	char	quote;
+	int		extra;
+	
+	i = 0;
+	extra = 0;
+	//calculate new length
+	//new malloc
+	res = malloc(ft_strcorr_len(str, "<>|") + 1);
+	if (!res)
+		return (NULL);
+	//Loop strlcat " ? " + following string until ?
+	while (str[i])
+	{
+
+		if (str[i] == '\"' || str[i] == '\'')
+		{
+			quote = str[i];
+			res[i + extra] = str[i];
+			i++;
+			while (str[i])
+			{
+				res[i + extra] = str[i];
+				if (str[i] == quote)
+					break ;
+				i++;
+			}
+		}
+		if (ft_strchr("<>|", str[i]))
+		{
+			res[i + extra] = ' ';
+			res[i + extra + 1] = str[i];
+			res[i + extra + 2] = ' ';
+			extra += 2;
+		}
+		else
+			res[i + extra] = str[i];
+		i++;
+	}
+	res[i + extra] = '\0';
+	//free previous string
+	//free (str);
+	//set str to new string
+	return (res);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	//char	*str = "$USER -la | grep \"Ma$USER ke file\"da $HOME";
-	char	*str = "USER|grep $HOME";
+	char	*str = "USER|grep \"<$HOME\"";
 	char	**res;
 	int		i = 0;
 	
 	(void)argc;
 	(void)argv;
+	str = ft_correct_str(str);
 	res = ft_split_str(str, ' ');
 	ft_check_var(res, env);
 	while (res[i])
@@ -284,16 +232,5 @@ int	main(int argc, char **argv, char **env)
 		printf("%s\n", res[i]);
 		i++;
 	}
-	printf("Here\n");
-	printf("%i\n", ft_strarrlen(res, "<|>"));
-	//ft_free_split(res);
-	/* res[0] = ft_expand_var(env, res[0]);
-	while (*res)
-	{
-		printf("%s ", *res);
-		res++;
-	}
-	printf("\n"); */
-	//system ("leaks splitstr");
-	return (0);
+	return (73);
 }
