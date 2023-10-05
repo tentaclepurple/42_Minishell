@@ -9,6 +9,8 @@ https://github.com/madebypixel02/minishell/blob/main/README.md
 https://www.youtube.com/watch?v=4jYFqFsu03A&list=PLGU1kcPKHMKj5yA0RPb5AK4QAhexmQwrW&index=7
 
 
+----
+
 En makefile
 
       -L/Users/$(USER)/.brew/opt/readline/lib -I/Users/$(USER)/.brew/opt/readline/include
