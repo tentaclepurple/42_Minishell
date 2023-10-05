@@ -9,11 +9,14 @@ https://github.com/madebypixel02/minishell/blob/main/README.md
 https://www.youtube.com/watch?v=4jYFqFsu03A&list=PLGU1kcPKHMKj5yA0RPb5AK4QAhexmQwrW&index=7
 
 
-----
 
 En makefile
 
       -L/Users/$(USER)/.brew/opt/readline/lib -I/Users/$(USER)/.brew/opt/readline/include
+
+Comp
+
+      comp -lreadline terminal.c libft.a -L/Users/$USER/.brew/opt/readline/lib -I/Users/$USER/.brew/opt/readline/include && ./a.out
 
 Readline Library
 
@@ -24,9 +27,16 @@ Para compilar readline
       -L/Users/$USER/.brew/opt/readline/lib 
       -I/Users/$USER/.brew/opt/readline/include
 
+      
+
+
+
 suprimir leaks readline
 
       valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./minishell
+
+
+      ------
 
 - [ ] Compile
 
