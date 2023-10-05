@@ -27,7 +27,6 @@ Para compilar readline
       -L/Users/$USER/.brew/opt/readline/lib 
       -I/Users/$USER/.brew/opt/readline/include
 
-      
 
 
 
