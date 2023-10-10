@@ -6,12 +6,13 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/05 13:06:15 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:02:37 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../parse.h"
 
+//Function to advnce the index i from quote to quote
 void	ft_mv_in_quotes(char const *s, unsigned int *i)
 {
 	char			quote;
@@ -29,6 +30,7 @@ void	ft_mv_in_quotes(char const *s, unsigned int *i)
 	}
 }
 
+//Returns the number of different words you have in s
 static int	ft_nbr_wrd(char const *s, char c)
 {
 	unsigned int	i;
@@ -55,6 +57,7 @@ static int	ft_nbr_wrd(char const *s, char c)
 	return (num);
 }
 
+//Returns the length of the next word ins
 static int	ft_str_chlen(char const *s, char c)
 {
 	unsigned int	i;
@@ -68,6 +71,7 @@ static int	ft_str_chlen(char const *s, char c)
 	return (i);
 }
 
+//Fills the wrd string with str and a specific length
 static char	*ft_fill_word(char *wrd, char *str, int len)
 {
 	int	i;
@@ -82,6 +86,7 @@ static char	*ft_fill_word(char *wrd, char *str, int len)
 	return (wrd);
 }
 
+//Sub function for ft_split_str
 static int	ft_split_low(char **split, char const *s, char c)
 {
 	char	*str;
@@ -111,6 +116,7 @@ static int	ft_split_low(char **split, char const *s, char c)
 	return (0);
 }
 
+//Splits a String into a 2D string array, taking quotes into account"
 char	**ft_split_str(char const *s, char c)
 {
 	char	**split;
@@ -135,6 +141,7 @@ char	**ft_split_str(char const *s, char c)
 	return (split);
 }
 
+//Function to free a 2D array
 void	ft_free_split(char **str)
 {
 	int	i;
@@ -148,6 +155,7 @@ void	ft_free_split(char **str)
 	free (str);
 }
 
+//Returns the length of the corrected string fot ft_correct_str
 int	ft_strcorr_len(char	*str, char *act)
 {
 	unsigned int	i;
@@ -165,6 +173,7 @@ int	ft_strcorr_len(char	*str, char *act)
 	return (i + extra);
 }
 
+//Adds spaces into the string, separating the special characters
 char	*ft_correct_str(char *str)
 {
 	char	*res;
@@ -218,7 +227,7 @@ char	*ft_correct_str(char *str)
 int	main(int argc, char **argv, char **env)
 {
 	//char	*str = "$USER -la | grep \"Ma$USER ke file\"da $HOME";
-	char	*str = "USER|grep \"<$HOME\"";
+	char	*str = "USER|grep \"<$HOME d\"";
 	char	**res;
 	int		i = 0;
 	
@@ -232,5 +241,5 @@ int	main(int argc, char **argv, char **env)
 		printf("%s\n", res[i]);
 		i++;
 	}
-	return (73);
+	return (150);
 }

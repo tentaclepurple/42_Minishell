@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:43:53 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/05 12:39:30 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/10 12:11:53 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*ft_fill_expand(char *env, char  *str, int index, int quote)
 	return (res);
 }
 
+//Search the env var and changes de string
 char	*ft_expand_var(char **envp, char *str, int index, int quote)
 {
 	int		i;
@@ -75,6 +76,7 @@ char	*ft_expand_var(char **envp, char *str, int index, int quote)
 	return (NULL);
 }
 
+//Function to expand all the environmental variables in the 2D array
 void	ft_check_var(char **str, char **env)
 {
 	int	i;

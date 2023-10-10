@@ -1,6 +1,7 @@
 NAME = splitstr
 LIBNAME = libft.a
 SRC = split.c check_var.c
+OBJ = $(SRC:.c=.o)
 
 #FLAGS = -Wall -Wextra -Werror
 NONE='\033[0m'
@@ -12,7 +13,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBNAME)
 	@echo $(CURSIVE)$(GRAY) "     - Compiling $(NAME)..." $(NONE)
-	@gcc $(FLAGS) $(SRC) $(LIBNAME) -o $(NAME)
+	@gcc $(FLAGS) $(OBJ) $(LIBNAME) -o $(NAME)
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
 $(LIBNAME):
@@ -20,6 +21,9 @@ $(LIBNAME):
 	@$(MAKE) -C ../../libft all
 	@cp ../../libft/libft.a $(LIBNAME)
 	@echo $(GREEN)"- Compiled -"$(NONE)
+
+%.o: %.c
+	$(CC) -c $(FLAGS) $^ -o $@
 
 clean:
 	@echo $(CURSIVE)$(GRAY) "     - Removing object files..." $(NONE)
