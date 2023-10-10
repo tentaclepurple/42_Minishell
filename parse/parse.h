@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/05 10:47:58 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:15:01 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,24 @@
 # include<stdio.h>
 
 void    ft_check_var(char **str, char **env);
+char	**ft_correc_special(char **str, char *spec);
+
+typedef enum    s_type
+{
+    CMD,
+    PIPE,
+    AND,
+    OR
+}               t_type;
+
+typedef struct  s_node
+{
+    t_type  type;
+    char    *path;
+    char    **cmd;
+    int     input;
+    int     output;
+}               t_node;
+
 
 #endif

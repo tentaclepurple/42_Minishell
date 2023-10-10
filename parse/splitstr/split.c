@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/10 13:02:37 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/10 17:34:01 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,6 @@ char	*ft_correct_str(char *str)
 {
 	char	*res;
 	int		i;
-	int		lim;
 	char	quote;
 	int		extra;
 	
@@ -186,7 +185,7 @@ char	*ft_correct_str(char *str)
 	extra = 0;
 	//calculate new length
 	//new malloc
-	res = malloc(ft_strcorr_len(str, "<>|") + 1);
+	res = malloc(ft_strcorr_len(str, "<>|&") + 1);
 	if (!res)
 		return (NULL);
 	//Loop strlcat " ? " + following string until ?
@@ -206,7 +205,7 @@ char	*ft_correct_str(char *str)
 				i++;
 			}
 		}
-		if (ft_strchr("<>|", str[i]))
+		if (ft_strchr("<>|&", str[i]))
 		{
 			res[i + extra] = ' ';
 			res[i + extra + 1] = str[i];
@@ -218,16 +217,14 @@ char	*ft_correct_str(char *str)
 		i++;
 	}
 	res[i + extra] = '\0';
-	//free previous string
-	//free (str);
-	//set str to new string
+	//free(str);
 	return (res);
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	//char	*str = "$USER -la | grep \"Ma$USER ke file\"da $HOME";
-	char	*str = "USER|grep \"<$HOME d\"";
+	char	*str = "<<$USER|grep \"<$HOME d\" >file";
 	char	**res;
 	int		i = 0;
 	
@@ -236,10 +233,13 @@ int	main(int argc, char **argv, char **env)
 	str = ft_correct_str(str);
 	res = ft_split_str(str, ' ');
 	ft_check_var(res, env);
+	res = ft_correc_special(res, "<>|&");
 	while (res[i])
 	{
 		printf("%s\n", res[i]);
 		i++;
 	}
+	ft_free_split(res);
+	free(str);
 	return (150);
 }

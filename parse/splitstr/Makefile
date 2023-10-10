@@ -1,9 +1,9 @@
 NAME = splitstr
 LIBNAME = libft.a
-SRC = split.c check_var.c
+SRC = split.c check_var.c  correc_special.c
 OBJ = $(SRC:.c=.o)
 
-#FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 NONE='\033[0m'
 GREEN='\033[32m'
 GRAY='\033[2;37m'
