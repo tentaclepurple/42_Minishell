@@ -1,6 +1,6 @@
 NAME = splitstr
 LIBNAME = libft.a
-SRC = split.c check_var.c  correc_special.c
+SRC = split.c check_var.c  correc_special.c ../parser/parser.c
 OBJ = $(SRC:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror -g

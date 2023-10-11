@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/10 17:34:01 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/11 15:39:35 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static char	*ft_fill_word(char *wrd, char *str, int len)
 	return (wrd);
 }
 
-//Sub function for ft_split_str
+/* Sub function for ft_split_str */
 static int	ft_split_low(char **split, char const *s, char c)
 {
 	char	*str;
@@ -173,47 +173,50 @@ int	ft_strcorr_len(char	*str, char *act)
 	return (i + extra);
 }
 
+//Auxiliar function of correct string, with the conditional statements
+void	ft_aux_correct_str(char *res, char *str, int *i, int *extra)
+{
+	char	quote;
+
+	if (str[*i] == '\"' || str[*i] == '\'')
+	{
+		quote = str[*i];
+		res[*i + *extra] = str[*i];
+		(*i)++;
+		while (str[*i])
+		{
+			res[*i + *extra] = str[*i];
+			if (str[*i] == quote)
+				break ;
+			(*i)++;
+		}
+	}
+	if (ft_strchr("<>|&", str[*i]))
+	{
+		res[*i + *extra] = ' ';
+		res[*i + *extra + 1] = str[*i];
+		res[*i + *extra + 2] = ' ';
+		(*extra) += 2;
+	}
+	else
+		res[*i + *extra] = str[*i];
+}
+
 //Adds spaces into the string, separating the special characters
 char	*ft_correct_str(char *str)
 {
 	char	*res;
 	int		i;
-	char	quote;
 	int		extra;
-	
+
 	i = 0;
 	extra = 0;
-	//calculate new length
-	//new malloc
 	res = malloc(ft_strcorr_len(str, "<>|&") + 1);
 	if (!res)
 		return (NULL);
-	//Loop strlcat " ? " + following string until ?
 	while (str[i])
 	{
-
-		if (str[i] == '\"' || str[i] == '\'')
-		{
-			quote = str[i];
-			res[i + extra] = str[i];
-			i++;
-			while (str[i])
-			{
-				res[i + extra] = str[i];
-				if (str[i] == quote)
-					break ;
-				i++;
-			}
-		}
-		if (ft_strchr("<>|&", str[i]))
-		{
-			res[i + extra] = ' ';
-			res[i + extra + 1] = str[i];
-			res[i + extra + 2] = ' ';
-			extra += 2;
-		}
-		else
-			res[i + extra] = str[i];
+		ft_aux_correct_str(res, str, &i, &extra);
 		i++;
 	}
 	res[i + extra] = '\0';
@@ -224,8 +227,9 @@ char	*ft_correct_str(char *str)
 int	main(int argc, char **argv, char **env)
 {
 	//char	*str = "$USER -la | grep \"Ma$USER ke file\"da $HOME";
-	char	*str = "<<$USER|grep \"<$HOME d\" >file";
+	char	*str = "ls -la << EOF |grep \"<$HOME d\" | cat > file";
 	char	**res;
+	t_px	*nodes;
 	int		i = 0;
 	
 	(void)argc;
@@ -239,7 +243,10 @@ int	main(int argc, char **argv, char **env)
 		printf("%s\n", res[i]);
 		i++;
 	}
+	nodes = malloc(sizeof(t_px) * 1);
+	ft_parse(res);
 	ft_free_split(res);
 	free(str);
-	return (150);
+	
+	return (0);
 }

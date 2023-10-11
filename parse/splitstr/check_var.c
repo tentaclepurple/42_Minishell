@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:43:53 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/10 16:24:15 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/11 13:37:22 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ size_t	ft_strlen_var(const char *s, int quote)
 	return (i);
 }
 
-char	*ft_fill_expand(char *env, char  *str, int index, int quote)
+char	*ft_fill_expand(char *env, char *str, int index, int quote)
 {
 	int		len_var;
 	int		len_post;
@@ -36,7 +36,8 @@ char	*ft_fill_expand(char *env, char  *str, int index, int quote)
 
 	i = 0;
 	len_var = ft_strlen(&env[ft_strlen_var(&str[index + 1], quote)]);
-	len_post = ft_strlen(&str[index + 1 + ft_strlen_var(&str[index + 1], quote)]);
+	len_post = ft_strlen(&str[index + 1
+			+ ft_strlen_var(&str[index + 1], quote)]);
 	res = malloc(len_var + len_post + index + 2);
 	if (!res)
 		return (NULL);
@@ -60,11 +61,12 @@ char	*ft_expand_var(char **envp, char *str, int index, int quote)
 {
 	int		i;
 	char	*res;
-	
+
 	i = 0;
 	while (envp[i])
 	{
-		if (!ft_strncmp(envp[i], &str[index + 1], ft_strlen_var(&str[index + 1], quote))
+		if (!ft_strncmp(envp[i], &str[index + 1],
+				ft_strlen_var(&str[index + 1], quote))
 			&& envp[i][ft_strlen_var(&str[index + 1], quote)] == '=')
 		{
 			res = ft_fill_expand(envp[i], str, index, quote);
@@ -99,7 +101,7 @@ void	ft_check_var(char **str, char **env)
 			else if ((*str)[i] == '$')
 				*str = ft_expand_var(env, *str, i, quote % 2);
 			i++;
-		} 
+		}
 		str++;
 	}
 }
