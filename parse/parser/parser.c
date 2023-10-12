@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/11 15:41:16 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:35:52 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	ft_num_args(char **str)
 	int	i;
 
 	i = 0;
-	while (ft_strncmp(*str, "|", 2) && ft_strncmp(*str, ">", 2)
+	while (*str && ft_strncmp(*str, "|", 2) && ft_strncmp(*str, ">", 2)
 		&& ft_strncmp(*str, ">>", 3) && ft_strncmp(*str, "&&", 3)
 		&& ft_strncmp(*str, "||", 3) && ft_strncmp(*str, "<<", 3))
 	{
@@ -90,16 +90,16 @@ char	**ft_parse_loop(t_px *node, char **str)
 			str++;
 		}
 		node->full_cmd[i] = NULL;
-		if (!ft_strncmp(*str, ">", 2) || !ft_strncmp(*str, ">>", 3))
+		if (*str && (!ft_strncmp(*str, ">", 2) || !ft_strncmp(*str, ">>", 3)))
 		{
 			if (!ft_strncmp(*str, ">", 2))
 				node->out_flag = 1;
 			else
 				node->out_flag = 2;
-			node->infile = ft_strdup(*(str + 1));
+			node->outfile = ft_strdup(*(str + 1));
 			str += 2;
 		}
-		else if (!ft_strncmp(*str, "<<", 3))
+		else if (*str && !ft_strncmp(*str, "<<", 3))
 		{
 			node->in_flag = 2;
 			node->limit = ft_strdup(*(str + 1));
@@ -154,7 +154,7 @@ t_px	*ft_parse(char **str)
 		str = ft_parse_loop(&nodes[i], str);
 		i++;
 	}
-	/* int j=0;
+	int j=0;
 	while (j < info->cmd_amount)
 	{
 		i = 0;
@@ -169,6 +169,6 @@ t_px	*ft_parse(char **str)
 		}
 		printf("\n");
 		j++;
-	} */
+	} 
 	return (nodes);
 }

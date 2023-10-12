@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/11 15:39:35 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/12 17:40:00 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,9 +227,12 @@ char	*ft_correct_str(char *str)
 int	main(int argc, char **argv, char **env)
 {
 	//char	*str = "$USER -la | grep \"Ma$USER ke file\"da $HOME";
-	char	*str = "ls -la << EOF |grep \"<$HOME d\" | cat > file";
+	//char	*str = "ls -la << EOF |awk \"<$HOME d\" | cat";
+	//char	*str = "ls -l | cat << lim | cat > outfile | cat >> outfile";
+	//char	*str = "ls -l | cat << lim | cat | cat";
+	char	*str = "ls | cat | cat | cat > file | cat | cat |cat >> outfile";
 	char	**res;
-	t_px	*nodes;
+	//t_px	*nodes;
 	int		i = 0;
 	
 	(void)argc;
@@ -243,7 +246,7 @@ int	main(int argc, char **argv, char **env)
 		printf("%s\n", res[i]);
 		i++;
 	}
-	nodes = malloc(sizeof(t_px) * 1);
+	//nodes = malloc(sizeof(t_px) * 1);
 	ft_parse(res);
 	ft_free_split(res);
 	free(str);
