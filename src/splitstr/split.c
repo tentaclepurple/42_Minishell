@@ -6,7 +6,7 @@
 /*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/12 17:40:00 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/14 18:54:27 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ char	*ft_correct_str(char *str)
 	return (res);
 }
 
-int	main(int argc, char **argv, char **env)
+/* int	main(int argc, char **argv, char **env)
 {
 	//char	*str = "$USER -la | grep \"Ma$USER ke file\"da $HOME";
 	//char	*str = "ls -la << EOF |awk \"<$HOME d\" | cat";
@@ -252,4 +252,4 @@ int	main(int argc, char **argv, char **env)
 	free(str);
 	
 	return (0);
-}
+} */

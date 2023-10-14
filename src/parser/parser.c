@@ -6,16 +6,11 @@
 /*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/12 17:35:52 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/14 19:50:55 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../parse.h"
-
-char	*ft_ask_path(char *str)
-{
-	return (ft_strdup(str));
-}
 
 //Returns the node quantity tto be allocated for the parsing of str
 int	ft_node_quant(char **str)
@@ -63,7 +58,7 @@ int	ft_num_args(char **str)
 }
 
 //Function to process and fill info of a single node
-char	**ft_parse_loop(t_px *node, char **str)
+char	**ft_parse_loop(t_px *node, char **str, char **env)
 {
 	int		num_arg;
 	int		i;
@@ -77,7 +72,7 @@ char	**ft_parse_loop(t_px *node, char **str)
 	}
 	while (*str && ft_strncmp("|", *str, 2))
 	{
-		node->path = ft_ask_path(*str);//Funcion de iban que devvuelve el path completo del comando
+		node->path = get_cmd_or_cmdpath(env, *str);//Funcion de iban que devvuelve el path completo del comando
 		num_arg = ft_num_args(str);
 		node->full_cmd = malloc(sizeof(char *) * num_arg + 1);
 		if (!node->full_cmd)
@@ -125,6 +120,7 @@ t_px	*ft_init_nodes(t_info *info)
 		nodes[i].path = NULL;
 		nodes[i].infile = NULL;
 		nodes[i].outfile = NULL;
+		nodes[i].limit = NULL;
 		nodes[i].in_flag = 0;
 		nodes[i].out_flag = 0;
 		nodes[i].info = info;
@@ -136,7 +132,7 @@ t_px	*ft_init_nodes(t_info *info)
 //Returns the str info into an array of t_px
 //Mallocs space for array of t_px and for the general info
 //It does not free the str
-t_px	*ft_parse(char **str)
+t_px	*ft_parse(char **str, char **env)
 {
 	t_px	*nodes;
 	t_info	*info;
@@ -151,10 +147,10 @@ t_px	*ft_parse(char **str)
 	nodes = ft_init_nodes(info);
 	while (i < info->cmd_amount)
 	{
-		str = ft_parse_loop(&nodes[i], str);
+		str = ft_parse_loop(&nodes[i], str, env);
 		i++;
 	}
-	int j=0;
+	/* int j=0;
 	while (j < info->cmd_amount)
 	{
 		i = 0;
@@ -169,6 +165,6 @@ t_px	*ft_parse(char **str)
 		}
 		printf("\n");
 		j++;
-	} 
+	}  */
 	return (nodes);
 }
