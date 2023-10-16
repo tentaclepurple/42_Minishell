@@ -99,34 +99,34 @@ char	*ft_getline(int fd)
 void	ft_fd_pipes(t_px *px, int n)
 {
 	
-	if (n == 0 && px->out_flag == 0) //first cmd
+	if (n == 0) //first cmd
 	{
-		fprintf(stderr, "pipes first cmd\n");
+		//fprintf(stderr, "pipes first cmd\n");
 		if (dup2(px->info->fd[n][1], STDOUT_FILENO) < 0)
 			printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
 	}
 	else if (n == px->info->cmd_amount - 1 && px->in_flag == 0) //last cmd
 	{
-		fprintf(stderr, "pipes last cmd\n");
+		//fprintf(stderr, "pipes last cmd\n");
 		if (dup2(px->info->fd[n - 1][0], STDIN_FILENO) < 0)
 			printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
 	}
 	else //middle cmd
 	{
-		fprintf(stderr, "pipes mid cmd output red flag: %i\n", px->out_flag);
+		//fprintf(stderr, "pipes mid cmd output red flag: %i\n", px->out_flag);
 		if (px->out_flag == 0)
 		{
 			if (dup2(px->info->fd[n][1], STDOUT_FILENO) < 0)
 				printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
 		}
-		fprintf(stderr, "pipes mid cmd input red flag: %i\n", px->in_flag);
+		//fprintf(stderr, "pipes mid cmd input red flag: %i\n", px->in_flag);
 		if (px->in_flag == 0)
 		{
 			if (dup2(px->info->fd[n - 1][0], STDIN_FILENO) < 0)
 				printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
 		}
 	}
-	fprintf(stderr, "he pasado por pipes\n");
+	//fprintf(stderr, "he pasado por pipes\n");
 }
 
 /* 
@@ -138,10 +138,10 @@ void	ft_input_redirect(t_px *px)
 {
 	int	fd_in;
 	
-	fprintf(stderr, "flaginpppp: %i\n", px->in_flag);
+	//fprintf(stderr, "inp redir: %i\n", px->in_flag);
 	if (px->in_flag == 1)
 	{
-		fprintf(stderr, "redir <\n");
+		//fprintf(stderr, "redir <\n");
 		fd_in = open(px->infile, O_RDONLY);
 		if (dup2(fd_in, STDIN_FILENO) < 0)
 			printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
@@ -149,7 +149,7 @@ void	ft_input_redirect(t_px *px)
 	}
 	if (px->in_flag == 2)
 	{
-		fprintf(stderr, "redir <<\n");
+		//fprintf(stderr, "redir <<\n");
 		write_here_doc_tmp(px);
 		fd_in = open(".tmp", O_RDONLY);
 		if (dup2(fd_in, STDIN_FILENO) < 0)
@@ -157,7 +157,7 @@ void	ft_input_redirect(t_px *px)
 		unlink(".tmp");
 		close(fd_in);
 	}
-	fprintf(stderr, "he pasado por redirect input\n");
+	//fprintf(stderr, "he pasado por redirect input\n");
 }
 
 /* 
@@ -171,7 +171,7 @@ void	ft_output_redirect(t_px *px)
 
 	if (px->out_flag == 1)
 	{
-		printf("redir >\n");
+		//printf("redir >\n");
 		fd_out = open(px->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (dup2(fd_out, STDOUT_FILENO) < 0)
 			printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
@@ -179,13 +179,13 @@ void	ft_output_redirect(t_px *px)
 	}
 	if (px->out_flag == 2)
 	{
-		printf("redir >>\n");
+		//printf("redir >>\n");
 		fd_out = open(px->outfile, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (dup2(fd_out, STDOUT_FILENO) < 0)
 			printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
 		close(fd_out);
 	}
-	fprintf(stderr, "he pasado por redirect output\n");
+	//fprintf(stderr, "he pasado por redirect output\n");
 }
 
 /* 
@@ -194,7 +194,9 @@ void	ft_output_redirect(t_px *px)
 void	ft_child(t_px *px, int n)
 {
 	
-	fprintf(stderr, "estoy en childs\n");
+	
+	
+	//fprintf(stderr, "estoy en childs\n");
 	if (px->info->cmd_amount > 1) 
 		ft_fd_pipes(px, n); 
 	if (px->in_flag > 0)
@@ -227,6 +229,10 @@ void	pipex(t_px *px)
 		ft_free_fd(px);
 }
 
+/* -----------------GET COMMAND WITH PATH--------------------------- */
+
+
+
 int	check_slash(char *str)
 {
 	int	i;
@@ -242,6 +248,7 @@ int	check_slash(char *str)
 	}
 	return (slash);
 }
+
 char	**get_path(char **env)
 {
 	int	i;

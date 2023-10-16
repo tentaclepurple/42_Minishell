@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/10/14 20:25:39 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/16 11:29:36 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	(void)argv;
-	char *var = getenv("USER");
-
-	printf("%s\n", var);
+	
 	if (!check_no_env(env))
 		return (printf("Invalid env\n"), -1);
 	if (argc != 1)
