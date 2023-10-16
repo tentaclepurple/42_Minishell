@@ -4,7 +4,8 @@ SRC = ./splitstr/split.c ./splitstr/check_var.c  ./splitstr/correc_special.c ./p
 OBJ = $(SRC:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror -g
-READFLAG =  -lreadline
+READFLAG =  -lreadline -L/Users/$(USER)/.brew/opt/readline/lib
+READINCLUDE = -I/Users/$(USER)/.brew/opt/readline/include
 NONE='\033[0m'
 GREEN='\033[32m'
 GRAY='\033[2;37m'
@@ -14,7 +15,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBNAME)
 	@echo $(CURSIVE)$(GRAY) "     - Compiling $(NAME)..." $(NONE)
-	@gcc $(FLAGS) $(OBJ) $(LIBNAME) $(READFLAG) -o $(NAME)
+	@gcc $(FLAGS)   $(OBJ) $(LIBNAME) $(READFLAG)  -o $(NAME)
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
 $(LIBNAME):
@@ -24,7 +25,7 @@ $(LIBNAME):
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
 %.o: %.c
-	$(CC) -c $(FLAGS) $^ -o $@
+	$(CC) $(READINCLUDE) -c $(FLAGS) $^ -o $@
 
 clean:
 	@echo $(CURSIVE)$(GRAY) "     - Removing object files..." $(NONE)

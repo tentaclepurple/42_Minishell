@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/14 19:37:12 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/16 11:22:38 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,17 @@ char	*get_prompt(char **env)
 	{
 		if (ft_strnstr(env[i], "USER=", 5))
 		{
-			//user = ft_strjoin(BLUEB, env[i] + 5);
-            user = ft_strjoin("", env[i] + 5);
+			user = ft_strjoin(BLUEB, env[i] + 5);
 			found++;	
 		}
 		i++;
 	}
 	if (found == 0)
 	{
-		//prompt = ft_strdup(GREENB"minichel42 "X);
-		prompt = ft_strdup("minichel42 ");
+		prompt = ft_strdup(GREENB"minichel42 "X);
         return (prompt);
 	}
-	//prompt = ft_strjoin(user, GREENB"@minichel42 "X);
-    prompt = ft_strjoin(user, "@minichel42 ");
+	prompt = ft_strjoin(user, GREENB"@minichel42 "X);
 	return (free(user), prompt);
 }
 

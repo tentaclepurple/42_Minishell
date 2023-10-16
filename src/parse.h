@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/14 19:43:04 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/16 11:14:59 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@
 /*# include "../colors.h"
 # include "../pipex.h"
 # include "../../terminal.h"*/
+
+# define RED		"\033[0;31m"
+# define GREEN		"\033[0;32m"
+# define GREENB		"\033[32;1m"
+# define YELLOW		"\033[0;33m"
+# define BLUE 		"\033[0;34m"
+# define BLUEB 		"\033[34;1m"
+# define PURPLE		"\033[0;35m"
+# define PURPLEB	"\033[35;1m"
+# define CYAN		"\033[0;36m"
+# define BOLD		"\033[0;1m"
+# define X			"\033[0;0m"
 
 typedef enum    s_type
 {
