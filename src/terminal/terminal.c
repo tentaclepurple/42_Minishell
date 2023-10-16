@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/16 11:22:38 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/16 13:37:29 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ int	ft_lines(char *str, char **env)
 {
 	char	**res;
 	t_px	*nodes;
-	
+
 	str = ft_correct_str(str);
+	if (!str)
+		return (1);
 	res = ft_split_str(str, ' ');
 	ft_check_var(res, env);
 	res = ft_correc_special(res, "<>|&");
 	nodes = ft_parse(res, env);
-    pipex(nodes);
+	pipex(nodes);
 	ft_free_split(res);
 	free(str);
 	return (0);
 }
-
 /* --------TERMINAL---------- */
-
 
 /*
 	Returns 0 if any mthfckr suppresed env
@@ -55,11 +55,11 @@ int	check_env_and_vars(char **env)
 		return (1);
 	else
 		return (0);
-	
 }
 
 /* 
-	returns custom prompt with user or just std prompt if user is suppresed 
+	returns custom prompt with user or just std prompt if user is suppresed. 
+	NULL if error
 */
 char	*get_prompt(char **env)
 {
@@ -75,14 +75,15 @@ char	*get_prompt(char **env)
 		if (ft_strnstr(env[i], "USER=", 5))
 		{
 			user = ft_strjoin(BLUEB, env[i] + 5);
-			found++;	
+			if (user)
+				found++;
 		}
 		i++;
 	}
 	if (found == 0)
 	{
 		prompt = ft_strdup(GREENB"minichel42 "X);
-        return (prompt);
+		return (prompt);
 	}
 	prompt = ft_strjoin(user, GREENB"@minichel42 "X);
 	return (free(user), prompt);
@@ -90,27 +91,27 @@ char	*get_prompt(char **env)
 
 void	terminal(char **env)
 {
-	char *input;
-	char *prompt;
+	char	*input;
+	char	*prompt;
 
-	
 	prompt = get_prompt(env);
 	while (1)
 	{
 		input = readline(prompt);
+		if (!input)
+			continue ;
 		if (!ft_strcmp("exit", input))
 		{
 			free(input);
 			break ;
 		}
-        add_history(input);
+		add_history(input);
 		if (!ft_strcmp("perro", input))
 			rl_clear_history();
 		if (!ft_strcmp("redisp", input))
 			rl_redisplay();
 		if (!ft_strcmp("rep", input))
 			rl_replace_line("replaced!!", 0);
-		rl_replace_line("replace", 0);
 		if (!ft_strcmp("clear", input))
 			printf("\033[H\033[2J");
 		else

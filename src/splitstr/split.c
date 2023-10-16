@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/14 18:54:27 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/16 13:34:18 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ void	ft_aux_correct_str(char *res, char *str, int *i, int *extra)
 }
 
 //Adds spaces into the string, separating the special characters
+// str is freed in terminal function
 char	*ft_correct_str(char *str)
 {
 	char	*res;
@@ -220,7 +221,6 @@ char	*ft_correct_str(char *str)
 		i++;
 	}
 	res[i + extra] = '\0';
-	//free(str);
 	return (res);
 }
 
