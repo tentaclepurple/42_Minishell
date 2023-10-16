@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putunbr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:36:35 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/08/03 11:42:59 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/10 16:23:00 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	ft_print_unumber(char *nbr, t_flag flags)
 	return (i);
 }
 
-static int	ft_print_unbr(char *nbr, t_flag flags, unsigned int n)
+static int	ft_print_unbr(char *nbr, t_flag flags)
 {
 	int	i;
 
@@ -73,7 +73,7 @@ static int	ft_print_unbr(char *nbr, t_flag flags, unsigned int n)
 	if (flags.precision)
 	{
 		flags.width -= flags.precwidth;
-		if (n < 0 || flags.plus || flags.space)
+		if (flags.plus || flags.space)
 			flags.width -= 1;
 		i += ft_print_width(flags.width, 0, 0);
 	}
@@ -90,11 +90,9 @@ int	ft_putunbr_fd(unsigned int n, int fd, t_flag flags)
 	char			nbr[12];
 	int				i;
 	int				dig;
-	unsigned int	nb;
 
 	dig = ft_unumer_digits(n);
 	i = dig - 1;
-	nb = n;
 	nbr[i + 1] = '\0';
 	while (n > 9 && fd)
 	{
@@ -108,5 +106,5 @@ int	ft_putunbr_fd(unsigned int n, int fd, t_flag flags)
 		i = ft_precision_nul(&flags);
 		return (i);
 	}
-	return (ft_print_unbr(nbr, flags, nb));
+	return (ft_print_unbr(nbr, flags));
 }
