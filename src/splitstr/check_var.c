@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:43:53 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/11 13:37:22 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:33:22 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*ft_expand_var(char **envp, char *str, int index, int quote)
 }
 
 //Function to expand all the environmental variables in the 2D array
-void	ft_check_var(char **str, char **env)
+int	ft_check_var(char **str, char **env)
 {
 	int	i;
 	int	quote;
@@ -99,9 +99,14 @@ void	ft_check_var(char **str, char **env)
 					i++;
 			}
 			else if ((*str)[i] == '$')
+			{
 				*str = ft_expand_var(env, *str, i, quote % 2);
+				if (!*str)
+					return (ft_free_split(*(str + 1)), 1);
+			}
 			i++;
 		}
 		str++;
 	}
+	return (0);
 }
