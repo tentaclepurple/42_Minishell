@@ -23,8 +23,16 @@ int	ft_lines(char *str, char **env)
 	if (!str)
 		return (1);
 	res = ft_split_str(str, ' ');
-	ft_check_var(res, env);
+	if (!res)
+	{
+		free (str);
+		return (2);
+	}
+	if (ft_check_var(res, env))
+		return(ft_free_split(res), 3);
 	res = ft_correc_special(res, "<>|&");
+	if (!res)
+		return (3);
 	if (ft_clean_quotes(res))
 		return (ft_free_split(res), 1);
 	nodes = ft_parse(res, env);
