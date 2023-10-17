@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   envcp.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/10/17 11:36:44 by imontero         ###   ########.fr       */
+/*   Created: 2023/10/17 10:08:01 by imontero          #+#    #+#             */
+/*   Updated: 2023/10/17 10:52:23 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"parse.h"
+#include "../parse.h"
 
-/* 
-	comp -lreadline terminal.c libft.a -L/Users/$USER/.brew/opt/readline/lib -I/Users/$USER/.brew/opt/readline/include && ./a.out
-*/
-int	main(int argc, char **argv, char **env)
+char	**ft_env_cpy(char **env)
 {
+	int		i;
 	char	**envcp;
-	
-	(void)argv;
-	if (!check_no_env(env))
-		return (printf("Invalid env\n"), -1);
-	if (argc != 1)
-		return(printf("Invalid arguments\n"), -2);
-	envcp = ft_env_cpy(env);
-	terminal(envcp);
-	return (37);
+
+	i = 0;
+	while (env[i])
+		i++;
+	envcp = malloc((sizeof(char *) * i) + 1);
+	envcp[i] = NULL;
+	i = 0;
+	while (env[i])
+	{
+		envcp[i] = ft_strdup(env[i]);
+		i++;
+	}
+	return (envcp);
 }
