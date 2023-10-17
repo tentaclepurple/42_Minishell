@@ -72,7 +72,7 @@ typedef struct  s_px
     t_info  *info;
 }               t_px;
 
-void    ft_check_var(char **str, char **env);
+int    ft_check_var(char **str, char **env);
 char	**ft_correc_special(char **str, char *spec);
 int 	ft_clean_quotes(char **str);
 
