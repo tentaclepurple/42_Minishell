@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/16 13:34:18 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:31:29 by josu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ char	**ft_split_str(char const *s, char c)
 	return (split);
 }
 
-//Function to free a 2D array
+/* //Function to free a 2D array
 void	ft_free_split(char **str)
 {
 	int	i;
@@ -153,7 +153,7 @@ void	ft_free_split(char **str)
 		i++;
 	}
 	free (str);
-}
+} */
 
 //Returns the length of the corrected string fot ft_correct_str
 int	ft_strcorr_len(char	*str, char *act)
