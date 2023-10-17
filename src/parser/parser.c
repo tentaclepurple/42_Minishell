@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/14 19:50:55 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/17 11:31:04 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,25 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 	{
 		node->in_flag = 1;
 		node->infile = ft_strdup(*(str + 1));
-		str += 2;
+		str++;
+		if (*str)
+			str++;
 	}
 	while (*str && ft_strncmp("|", *str, 2))
 	{
 		node->path = get_cmd_or_cmdpath(env, *str);//Funcion de iban que devvuelve el path completo del comando
 		num_arg = ft_num_args(str);
 		node->full_cmd = malloc(sizeof(char *) * num_arg + 1);
-		if (!node->full_cmd)
-			return (NULL);
-		node->full_cmd[i++] = node->path;
+		if (node->full_cmd)
+			node->full_cmd[i++] = node->path;
 		str++;
-		while (i < num_arg)
+		while (i < num_arg && node->full_cmd)
 		{
 			node->full_cmd[i++] = ft_strdup(*str);
 			str++;
 		}
-		node->full_cmd[i] = NULL;
+		if (node->full_cmd)
+			node->full_cmd[i] = NULL;
 		if (*str && (!ft_strncmp(*str, ">", 2) || !ft_strncmp(*str, ">>", 3)))
 		{
 			if (!ft_strncmp(*str, ">", 2))
@@ -92,13 +94,17 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 			else
 				node->out_flag = 2;
 			node->outfile = ft_strdup(*(str + 1));
-			str += 2;
+			str++;
+			if (*str)
+				str++;
 		}
 		else if (*str && !ft_strncmp(*str, "<<", 3))
 		{
 			node->in_flag = 2;
 			node->limit = ft_strdup(*(str + 1));
-			str += 2;
+			str++;
+			if (*str)
+				str++;
 		}
 	}
 	return (++str);
@@ -129,6 +135,63 @@ t_px	*ft_init_nodes(t_info *info)
 	return (nodes);
 }
 
+//Check inapropriate node, returns 0 if OK
+int	ft_err_node(t_px node)
+{
+	if (!node.full_cmd || node.path)
+		return (1);
+	if (node.out_flag && !node.outfile)
+		return (2);
+	if (node.in_flag == 1 && !node.infile)
+		return (3);
+	if (node.in_flag == 2 && !node.limit)
+		return (4);
+	return (0);
+}
+
+//Function to check if every malloc filling the nodes where correctly done
+int	ft_check_nodes(t_px *nodes)
+{
+	int	len;
+	int	i;
+
+	len = (*nodes).info->cmd_amount;
+	i = 0;
+	while (i < len)
+	{
+		if (ft_err_node(*(nodes + i)))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+//Function to free the nodes array
+void	ft_free_nodes(t_px *nodes)
+{
+	int	len;
+	int	i;
+
+	len = (*nodes).info->cmd_amount;
+	i = 0;
+	while (i < len)
+	{
+		if (nodes[i].full_cmd)
+			ft_free_split(nodes[i].full_cmd);
+		if (nodes[i].path)
+			free(nodes[i].path);
+		if (nodes[i].infile)
+			free(nodes[i].infile);
+		if (nodes[i].outfile)
+			free(nodes[i].outfile);
+		if (nodes[i].limit)
+			free(nodes[i].limit);
+		i++;
+	}
+	free((*nodes).info);
+	free(nodes);
+}
+
 //Returns the str info into an array of t_px
 //Mallocs space for array of t_px and for the general info
 //It does not free the str
@@ -140,16 +203,21 @@ t_px	*ft_parse(char **str, char **env)
 
 	i = 0;
 	info = malloc(sizeof(t_info));
-	/* if (!info)
-		return ; */
+	if (!info)
+		return (NULL);
 	info->cmd_amount = ft_node_quant(str);
 	info->fd = NULL;
+	info->envcp = env;
 	nodes = ft_init_nodes(info);
+	if (!nodes)
+		return (free(info), NULL);
 	while (i < info->cmd_amount)
 	{
 		str = ft_parse_loop(&nodes[i], str, env);
 		i++;
 	}
+	if (ft_check_nodes(nodes))
+		return (ft_free_nodes(nodes), NULL);
 	/* int j=0;
 	while (j < info->cmd_amount)
 	{

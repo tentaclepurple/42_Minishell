@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/17 11:00:56 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/17 09:53:49 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct  s_info
 {
     int     cmd_amount;
     int     **fd;
+    char    **envcp;
 }               t_info;
 
 typedef struct  s_px

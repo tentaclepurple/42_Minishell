@@ -17,14 +17,16 @@
 */
 int	main(int argc, char **argv, char **env)
 {
-	char	**envcp;
-	
 	(void)argv;
+	char	**envcp;
+  
 	if (!check_no_env(env))
 		return (printf("Invalid env\n"), -1);
+	envcp = ft_dup_2darr(env);
 	if (argc != 1)
 		return(printf("Invalid arguments\n"), -2);
 	envcp = ft_env_cpy(env);
 	terminal(envcp);
-	return (37);
+  ft_free_split(envcp);
+	return (0);
 }
