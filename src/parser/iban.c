@@ -20,6 +20,8 @@ void	ft_alloc_fd(t_px *px)
 
 	i = 0;
 	px->info->fd = malloc(sizeof(int *) * (px->info->cmd_amount - 1));
+	if (!px->info->fd)
+		return ;
 	while (i < px->info->cmd_amount - 1)
 	{
 		px->info->fd[i] = malloc(sizeof(int) * 2);
@@ -193,9 +195,6 @@ void	ft_output_redirect(t_px *px)
 */
 void	ft_child(t_px *px, int n)
 {
-	
-	
-	
 	//fprintf(stderr, "estoy en childs\n");
 	if (px->info->cmd_amount > 1) 
 		ft_fd_pipes(px, n); 
@@ -214,6 +213,8 @@ void	pipex(t_px *px)
 	int		i;
 
 	ft_alloc_fd(px);
+	if (!px->info->fd)
+		return ;
 	i = 0;
 	while (i < px->info->cmd_amount)
 	{
@@ -225,8 +226,8 @@ void	pipex(t_px *px)
 		waitpid(pid, NULL, 0);
 		i++;
 	}
-	if (px->info->cmd_amount > 1)
-		ft_free_fd(px);
+	//if (px->info->cmd_amount > 1)
+	ft_free_fd(px);
 }
 
 /* -----------------GET COMMAND WITH PATH--------------------------- */
