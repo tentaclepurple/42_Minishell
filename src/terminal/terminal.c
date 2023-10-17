@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
 /*   Updated: 2023/10/17 11:10:07 by jzubizar         ###   ########.fr       */
@@ -114,6 +114,7 @@ void	terminal(char **env)
 			rl_redisplay();
 		if (!ft_strcmp("rep", input))
 			rl_replace_line("replaced!!", 0);
+		//rl_replace_line("replace", 0);
 		if (!ft_strcmp("clear", input))
 			printf("\033[H\033[2J");
 		else
