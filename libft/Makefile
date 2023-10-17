@@ -8,7 +8,7 @@ lib/ft_tolower.c lib/ft_strchr.c lib/ft_strrchr.c lib/ft_strncmp.c lib/ft_memchr
 lib/ft_atoi.c lib/ft_calloc.c lib/ft_strdup.c lib/ft_substr.c lib/ft_strjoin.c lib/ft_strtrim.c lib/ft_split.c \
 lib/ft_itoa.c lib/ft_strmapi.c lib/ft_striteri.c lib/ft_putchar_fd.c lib/ft_putstr_fd.c lib/ft_putendl_fd.c \
 lib/ft_putnbr_fd.c lib/ft_lstnew.c lib/ft_lstadd_front.c lib/ft_lstsize.c lib/ft_lstlast.c lib/ft_lstadd_back.c \
-lib/ft_lstdelone.c lib/ft_lstclear.c lib/ft_lstiter.c lib/ft_lstmap.c lib/ft_strcmp.c
+lib/ft_lstdelone.c lib/ft_lstclear.c lib/ft_lstiter.c lib/ft_lstmap.c lib/ft_strcmp.c lib/ft_free_split.c
 SRCPF = printf/ft_printf.c printf/ft_putunbr.c printf/ft_putxnbr.c printf/ft_putxptr.c printf/ft_putXmnbr.c \
 printf/ft_printf_func.c printf/ft_pfputstr.c printf/ft_pfputnbr.c printf/ft_pfflags.c printf/ft_pfputchar.c printf/ft_pfputnbr_aux.c
 SRCGNL = gnl/get_next_line.c gnl/get_next_line_utils.c

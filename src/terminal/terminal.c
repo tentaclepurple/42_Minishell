@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/17 12:14:26 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:31:48 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	terminal(char **env)
 	{
 		input = readline(prompt);
 		if (!input)
-			continue ;
+			break ;
 		if (!ft_strcmp("exit", input))
 		{
 			free(input);
@@ -126,7 +126,7 @@ void	terminal(char **env)
 			rl_replace_line("replaced!!", 0);
 		if (!ft_strcmp("clear", input))
 			printf("\033[H\033[2J");
-		else
+		else if (ft_strlen(input))
 			ft_lines(input, env);
 		free (input);
 	}

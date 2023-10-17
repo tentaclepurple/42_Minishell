@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/17 13:22:12 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/17 17:31:12 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int	ft_num_args(char **str)
 
 int	ft_is_cm(char *str, t_px *node)
 {
-	if (ft_strcmp(str, "export") || ft_strcmp(str, "echo") || ft_strcmp(str, "cd") ||
-			ft_strcmp(str, "pwd") || ft_strcmp(str, "unset")  || ft_strcmp(str, "env") ||
-			ft_strcmp(str, "env"))
+	if (!ft_strcmp(str, "export") || !ft_strcmp(str, "echo") || !ft_strcmp(str, "cd") ||
+			!ft_strcmp(str, "pwd") || !ft_strcmp(str, "unset")  || !ft_strcmp(str, "env") ||
+			!ft_strcmp(str, "env"))
 	{
 		node->type = BI;
 		return (1);
@@ -242,7 +242,7 @@ t_px	*ft_parse(char **str, char **env)
 	{
 		i = 0;
 		printf("NODO %i\n", j + 1);
-		printf("PATH: %s\nOutput: %i\nInput: %i\n", nodes[j].path, nodes[j].out_flag, nodes[j].in_flag);
+		printf("PATH: %s\nOutput: %i\nInput: %i\nTipo: %i\n", nodes[j].path, nodes[j].out_flag, nodes[j].in_flag, nodes[j].type);
 		printf("Infile: %s\nOutfile: %s\nLimit: %s\n", nodes[j].infile, nodes[j].outfile, nodes[j].limit);
 		printf("ARGS: ");
 		while (nodes[j].full_cmd[i])
@@ -252,6 +252,6 @@ t_px	*ft_parse(char **str, char **env)
 		}
 		printf("\n");
 		j++;
-	}  */
+	} */
 	return (nodes);
 }

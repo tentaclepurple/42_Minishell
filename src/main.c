@@ -6,11 +6,22 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/10/17 12:39:51 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:09:15 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"parse.h"
+#include<libc.h>
+//Function to handle SIGINT signal received
+void	ft_handle_client(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_replace_line("adc", 1);
+		rl_on_new_line();
+	}
+}
 
 /* 
 	comp -lreadline terminal.c libft.a -L/Users/$USER/.brew/opt/readline/lib -I/Users/$USER/.brew/opt/readline/include && ./a.out
@@ -18,12 +29,16 @@
 int	main(int argc, char **argv, char **env)
 {
 	(void)argv;
+	struct sigaction	sa;
 
-
+	sa.sa_handler = &ft_handle_client;
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
 	if (!check_no_env(env))
 		return (printf("Invalid env\n"), -1);
 	if (argc != 1)
 		return(printf("Invalid arguments\n"), -2);
 	terminal(env);
-	return (37);
+	return (0);
 }

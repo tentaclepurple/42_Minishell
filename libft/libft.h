@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:34:23 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/14 19:27:25 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/17 16:12:03 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int		ft_atoi(const char *str);
 int		ft_strcmp(char *s1, char *s2);
+void	ft_free_split(char **str);
 //Next
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s1);

@@ -218,7 +218,6 @@ void	pipex(t_px *px)
 	i = 0;
 	while (i < px->info->cmd_amount)
 	{
-
 		pid = fork();
 		if (pid == 0)
 			ft_child(&px[i], i);
@@ -226,8 +225,8 @@ void	pipex(t_px *px)
 		waitpid(pid, NULL, 0);
 		i++;
 	}
-	//if (px->info->cmd_amount > 1)
-	ft_free_fd(px);
+	if (px->info->cmd_amount > 1)
+		ft_free_fd(px);
 }
 
 /* -----------------GET COMMAND WITH PATH--------------------------- */
