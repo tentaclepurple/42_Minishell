@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/17 09:53:49 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:13:17 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@
 
 typedef enum    s_type
 {
-    CMD,
+    CMD=1,
+    BI,
     PIPE,
     AND,
     OR
@@ -60,6 +61,7 @@ typedef struct  s_info
 
 typedef struct  s_px
 {
+    t_type  type;
     char    *path;
     char    **full_cmd;
     int     in_flag;
@@ -72,6 +74,7 @@ typedef struct  s_px
 
 void    ft_check_var(char **str, char **env);
 char	**ft_correc_special(char **str, char *spec);
+int 	ft_clean_quotes(char **str);
 
 char	*ft_correct_str(char *str);
 char	**ft_split_str(char const *s, char c);

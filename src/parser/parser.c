@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/17 11:31:04 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/17 13:22:12 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,19 @@ int	ft_num_args(char **str)
 	return (i);
 }
 
+int	ft_is_cm(char *str, t_px *node)
+{
+	if (ft_strcmp(str, "export") || ft_strcmp(str, "echo") || ft_strcmp(str, "cd") ||
+			ft_strcmp(str, "pwd") || ft_strcmp(str, "unset")  || ft_strcmp(str, "env") ||
+			ft_strcmp(str, "env"))
+	{
+		node->type = BI;
+		return (1);
+	}
+	node->type = CMD;
+	return (0);
+}
+
 //Function to process and fill info of a single node
 char	**ft_parse_loop(t_px *node, char **str, char **env)
 {
@@ -74,7 +87,10 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 	}
 	while (*str && ft_strncmp("|", *str, 2))
 	{
-		node->path = get_cmd_or_cmdpath(env, *str);//Funcion de iban que devvuelve el path completo del comando
+		if (!ft_is_cm(*str, node))
+			node->path = get_cmd_or_cmdpath(env, *str);//Funcion de iban que devvuelve el path completo del comando
+		else
+			node->path = ft_strdup(*str);
 		num_arg = ft_num_args(str);
 		node->full_cmd = malloc(sizeof(char *) * num_arg + 1);
 		if (node->full_cmd)
@@ -138,7 +154,7 @@ t_px	*ft_init_nodes(t_info *info)
 //Check inapropriate node, returns 0 if OK
 int	ft_err_node(t_px node)
 {
-	if (!node.full_cmd || node.path)
+	if (!node.full_cmd || !node.path)
 		return (1);
 	if (node.out_flag && !node.outfile)
 		return (2);
@@ -177,7 +193,10 @@ void	ft_free_nodes(t_px *nodes)
 	while (i < len)
 	{
 		if (nodes[i].full_cmd)
+		{
 			ft_free_split(nodes[i].full_cmd);
+			nodes[i].path = NULL;
+		}
 		if (nodes[i].path)
 			free(nodes[i].path);
 		if (nodes[i].infile)
