@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/17 11:10:07 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:30:15 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	ft_lines(char *str, char **env)
 	ft_free_split(res);
 	if (!nodes)
 		return (1);
+	
 	pipex(nodes);
 	free(str);
 	return (0);

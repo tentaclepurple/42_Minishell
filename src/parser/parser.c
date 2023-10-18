@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/17 11:31:04 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/17 12:30:39 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ t_px	*ft_init_nodes(t_info *info)
 //Check inapropriate node, returns 0 if OK
 int	ft_err_node(t_px node)
 {
-	if (!node.full_cmd || node.path)
+	if (!node.full_cmd || !node.path)
 		return (1);
 	if (node.out_flag && !node.outfile)
 		return (2);
@@ -177,7 +177,10 @@ void	ft_free_nodes(t_px *nodes)
 	while (i < len)
 	{
 		if (nodes[i].full_cmd)
+		{
 			ft_free_split(nodes[i].full_cmd);
+			nodes[i].path = NULL;
+		}
 		if (nodes[i].path)
 			free(nodes[i].path);
 		if (nodes[i].infile)
@@ -217,7 +220,9 @@ t_px	*ft_parse(char **str, char **env)
 		i++;
 	}
 	if (ft_check_nodes(nodes))
+	{
 		return (ft_free_nodes(nodes), NULL);
+	}
 	/* int j=0;
 	while (j < info->cmd_amount)
 	{
