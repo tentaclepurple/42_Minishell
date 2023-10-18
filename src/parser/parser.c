@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/17 17:31:12 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/18 19:09:35 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_num_args(char **str)
 
 int	ft_is_cm(char *str, t_px *node)
 {
-	if (!ft_strcmp(str, "export") || !ft_strcmp(str, "echo") || !ft_strcmp(str, "cd") ||
+	if (!ft_strcmp(str, "export") || !ft_strcmp(str, "echos") || !ft_strcmp(str, "cd") ||
 			!ft_strcmp(str, "pwd") || !ft_strcmp(str, "unset")  || !ft_strcmp(str, "env") ||
 			!ft_strcmp(str, "env"))
 	{

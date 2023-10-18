@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   correc_special.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:39:38 by josu              #+#    #+#             */
-/*   Updated: 2023/10/16 18:00:47 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/18 19:08:32 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ static int ft_correc_fill(char **res, char **str, char *spec)
 	}
 	if (str)
 		res[len++] = *str;
-	free(str);
+	//free(str);
+	//printf("Here\n");
 	res[len] = NULL;
 	return (0);
 }	
@@ -83,7 +84,7 @@ char	**ft_correc_special(char **str, char *spec)
 	char	**res;
 
 	n_len = ft_correc_len(str, spec);
-	res = malloc(sizeof(char *) * n_len + 1);
+	res = malloc(sizeof(char *) * (n_len + 1));
 	if (!res)
 		return (ft_free_split(str), NULL);
 	if (ft_correc_fill(res, str, spec))

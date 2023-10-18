@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/17 17:31:48 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:53:43 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_lines(char *str, char **env)
 	nodes = ft_parse(res, env);
 	ft_free_split(res);
 	if (!nodes)
-		return (1);
+		return (perror(""), 1);
 	pipex(nodes);
 	free(str);
 	return (0);
