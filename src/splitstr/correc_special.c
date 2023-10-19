@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:39:38 by josu              #+#    #+#             */
-/*   Updated: 2023/10/18 19:08:32 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/19 12:18:51 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ static int ft_correc_fill(char **res, char **str, char *spec)
 {
 	int		len;
 	char	*n_wrd;
+	char	**str_mem;
 
 	len = 0;
+	str_mem = str;
 	if (!*str)
 		return (0);
 	while (str[0] && str[1])
@@ -72,8 +74,7 @@ static int ft_correc_fill(char **res, char **str, char *spec)
 	}
 	if (str)
 		res[len++] = *str;
-	//free(str);
-	//printf("Here\n");
+	free(str_mem);
 	res[len] = NULL;
 	return (0);
 }	

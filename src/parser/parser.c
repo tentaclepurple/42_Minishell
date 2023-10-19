@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/18 19:09:35 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:10:13 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	ft_num_args(char **str)
 	i = 0;
 	while (*str && ft_strncmp(*str, "|", 2) && ft_strncmp(*str, ">", 2)
 		&& ft_strncmp(*str, ">>", 3) && ft_strncmp(*str, "&&", 3)
-		&& ft_strncmp(*str, "||", 3) && ft_strncmp(*str, "<<", 3))
+		&& ft_strncmp(*str, "||", 3) && ft_strncmp(*str, "<<", 3)
+		&& ft_strncmp(*str, "<", 3))
 	{
 		i++;
 		str++;
@@ -70,14 +71,9 @@ int	ft_is_cm(char *str, t_px *node)
 	return (0);
 }
 
-//Function to process and fill info of a single node
-char	**ft_parse_loop(t_px *node, char **str, char **env)
+char	**ft_inout_file(t_px *node, char **str)
 {
-	int		num_arg;
-	int		i;
-
-	i = 0;
-	if (!ft_strncmp("<", *str, 2))
+	if (*str && !ft_strncmp("<", *str, 2))
 	{
 		node->in_flag = 1;
 		node->infile = ft_strdup(*(str + 1));
@@ -85,6 +81,44 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 		if (*str)
 			str++;
 	}
+	else if (*str && (!ft_strncmp(*str, ">", 2) || !ft_strncmp(*str, ">>", 3)))
+	{
+		if (!ft_strncmp(*str, ">", 2))
+			node->out_flag = 1;
+		else
+			node->out_flag = 2;
+		node->outfile = ft_strdup(*(str + 1));
+		str++;
+		if (*str)
+			str++;
+	}
+	else if (*str && !ft_strncmp(*str, "<<", 3))
+	{
+		node->in_flag = 2;
+		node->limit = ft_strdup(*(str + 1));
+		str++;
+		if (*str)
+			str++;
+	}
+	return (str);
+}
+
+//Function to process and fill info of a single node
+char	**ft_parse_loop(t_px *node, char **str, char **env)
+{
+	int		num_arg;
+	int		i;
+
+	i = 0;
+	/* if (!ft_strncmp("<", *str, 2))
+	{
+		node->in_flag = 1;
+		node->infile = ft_strdup(*(str + 1));
+		str++;
+		if (*str)
+			str++;
+	} */
+	str = ft_inout_file(node, str);
 	while (*str && ft_strncmp("|", *str, 2))
 	{
 		if (!ft_is_cm(*str, node))
@@ -103,7 +137,8 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 		}
 		if (node->full_cmd)
 			node->full_cmd[i] = NULL;
-		if (*str && (!ft_strncmp(*str, ">", 2) || !ft_strncmp(*str, ">>", 3)))
+		str = ft_inout_file(node, str);
+		/* if (*str && (!ft_strncmp(*str, ">", 2) || !ft_strncmp(*str, ">>", 3)))
 		{
 			if (!ft_strncmp(*str, ">", 2))
 				node->out_flag = 1;
@@ -121,7 +156,7 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 			str++;
 			if (*str)
 				str++;
-		}
+		} */
 	}
 	return (++str);
 }

@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:43:53 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/17 16:10:33 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:44:56 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,13 @@ char	*ft_expand_var(char **envp, char *str, int index, int quote)
 			return (res);
 		}
 		i++;
+	}
+	if (!ft_strncmp("?", &str[index + 1],
+				ft_strlen_var(&str[index + 1], quote)))
+	{
+		res = ft_itoa(g_stat);
+		free(str);
+		return (res);
 	}
 	return (str);
 }

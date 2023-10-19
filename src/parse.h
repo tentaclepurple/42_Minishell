@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/17 17:41:59 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:03:04 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	ft_free_split(char **str);
 int	    ft_node_quant(char **str);
 t_px	*ft_parse(char **str, char **env);
 
-
+void	ft_handle_client(int sig);
+void	ft_2nd_handler(int sig);
 //iban.c
 char	*ft_getline(int fd);
 void	pipex(t_px *px);
@@ -92,5 +93,7 @@ char	*get_cmd_or_cmdpath(char **env, char *str);
 //terminal.c
 int	    check_no_env(char **env);
 void	terminal(char **env);
+
+int	g_stat;
 
 #endif

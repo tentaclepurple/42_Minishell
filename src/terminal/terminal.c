@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/18 18:53:43 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:51:14 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_lines(char *str, char **env)
 	nodes = ft_parse(res, env);
 	ft_free_split(res);
 	if (!nodes)
-		return (perror(""), 1);
+		return (1);
 	pipex(nodes);
 	free(str);
 	return (0);
@@ -105,10 +105,16 @@ void	terminal(char **env)
 {
 	char	*input;
 	char	*prompt;
+	struct sigaction	sa;
 
 	prompt = get_prompt(env);
 	while (1)
 	{
+
+		sa.sa_handler = &ft_handle_client;
+		sigaction(SIGINT, &sa, NULL);
+		sa.sa_handler = SIG_IGN;
+		sigaction(SIGQUIT, &sa, NULL);
 		input = readline(prompt);
 		if (!input)
 			break ;
@@ -117,7 +123,8 @@ void	terminal(char **env)
 			free(input);
 			break ;
 		}
-		add_history(input);
+		if (input[0])
+			add_history(input);
 		if (!ft_strcmp("perro", input))
 			rl_clear_history();
 		if (!ft_strcmp("redisp", input))

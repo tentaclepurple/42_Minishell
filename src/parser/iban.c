@@ -195,7 +195,12 @@ void	ft_output_redirect(t_px *px)
 */
 void	ft_child(t_px *px, int n)
 {
+	struct sigaction	sa;
+
 	//fprintf(stderr, "estoy en childs\n");
+	sa.sa_handler = SIG_DFL;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 	if (px->info->cmd_amount > 1) 
 		ft_fd_pipes(px, n); 
 	if (px->in_flag > 0)
@@ -211,7 +216,11 @@ void	pipex(t_px *px)
 {
 	pid_t	pid;
 	int		i;
+	struct sigaction	sa;
 
+	sa.sa_handler = &ft_2nd_handler;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 	ft_alloc_fd(px);
 	if (!px->info->fd)
 		return ;
@@ -222,7 +231,8 @@ void	pipex(t_px *px)
 		if (pid == 0)
 			ft_child(&px[i], i);
 		ft_fd_close(px, i);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &g_stat, 0);
+		g_stat = WEXITSTATUS(g_stat);
 		i++;
 	}
 	if (px->info->cmd_amount > 1)
