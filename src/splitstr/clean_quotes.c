@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:51:13 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/19 16:28:57 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/20 08:39:03 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ int	ft_clean_quotes(char **str)
 			new[i] = '\0';
 			free (*str);
 			*str = new;
+			if (quote)
+				return ((int)ft_error(QUOTE, NULL, 1));
 		}
 		str++;
 	}
-	return (0);
+	return (1);
 }
 
 

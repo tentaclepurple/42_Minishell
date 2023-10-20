@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:39:38 by josu              #+#    #+#             */
-/*   Updated: 2023/10/19 12:18:51 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/20 08:49:50 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ char	**ft_correc_special(char **str, char *spec)
 	n_len = ft_correc_len(str, spec);
 	res = malloc(sizeof(char *) * (n_len + 1));
 	if (!res)
-		return (ft_free_split(str), NULL);
+		return (ft_free_split(str), ft_error(MEM, NULL, 2));
 	if (ft_correc_fill(res, str, spec))
-		return (ft_free_split(res), NULL);
+		return (ft_free_split(res), ft_error(MEM, NULL, 2));
 	return (res);
 }

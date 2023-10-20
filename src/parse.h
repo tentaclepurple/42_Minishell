@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/19 14:03:04 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/20 09:56:56 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,22 @@
 # define CYAN		"\033[0;36m"
 # define BOLD		"\033[0;1m"
 # define X			"\033[0;0m"
+
+typedef enum	e_mini_error
+{
+	QUOTE = 1,
+	NDIR = 2,
+	NPERM = 3,
+	NCMD = 6,
+	DUPERR = 7,
+	FORKERR = 8,
+	PIPERR = 9,
+	SYNERR = 10,
+	MEM = 11,
+	IS_DIR = 12,
+	NOT_DIR = 13,
+    NODE = 14
+}               t_mini_error;
 
 typedef enum    s_type
 {
@@ -86,6 +102,8 @@ t_px	*ft_parse(char **str, char **env);
 
 void	ft_handle_client(int sig);
 void	ft_2nd_handler(int sig);
+
+void	*ft_error(int err_type, char *param, int err);
 //iban.c
 char	*ft_getline(int fd);
 void	pipex(t_px *px);

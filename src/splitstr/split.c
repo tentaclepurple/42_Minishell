@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josu <josu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/16 17:31:29 by josu             ###   ########.fr       */
+/*   Updated: 2023/10/20 08:46:41 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ char	**ft_split_str(char const *s, char c)
 
 	split = malloc(sizeof(char *) * (ft_nbr_wrd(s, c) + 1));
 	if (split == NULL)
-		return (NULL);
+		return (ft_error(MEM, NULL, 2));
 	err = ft_split_low(split, s, c);
 	if (err)
 	{
@@ -136,7 +136,7 @@ char	**ft_split_str(char const *s, char c)
 			i++;
 		}
 		free (split);
-		return (NULL);
+		return (ft_error(MEM, NULL, 2));
 	}
 	return (split);
 }
@@ -214,7 +214,7 @@ char	*ft_correct_str(char *str)
 	extra = 0;
 	res = malloc(ft_strcorr_len(str, "<>|&") + 1);
 	if (!res)
-		return (NULL);
+		return (ft_error(MEM, NULL, 2));
 	while (str[i])
 	{
 		ft_aux_correct_str(res, str, &i, &extra);

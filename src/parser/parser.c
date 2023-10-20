@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/19 17:10:13 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/20 11:02:57 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ t_px	*ft_init_nodes(t_info *info)
 	i = 0;
 	nodes = malloc(sizeof(t_px) * info->cmd_amount);
 	if (!nodes)
-		return (NULL);
+		return (ft_error(MEM, NULL, 2));
 	while (i < info->cmd_amount)
 	{
 		nodes[i].full_cmd = NULL;
@@ -189,14 +189,26 @@ t_px	*ft_init_nodes(t_info *info)
 //Check inapropriate node, returns 0 if OK
 int	ft_err_node(t_px node)
 {
-	if (!node.full_cmd || !node.path)
+	if (!node.path)
+		return (ft_error(NCMD, NULL, 50), 2);
+	if (!node.full_cmd)
 		return (1);
 	if (node.out_flag && !node.outfile)
-		return (2);
+		return (ft_error(SYNERR, NULL, 20), 4);
+	else if (node.out_flag && access(node.outfile, F_OK) < 0)
+		return (ft_error(NDIR, node.outfile, 30), 6);
+	else if (node.out_flag && access(node.outfile, R_OK) < 0)
+		return (ft_error(NPERM, node.outfile, 10), 5);
 	if (node.in_flag == 1 && !node.infile)
-		return (3);
+		return (ft_error(SYNERR, NULL, 20), 4);
+	else if (node.in_flag == 1 && access(node.infile, F_OK) < 0)
+		return (ft_error(NDIR, node.infile, 30), 6);
+	else if (node.in_flag == 1 && access(node.infile, R_OK) < 0)
+		return (ft_error(NPERM, node.infile, 10), 5);
 	if (node.in_flag == 2 && !node.limit)
-		return (4);
+		return (ft_error(SYNERR, NULL, 20), 4);
+	if (node.in_flag == 2 && (access(".tmp", F_OK) == 0 && access(".tmp", W_OK) < 0))
+		return (ft_error(NPERM, ".temp", 10), 5);
 	return (0);
 }
 
@@ -258,7 +270,7 @@ t_px	*ft_parse(char **str, char **env)
 	i = 0;
 	info = malloc(sizeof(t_info));
 	if (!info)
-		return (NULL);
+		return (ft_error(MEM, NULL, 2));
 	info->cmd_amount = ft_node_quant(str);
 	info->fd = NULL;
 	info->envcp = env;
