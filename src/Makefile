@@ -1,13 +1,7 @@
 NAME = minichell
 LIBNAME = libft.a
-SRC = 	./splitstr/split.c \
-		./splitstr/check_var.c \
-		./splitstr/correc_special.c \
-		./parser/parser.c \
-		./parser/iban.c \
-		./terminal/terminal.c \
-		./envutils/envcp.c \
-		main.c
+SRC = ./splitstr/split.c ./splitstr/clean_quotes.c ./splitstr/check_var.c  ./splitstr/correc_special.c ./parser/parser.c ./parser/iban.c ./terminal/terminal.c main.c \
+		./error/error.c
 OBJ = $(SRC:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address

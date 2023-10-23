@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:43:53 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/11 13:37:22 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/20 10:15:11 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,18 @@ char	*ft_expand_var(char **envp, char *str, int index, int quote)
 		}
 		i++;
 	}
+	if (!ft_strncmp("?", &str[index + 1],
+				ft_strlen_var(&str[index + 1], quote)))
+	{
+		res = ft_itoa(g_stat);
+		free(str);
+		return (res);
+	}
 	return (str);
 }
 
 //Function to expand all the environmental variables in the 2D array
-void	ft_check_var(char **str, char **env)
+int	ft_check_var(char **str, char **env)
 {
 	int	i;
 	int	quote;
@@ -99,9 +106,14 @@ void	ft_check_var(char **str, char **env)
 					i++;
 			}
 			else if ((*str)[i] == '$')
+			{
 				*str = ft_expand_var(env, *str, i, quote % 2);
+				if (!*str)
+					return (ft_free_split((str + 1)), (int)ft_error(MEM, NULL, 2));
+			}
 			i++;
 		}
 		str++;
 	}
+	return (0);
 }

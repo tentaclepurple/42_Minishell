@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/17 16:30:15 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/23 09:00:16 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,18 @@ int	ft_lines(char *str, char **env)
 	if (!str)
 		return (1);
 	res = ft_split_str(str, ' ');
-	ft_check_var(res, env);
+	if (!res)
+	{
+		free (str);
+		return (2);
+	}
+	if (ft_check_var(res, env))
+		return(ft_free_split(res), 3);
 	res = ft_correc_special(res, "<>|&");
+	if (!res)
+		return (3);
+	if (!ft_clean_quotes(res))
+		return (ft_free_split(res), 1);
 	nodes = ft_parse(res, env);
 	ft_free_split(res);
 	if (!nodes)
@@ -96,19 +106,26 @@ void	terminal(char **env)
 {
 	char	*input;
 	char	*prompt;
+	struct sigaction	sa;
 
 	prompt = get_prompt(env);
 	while (1)
 	{
+
+		sa.sa_handler = &ft_handle_client;
+		sigaction(SIGINT, &sa, NULL);
+		sa.sa_handler = SIG_IGN;
+		sigaction(SIGQUIT, &sa, NULL);
 		input = readline(prompt);
 		if (!input)
-			continue ;
+			break ;
 		if (!ft_strcmp("exit", input))
 		{
 			free(input);
 			break ;
 		}
-		add_history(input);
+		if (input[0])
+			add_history(input);
 		if (!ft_strcmp("perro", input))
 			rl_clear_history();
 		if (!ft_strcmp("redisp", input))
@@ -118,7 +135,7 @@ void	terminal(char **env)
 		//rl_replace_line("replace", 0);
 		if (!ft_strcmp("clear", input))
 			printf("\033[H\033[2J");
-		else
+		else if (ft_strlen(input))
 			ft_lines(input, env);
 		free (input);
 	}

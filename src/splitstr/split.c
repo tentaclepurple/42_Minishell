@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/16 13:34:18 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/20 08:46:41 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ char	**ft_split_str(char const *s, char c)
 
 	split = malloc(sizeof(char *) * (ft_nbr_wrd(s, c) + 1));
 	if (split == NULL)
-		return (NULL);
+		return (ft_error(MEM, NULL, 2));
 	err = ft_split_low(split, s, c);
 	if (err)
 	{
@@ -136,12 +136,12 @@ char	**ft_split_str(char const *s, char c)
 			i++;
 		}
 		free (split);
-		return (NULL);
+		return (ft_error(MEM, NULL, 2));
 	}
 	return (split);
 }
 
-//Function to free a 2D array
+/* //Function to free a 2D array
 void	ft_free_split(char **str)
 {
 	int	i;
@@ -153,7 +153,7 @@ void	ft_free_split(char **str)
 		i++;
 	}
 	free (str);
-}
+} */
 
 //Returns the length of the corrected string fot ft_correct_str
 int	ft_strcorr_len(char	*str, char *act)
@@ -214,7 +214,7 @@ char	*ft_correct_str(char *str)
 	extra = 0;
 	res = malloc(ft_strcorr_len(str, "<>|&") + 1);
 	if (!res)
-		return (NULL);
+		return (ft_error(MEM, NULL, 2));
 	while (str[i])
 	{
 		ft_aux_correct_str(res, str, &i, &extra);

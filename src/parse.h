@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/17 09:53:49 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/23 09:09:03 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <signal.h>
 
 /*# include "../colors.h"
 # include "../pipex.h"
@@ -43,9 +44,26 @@
 # define BOLD		"\033[0;1m"
 # define X			"\033[0;0m"
 
+typedef enum	e_mini_error
+{
+	QUOTE = 1,
+	NDIR = 2,
+	NPERM = 3,
+	NCMD = 6,
+	DUPERR = 7,
+	FORKERR = 8,
+	PIPERR = 9,
+	SYNERR = 10,
+	MEM = 11,
+	IS_DIR = 12,
+	NOT_DIR = 13,
+    NODE = 14
+}               t_mini_error;
+
 typedef enum    s_type
 {
-    CMD,
+    CMD=1,
+    BI,
     PIPE,
     AND,
     OR
@@ -60,6 +78,7 @@ typedef struct  s_info
 
 typedef struct  s_px
 {
+    t_type  type;
     char    *path;
     char    **full_cmd;
     int     in_flag;
@@ -70,8 +89,9 @@ typedef struct  s_px
     t_info  *info;
 }               t_px;
 
-void    ft_check_var(char **str, char **env);
+int    ft_check_var(char **str, char **env);
 char	**ft_correc_special(char **str, char *spec);
+int 	ft_clean_quotes(char **str);
 
 char	*ft_correct_str(char *str);
 char	**ft_split_str(char const *s, char c);
@@ -80,7 +100,10 @@ void	ft_free_split(char **str);
 int	    ft_node_quant(char **str);
 t_px	*ft_parse(char **str, char **env);
 
+void	ft_handle_client(int sig);
+void	ft_2nd_handler(int sig);
 
+void	*ft_error(int err_type, char *param, int err);
 //iban.c
 char	*ft_getline(int fd);
 void	pipex(t_px *px);
@@ -92,5 +115,8 @@ void	terminal(char **env);
 
 //envutils.c
 char	**ft_env_cpy(char **env);
+
+#endif
+int	g_stat;
 
 #endif

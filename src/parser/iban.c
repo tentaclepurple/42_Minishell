@@ -105,13 +105,13 @@ void	ft_fd_pipes(t_px *px, int n)
 	{
 		//fprintf(stderr, "pipes first cmd\n");
 		if (dup2(px->info->fd[n][1], STDOUT_FILENO) < 0)
-			printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
+			ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
 	}
 	else if (n == px->info->cmd_amount - 1 && px->in_flag == 0) //last cmd
 	{
 		//fprintf(stderr, "pipes last cmd\n");
 		if (dup2(px->info->fd[n - 1][0], STDIN_FILENO) < 0)
-			printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
+			ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
 	}
 	else //middle cmd
 	{
@@ -119,13 +119,13 @@ void	ft_fd_pipes(t_px *px, int n)
 		if (px->out_flag == 0)
 		{
 			if (dup2(px->info->fd[n][1], STDOUT_FILENO) < 0)
-				printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
+				ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
 		}
 		//fprintf(stderr, "pipes mid cmd input red flag: %i\n", px->in_flag);
 		if (px->in_flag == 0)
 		{
 			if (dup2(px->info->fd[n - 1][0], STDIN_FILENO) < 0)
-				printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
+				ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
 		}
 	}
 	//fprintf(stderr, "he pasado por pipes\n");
@@ -146,7 +146,7 @@ void	ft_input_redirect(t_px *px)
 		//fprintf(stderr, "redir <\n");
 		fd_in = open(px->infile, O_RDONLY);
 		if (dup2(fd_in, STDIN_FILENO) < 0)
-			printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
+			ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
 		close(fd_in);
 	}
 	if (px->in_flag == 2)
@@ -155,7 +155,7 @@ void	ft_input_redirect(t_px *px)
 		write_here_doc_tmp(px);
 		fd_in = open(".tmp", O_RDONLY);
 		if (dup2(fd_in, STDIN_FILENO) < 0)
-			printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
+			ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
 		unlink(".tmp");
 		close(fd_in);
 	}
@@ -176,7 +176,7 @@ void	ft_output_redirect(t_px *px)
 		//printf("redir >\n");
 		fd_out = open(px->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (dup2(fd_out, STDOUT_FILENO) < 0)
-			printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
+			ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
 		close(fd_out);
 	}
 	if (px->out_flag == 2)
@@ -184,7 +184,7 @@ void	ft_output_redirect(t_px *px)
 		//printf("redir >>\n");
 		fd_out = open(px->outfile, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (dup2(fd_out, STDOUT_FILENO) < 0)
-			printf("error dup"); //ft_error_free_exit("dup error 1", NULL, px);
+			ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
 		close(fd_out);
 	}
 	//fprintf(stderr, "he pasado por redirect output\n");
@@ -195,7 +195,12 @@ void	ft_output_redirect(t_px *px)
 */
 void	ft_child(t_px *px, int n)
 {
+	struct sigaction	sa;
+
 	//fprintf(stderr, "estoy en childs\n");
+	sa.sa_handler = SIG_DFL;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 	if (px->info->cmd_amount > 1) 
 		ft_fd_pipes(px, n); 
 	if (px->in_flag > 0)
@@ -211,23 +216,32 @@ void	pipex(t_px *px)
 {
 	pid_t	pid;
 	int		i;
+	struct sigaction	sa;
 
+	sa.sa_handler = &ft_2nd_handler;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 	ft_alloc_fd(px);
 	if (!px->info->fd)
 		return ;
 	i = 0;
 	while (i < px->info->cmd_amount)
 	{
-
 		pid = fork();
+		if (pid < 0)
+		{
+			ft_error(FORKERR, NULL, 4);
+			return ;
+		}
 		if (pid == 0)
 			ft_child(&px[i], i);
 		ft_fd_close(px, i);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &g_stat, 0);
+		g_stat = WEXITSTATUS(g_stat);
 		i++;
 	}
-	//if (px->info->cmd_amount > 1)
-	ft_free_fd(px);
+	if (px->info->cmd_amount > 1)
+		ft_free_fd(px);
 }
 
 /* -----------------GET COMMAND WITH PATH--------------------------- */
@@ -278,7 +292,8 @@ char	*get_cmd_or_cmdpath(char **env, char *str)
 
 	env_path = NULL;
 	i = 0;
-	if (check_slash(str) > 0 && !access(str, F_OK)) // si hay '/' probar si es ruta + comando valido
+	//if (check_slash(str) > 0 && !access(str, F_OK)) // si hay '/' probar si es ruta + comando valido
+	if (check_slash(str) > 0)
 		return (ft_strdup(str)); //BE CAREFUL check if str comes allocated!!!!!!
 	else if (check_slash(str) == 0) 	// si no hay '/' comprobar si es un comando valido:
 	{		// buscar path y splitearlo
