@@ -197,10 +197,9 @@ void	ft_child(t_px *px, int n)
 {
 	struct sigaction	sa;
 
-	//fprintf(stderr, "estoy en childs\n");
 	sa.sa_handler = SIG_DFL;
 	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	//fprintf(stderr, "estoy en childs\n");
 	if (px->info->cmd_amount > 1) 
 		ft_fd_pipes(px, n); 
 	if (px->in_flag > 0)
@@ -208,6 +207,12 @@ void	ft_child(t_px *px, int n)
 	if (px->out_flag > 0)
 		ft_output_redirect(px); // open output file, dup - (>, >>)
 	ft_fd_close(px, px->info->cmd_amount - 1);
+	sa.sa_handler = &ft_2nd_handler;
+	sigaction(SIGQUIT, &sa, NULL);
+	if (px->type == BIc)
+	{
+		exit(1);
+	}
 	execve(px->path, px->full_cmd, NULL);
 }
 
@@ -220,24 +225,29 @@ void	pipex(t_px *px)
 
 	sa.sa_handler = &ft_2nd_handler;
 	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	//sigaction(SIGQUIT, &sa, NULL);
 	ft_alloc_fd(px);
 	if (!px->info->fd)
 		return ;
 	i = 0;
 	while (i < px->info->cmd_amount)
 	{
-		pid = fork();
-		if (pid < 0)
+		if (px[i].type != BIp)
 		{
-			ft_error(FORKERR, NULL, 4);
-			return ;
+			pid = fork();
+			if (pid < 0)
+			{
+				ft_error(FORKERR, NULL, 4);
+				return ;
+			}
+			if (pid == 0)
+				ft_child(&px[i], i);
+			ft_fd_close(px, i);
+			waitpid(pid, &g_stat, 0);
+			g_stat = WEXITSTATUS(g_stat);
 		}
-		if (pid == 0)
-			ft_child(&px[i], i);
-		ft_fd_close(px, i);
-		waitpid(pid, &g_stat, 0);
-		g_stat = WEXITSTATUS(g_stat);
+		else
+			ft_fd_close(px, i);
 		i++;
 	}
 	if (px->info->cmd_amount > 1)
@@ -292,8 +302,8 @@ char	*get_cmd_or_cmdpath(char **env, char *str)
 
 	env_path = NULL;
 	i = 0;
-	//if (check_slash(str) > 0 && !access(str, F_OK)) // si hay '/' probar si es ruta + comando valido
-	if (check_slash(str) > 0)
+	if (check_slash(str) > 0 && !access(str, F_OK)) // si hay '/' probar si es ruta + comando valido
+	//if (check_slash(str) > 0)
 		return (ft_strdup(str)); //BE CAREFUL check if str comes allocated!!!!!!
 	else if (check_slash(str) == 0) 	// si no hay '/' comprobar si es un comando valido:
 	{		// buscar path y splitearlo

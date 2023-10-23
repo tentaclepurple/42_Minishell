@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/20 09:56:56 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/23 14:13:09 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ typedef enum	e_mini_error
 typedef enum    s_type
 {
     CMD=1,
-    BI,
+    BIp,
+    BIc,
     PIPE,
     AND,
     OR

@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/10/20 10:32:42 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:37:20 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ void	ft_2nd_handler(int sig)
 		ft_printf("\n");
 	}
 	else if (sig == SIGQUIT)
-		ft_printf("Quit: %i\n", errno);
+	{
+		perror("Quit");
+	}
+	//	ft_printf("Quit: %i\n", errno);
 }
 
 /* 

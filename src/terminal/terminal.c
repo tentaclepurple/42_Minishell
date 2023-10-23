@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/20 08:39:26 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/23 14:17:50 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int	ft_lines(char *str, char **env)
 	ft_free_split(res);
 	if (!nodes)
 		return (1);
-	pipex(nodes);
+	/* if (nodes->info->cmd_amount == 1 || nodes->type == BIp)
+		execve_builtins_parents();
+	else */
+		pipex(nodes);
 	free(str);
 	return (0);
 }

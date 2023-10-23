@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/20 08:46:41 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:15:46 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ char	**ft_split_str(char const *s, char c)
 	int		err;
 	int		i;
 
+	if (!ft_nbr_wrd(s, c))
+		return (NULL);
 	split = malloc(sizeof(char *) * (ft_nbr_wrd(s, c) + 1));
 	if (split == NULL)
 		return (ft_error(MEM, NULL, 2));
