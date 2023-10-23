@@ -195,7 +195,7 @@ void	ft_output_redirect(t_px *px)
 */
 void	ft_child(t_px *px, int n)
 {
-	struct sigaction	sa;
+	struct sigaction	sa = {0};
 
 	sa.sa_handler = SIG_DFL;
 	sigaction(SIGINT, &sa, NULL);
@@ -221,7 +221,7 @@ void	pipex(t_px *px)
 {
 	pid_t	pid;
 	int		i;
-	struct sigaction	sa;
+	struct sigaction	sa = {0};
 
 	sa.sa_handler = &ft_2nd_handler;
 	sigaction(SIGINT, &sa, NULL);

@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/23 14:17:50 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:32:58 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ int	ft_lines(char *str, char **env)
 	if (!str)
 		return (1);
 	res = ft_split_str(str, ' ');
+	free (str);
 	if (!res)
-	{
-		free (str);
 		return (2);
-	}
 	if (ft_check_var(res, env))
 		return(ft_free_split(res), 3);
 	res = ft_correc_special(res, "<>|&");
@@ -42,8 +40,8 @@ int	ft_lines(char *str, char **env)
 	/* if (nodes->info->cmd_amount == 1 || nodes->type == BIp)
 		execve_builtins_parents();
 	else */
-		pipex(nodes);
-	free(str);
+	pipex(nodes);
+	ft_free_nodes(nodes);
 	return (0);
 }
 /* --------TERMINAL---------- */
@@ -92,6 +90,7 @@ char	*get_prompt(char **env)
 			user = ft_strjoin(BLUEB, env[i] + 5);
 			if (user)
 				found++;
+			break ;
 		}
 		i++;
 	}
@@ -108,12 +107,11 @@ void	terminal(char **env)
 {
 	char	*input;
 	char	*prompt;
-	struct sigaction	sa;
+	struct sigaction	sa = {0};
 
 	prompt = get_prompt(env);
 	while (1)
 	{
-
 		sa.sa_handler = &ft_handle_client;
 		sigaction(SIGINT, &sa, NULL);
 		sa.sa_handler = SIG_IGN;

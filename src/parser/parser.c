@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/23 14:15:24 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:23:38 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 		else
 			node->path = ft_strdup(*str);
 		num_arg = ft_num_args(str);
-		node->full_cmd = malloc(sizeof(char *) * num_arg + 1);
+		node->full_cmd = malloc(sizeof(char *) * (num_arg + 1));
 		if (node->full_cmd)
 			node->full_cmd[i++] = node->path;
 		str++;
