@@ -208,7 +208,10 @@ void	ft_child(t_px *px, int n)
 	if (px->out_flag > 0)
 		ft_output_redirect(px); // open output file, dup - (>, >>)
 	ft_fd_close(px, px->info->cmd_amount - 1);
-	execve(px->path, px->full_cmd, NULL);
+	if (px->type == BI)
+		ft_execbi(px);
+	else
+		execve(px->path, px->full_cmd, NULL);
 }
 
 
@@ -221,23 +224,27 @@ void	pipex(t_px *px)
 	sa.sa_handler = &ft_2nd_handler;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
-	ft_alloc_fd(px);
+	
 	if (!px->info->fd)
 		return ;
 	i = 0;
+	printf("aqui!!\n");
 	while (i < px->info->cmd_amount)
 	{
-		pid = fork();
-		if (pid < 0)
+		if (px->type != BI)
 		{
-			ft_error(FORKERR, NULL, 4);
-			return ;
+			pid = fork();
+			if (pid < 0)
+			{
+				ft_error(FORKERR, NULL, 4);
+				return ;
+			}
+			if (pid == 0)
+				ft_child(&px[i], i);
+			ft_fd_close(px, i);
+			waitpid(pid, &g_stat, 0);
+			g_stat = WEXITSTATUS(g_stat);
 		}
-		if (pid == 0)
-			ft_child(&px[i], i);
-		ft_fd_close(px, i);
-		waitpid(pid, &g_stat, 0);
-		g_stat = WEXITSTATUS(g_stat);
 		i++;
 	}
 	if (px->info->cmd_amount > 1)

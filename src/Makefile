@@ -1,7 +1,20 @@
 NAME = minichell
 LIBNAME = libft.a
-SRC = ./splitstr/split.c ./splitstr/clean_quotes.c ./splitstr/check_var.c  ./splitstr/correc_special.c ./parser/parser.c ./parser/iban.c ./terminal/terminal.c main.c \
-		./error/error.c
+SRC = 	./splitstr/split.c \
+		./splitstr/clean_quotes.c \
+		./splitstr/check_var.c  \
+		./splitstr/correc_special.c \
+		./parser/parser.c \
+		./parser/iban.c \
+		./terminal/terminal.c main.c \
+		./error/error.c \
+		./envutils/envcp.c \
+		./builtins/bt_cd.c \
+		./builtins/bt_env_pwd_echo.c \
+		./builtins/bt_export.c \
+		./builtins/bt_unset.c \
+		./builtins/btmanager.c
+
 OBJ = $(SRC:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
