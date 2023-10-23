@@ -255,7 +255,7 @@ char	**get_path(char **env)
 	int	i;
 
 	i = 0;
-	while (env[i])  //
+	while (env[i])  
 	{
 		if (ft_strnstr(env[i], "PATH=", 5))
 			return(ft_split(env[i] + 5, ':'));

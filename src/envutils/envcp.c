@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:08:01 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/19 19:52:09 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:45:07 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**del_var_aux(int found, char **env, char **envcpy)
 		else
 			i++;
 	}
-	ft_free_split(env);
+	//ft_free_split(env);
 	return (envcpy);
 }
 /* 	deletes the var and returns a copy of env
@@ -104,8 +104,6 @@ char	**del_var(char **env, char *var)
 }
 
 
-
-
 //-----------------------UNSET-----------------------------
 /* 	Iterates throug the cmd args and deletes the vars if founded. 
 	Returns a copy of env with vars deleted
@@ -130,7 +128,6 @@ char	**ft_unset(char **env, char **cmdargs)
 
 
 //-----------------------EXPORT----------------------------
-
 
 int	find_equal(char *var, int *found)
 {
@@ -174,17 +171,27 @@ void	export_declare(char **env)
 		}
 	}
 }
+char	**ft_export_aux_del(char **env, char **cmdargs, int i, int found)
+{
+	char	*var_only;
 
-void	ft_export_aux(char **env, char **cmdargs)
+	var_only = ft_substr(cmdargs[i], 0, found);
+	env = del_var(env, var_only);
+	free(var_only);
+	return (env);
+}
+
+
+char	**ft_export_aux(char **env, char **cmdargs)
 {
 	int		i;
 	int		j;
 	int		found;
-	char	*var_only;
+	//char	*var_only;
 
-	i = 1;
+	i = 0;
 	found = 0;
-	while (cmdargs[i])
+	while (cmdargs[++i])
 	{
 		if (find_equal(cmdargs[i], &found) == 0)
 		{
@@ -192,33 +199,32 @@ void	ft_export_aux(char **env, char **cmdargs)
 			continue ;
 		}
 		j = 0;
-		while (env[j])
+		while (env[++j])
 		{
 			if (ft_strncmp(cmdargs[i], env[j], found + 1) == 0)
 			{
-				var_only = ft_substr(cmdargs[i], 0, found);
+				env = ft_export_aux_del(env, cmdargs, i, found);
+				/*var_only = ft_substr(cmdargs[i], 0, found);
 				env = del_var(env, var_only);
-				free(var_only);
+				free(var_only);*/
 				j--;
 			}
-			j++;
 		}
-		i++;
 	}
+	return (env);
 }
-
 
 char	**ft_export(char **env, char **cmdargs)
 {
 	int		i;
-	int		j;
-	int		found;
-	char	*var_only;
+	//int		j;
+	//int		found;
+	//char	*var_only;
 
 	if (!cmdargs[1])
 		return (export_declare(env), env);
-	//ft_export_aux(env, cmdargs);
-	i = 1;
+	env = ft_export_aux(env, cmdargs);
+	/*i = 1;
 	found = 0;
 	while (cmdargs[i])
 	{
@@ -240,7 +246,7 @@ char	**ft_export(char **env, char **cmdargs)
 			j++;
 		}
 		i++;
-	}
+	}*/
 	i = 1;
 	while (cmdargs[i])
 	{
@@ -252,15 +258,116 @@ char	**ft_export(char **env, char **cmdargs)
 }
 //----------------------------------------------------------
 
+//---------------------------PWD---------------------------
+void	ft_pwd(void)
+{
+ 	char *cwd;
 
+    cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+		perror("PWD ERROR");
+	ft_putendl_fd(cwd, 1);
+	free(cwd);
+}
 
+//--------------------------------------------------------
 
 //---------------------------CD----------------------------
+/* 
+	returns 1 if found
+*/
+int	found_in_env(char *var, char **env, char **path)
+{
+	int	i;
+	int	foundeq;
 
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(var, env[i], ft_strlen(var)) == 0)
+		{
+			find_equal(env[i], &foundeq);
+			*path = ft_substr(env[i], foundeq + 1, ft_strlen(env[i]) - foundeq );
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+char	**ft_cd_update_env(char **env, char *path)
+{
+	char *var;
+	char *pwd;
 
+	pwd = getcwd(NULL, 0);
+	env = del_var(env, "OLDPWD");
+	var = ft_strjoin("OLDPWD=", pwd);
+	env = add_var(env, var);
+	free(var);
+	free(pwd);
+	chdir(path);
+	env = del_var(env, "PWD");
+	pwd = getcwd(NULL, 0);
+	var = ft_strjoin("PWD=", pwd);
+	env = add_var(env, var);
+	free(var);
+	free(pwd);
+	int i = 0;
+	while (env[i])
+	{
+		printf("%s :: %i\n", env[i], i);
+		i++;	
+	}
+	printf("*****************************************************************************\n");
+	return (env);
+}
+
+void	ft_cd(char **env, char **cmdargs)
+{
+	char	*path;
+
+	if (cmdargs[1] == NULL || ft_strcmp(cmdargs[1], "--") == 0)
+	{
+		if (found_in_env("HOME=", env, &path) == 1)
+		{
+			ft_cd_update_env(env, path);
+			free(path);
+		}
+		else
+			perror("bash: cd: HOME not set");
+	}
+	else if (ft_strcmp(cmdargs[1], "~") == 0)
+	{
+		ft_cd_update_env(env, "/Users/imontero"); // OJO!!!!!!! Este path hay que substituirlo por el home guardado
+	}
+	else if (ft_strcmp(cmdargs[1], "-") == 0)
+	{
+		if (found_in_env("OLDPWD=", env, &path) == 1)
+		{
+			ft_cd_update_env(env, path);
+			ft_pwd();
+			free(path);
+		}
+		else
+			perror("bash: cd: OLDPWD not set");
+	}
+	else
+		if (access(cmdargs[1], F_OK) == 0)
+        	ft_cd_update_env(env, cmdargs[1]);
+		else
+		    perror("bash: ERRORCIKO");
+	    	
+	
+}
+
+		
+	/*}
+	if (cmdargs[1] == "~")
+		chdir(HOMEguardado);
+	else
+		chdir(cmdargs[1]);*/
 
 //----------------------------------------------------------
-
 
 
 
@@ -270,7 +377,44 @@ int	main(int c, char **v, char **env)
 	(void)c;
 	(void)v;
 	char	**envcpy = ft_env_cpy(env);
-	char	*cmdargs[6] = {"export", "USER=manolito", "MACAGON=SANDIOS"};
+	char	*cmdargs[6] = {"cd", ".."};
+	
+	int i = 0;
+	while (envcpy[i])
+	{
+		printf("%s :: %i\n", envcpy[i], i);
+		i++;	
+	}
+	printf("*****************************************************************************\n");
+	
+	printf("\n..........................................\n\n");
+	printf("BEFORE: %s\n", (getcwd(NULL, 0)));
+	printf("\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\n");
+	ft_cd(envcpy, cmdargs);
+	
+	
+	printf("\n..........................................\n\n");
+	printf("AFTER: %s\n", (getcwd(NULL, 0)));
+	
+	
+	cmdargs[1] = "-";
+	
+	ft_cd(envcpy, cmdargs);
+	
+	printf("\n..........................................\n\n");
+	printf("AFTER LAST: %s\n", (getcwd(NULL, 0)));
+
+
+
+	
+	return (0);
+}
+/*int	main(int c, char **v, char **env)
+{
+	(void)c;
+	(void)v;
+	char	**envcpy = ft_env_cpy(env);
+	char	*cmdargs[6] = {"export"};
 
 	printf("..........................................\n");
  
@@ -291,4 +435,4 @@ int	main(int c, char **v, char **env)
 	printf("*****************************************************************************\n");
 	ft_free_split(envcpy);
 	return (0);
-}
+}*/
