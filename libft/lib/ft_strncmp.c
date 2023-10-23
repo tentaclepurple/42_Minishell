@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 18:13:56 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/08/03 11:41:38 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:29:14 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../libft.h"
 
+/* 
+	returns 0 if they're equal
+*/
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	unsigned int	i;

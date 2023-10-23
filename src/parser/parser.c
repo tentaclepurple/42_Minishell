@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
 /*   Updated: 2023/10/23 14:15:24 by jzubizar         ###   ########.fr       */
@@ -273,6 +273,7 @@ t_px	*ft_parse(char **str, char **env)
 		i++;
 	}
 	if (ft_check_nodes(nodes))
+	{
 		return (ft_free_nodes(nodes), NULL);
 	//printf("Here\n");
 	/* int j=0;
