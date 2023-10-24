@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/24 11:49:43 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:58:32 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	**ft_split_str(char const *s, char c);
 void	ft_free_split(char **str);
 
 int	    ft_node_quant(char **str);
-//t_px	*ft_parse(char **str, char **env);
+void	ft_free_nodes(t_px *nodes);
 t_px	*ft_parse(char **str, t_info *info);
 
 void	ft_handle_client(int sig);

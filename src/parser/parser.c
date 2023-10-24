@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/24 12:46:17 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:53:55 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**ft_inout_file(t_px *node, char **str)
 		node->in_flag = 1;
 		str++;
 		if (*str && !ft_strchr("<|>", **str))
-			node->infile = ft_strdup(*(str++));
+			node->infile = ft_strdup(*(str));
 		if (*str)
 			str++;
 	}
@@ -103,7 +103,7 @@ char	**ft_inout_file(t_px *node, char **str)
 			node->out_flag = 2;
 		str++;
 		if (*str && !ft_strchr("<|>", **str))
-			node->outfile = ft_strdup(*(str++));
+			node->outfile = ft_strdup(*(str));
 		if (*str)
 			str++;
 	}
@@ -112,7 +112,7 @@ char	**ft_inout_file(t_px *node, char **str)
 		node->in_flag = 2;
 		str++;
 		if (*str && !ft_strchr("<|>", **str))
-			node->limit = ft_strdup(*(str++));
+			node->limit = ft_strdup(*(str));
 		if (*str)
 			str++;
 	}

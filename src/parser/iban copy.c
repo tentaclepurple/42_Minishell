@@ -98,34 +98,38 @@ char	*ft_getline(int fd)
 		- middle cmd: dup2 stdin & stdout (if there is no >, >> or <, <<)
 		- last cmd: dup2 stdin (if there is no <, <<)
 */
-void	ft_fd_pipes(t_px *px, int n)
+void	ft_fd_pipes(t_px *px, int *fd1, int *fd2, int n)
 {
 	
 	if (n == 0 && px->out_flag == 0) //first cmd
 	{
 		//fprintf(stderr, "pipes first cmd\n");
-		if (dup2(px->info->fd[n][1], STDOUT_FILENO) < 0)
-			ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
+		if (dup2(fd2[1], STDOUT_FILENO) < 0)
+			ft_error(DUPERR, NULL, 5);
+		close(fd2[1]); //ft_error_free_exit("dup error 1", NULL, px);
 	}
 	else if (n == px->info->cmd_amount - 1 && px->in_flag == 0) //last cmd
 	{
 		//fprintf(stderr, "pipes last cmd\n");
-		if (dup2(px->info->fd[n - 1][0], STDIN_FILENO) < 0)
+		if (dup2(fd1[0], STDIN_FILENO) < 0)
 			ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
+		close(fd1[0]);
 	}
-	else if (n > 0 && n < px->info->cmd_amount - 1)//middle cmd
+	else if (n > 0 && n < px->info->cmd_amount - 1) //middle cmd
 	{
 		//fprintf(stderr, "pipes mid cmd output red flag: %i\n", px->out_flag);
 		if (px->out_flag == 0)
 		{
-			if (dup2(px->info->fd[n][1], STDOUT_FILENO) < 0)
+			if (dup2(fd2[1], STDOUT_FILENO) < 0)
 				ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
+			close(fd2[1]);
 		}
 		//fprintf(stderr, "pipes mid cmd input red flag: %i\n", px->in_flag);
 		if (px->in_flag == 0)
 		{
-			if (dup2(px->info->fd[n - 1][0], STDIN_FILENO) < 0)
+			if (dup2(fd1[0], STDIN_FILENO) < 0)
 				ft_error(DUPERR, NULL, 5); //ft_error_free_exit("dup error 1", NULL, px);
+			close(fd1[0]);
 		}
 	}
 	//fprintf(stderr, "he pasado por pipes\n");
@@ -193,11 +197,10 @@ void	ft_output_redirect(t_px *px)
 /* 
 	n = command index
 */
-void	ft_child(t_px *px, int n)
+void	ft_child(t_px *px, int n, int *fd1, int *fd2)
 {
 	struct sigaction	sa = {0};
 
-	
 	sa.sa_handler = SIG_DFL;
 	sigaction(SIGINT, &sa, NULL);
 	//fprintf(stderr, "estoy en childs\n");
@@ -212,8 +215,7 @@ void	ft_child(t_px *px, int n)
 	sigaction(SIGQUIT, &sa, NULL);
 	if (px->type == BIc)
 	{
-		ft_execbi_child(px);
-		exit(1);			//provisional, liberar y cerrar mierdas
+		exit(1);
 	}
 	execve(px->path, px->full_cmd, NULL);
 }
@@ -223,20 +225,24 @@ void	pipex(t_px *px)
 {
 	pid_t	pid;
 	int		i;
+	int		fd[2][2];
 	struct sigaction	sa = {0};
 
-	
 	sa.sa_handler = &ft_2nd_handler;
 	sigaction(SIGINT, &sa, NULL);
 	//sigaction(SIGQUIT, &sa, NULL);
-	ft_alloc_fd(px);
-	if (!px->info->fd)
-		return ;
+	//ft_alloc_fd(px);
+	if (pipe(fd[0]) == -1)
+		return (1);
+	/* if (!px->info->fd)
+		return ; */
 	i = 0;
 	while (i < px->info->cmd_amount)
 	{
 		if (px[i].type != BIp)
 		{
+			if (pipe(fd[1]) == -1)
+				return (1);
 			pid = fork();
 			if (pid < 0)
 			{
@@ -282,7 +288,7 @@ char	**get_path(char **env)
 	int	i;
 
 	i = 0;
-	while (env[i])  
+	while (env[i])  //
 	{
 		if (ft_strnstr(env[i], "PATH=", 5))
 			return(ft_split(env[i] + 5, ':'));

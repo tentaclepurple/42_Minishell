@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/24 12:06:38 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:56:50 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ int	ft_lines(char *str, t_info *info)
 	if (!str)
 		return (1);
 	res = ft_split_str(str, ' ');
+	free (str);
 	if (!res)
-	{
-		free (str);
 		return (2);
-	}
 	if (ft_check_var(res, info->envcp))
 		return(ft_free_split(res), 3);
 	res = ft_correc_special(res, "<>|&");
@@ -50,7 +48,7 @@ int	ft_lines(char *str, t_info *info)
 		n++;
 	}*/
 	pipex(nodes);
-	free(str);
+	ft_free_nodes(nodes);
 	return (0);
 }
 /* --------TERMINAL---------- */
@@ -99,6 +97,7 @@ char	*get_prompt(char **env)
 			user = ft_strjoin(BLUEB, env[i] + 5);
 			if (user)
 				found++;
+			break ;
 		}
 		i++;
 	}
@@ -117,7 +116,7 @@ void	terminal(t_info *info)
 	//int		cont;
 	char	*input;
 	char	*prompt;
-	struct sigaction	sa;
+	struct sigaction	sa = {0};
 
 	//cont = 0;
 	prompt = get_prompt(info->envcp);
