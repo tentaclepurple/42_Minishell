@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/23 16:21:03 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:58:32 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct  s_info
     int     cmd_amount;
     int     **fd;
     char    **envcp;
+    char    *homepath;
 }               t_info;
 
 typedef struct  s_px
@@ -100,7 +101,7 @@ void	ft_free_split(char **str);
 
 int	    ft_node_quant(char **str);
 void	ft_free_nodes(t_px *nodes);
-t_px	*ft_parse(char **str, char **env);
+t_px	*ft_parse(char **str, t_info *info);
 
 void	ft_handle_client(int sig);
 void	ft_2nd_handler(int sig);
@@ -110,9 +111,43 @@ void	*ft_error(int err_type, char *param, int err);
 char	*ft_getline(int fd);
 void	pipex(t_px *px);
 char	*get_cmd_or_cmdpath(char **env, char *str);
+
 //terminal.c
 int	    check_no_env(char **env);
-void	terminal(char **env);
+//void	terminal(char **env);
+void	terminal(t_info *info);
+
+//envutils
+char	**ft_env_cpy(char **env);
+char	**add_var(char **env, char *var);
+char	**del_var_aux(int found, char **env, char **envcpy);
+char	**del_var(char **env, char *var);
+int 	found_in_env(char *var, char **env, char **path);
+
+//bt_cd.c
+
+//char	**ft_cd(char **env, char **cmdargs);
+char	**ft_cd(t_px *px);
+char	**ft_cd_update_env(char **env, char *path);
+
+//bt_env_pwd_echo.c
+void	ft_pwd(void);
+void	ft_echo(t_px *px);
+void	ft_env(char **env);
+
+//unset.c
+char    **ft_unset(t_px *px);
+
+//export.c
+int 	find_equal(char *var, int *found);
+void	export_declare(char **env);
+char	**ft_export_aux_del(char **env, char **cmdargs, int i, int found);
+char	**ft_export_aux(char **env, char **cmdargs);
+char	**ft_export(char **env, char **cmdargs);
+
+//ft_manag.c
+void	ft_execbi_parent(t_px *px);
+void	ft_execbi_child(t_px *px);
 
 int	g_stat;
 
