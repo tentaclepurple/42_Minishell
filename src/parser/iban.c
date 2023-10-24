@@ -197,6 +197,7 @@ void	ft_child(t_px *px, int n)
 {
 	struct sigaction	sa;
 
+	
 	sa.sa_handler = SIG_DFL;
 	sigaction(SIGINT, &sa, NULL);
 	//fprintf(stderr, "estoy en childs\n");
@@ -211,7 +212,8 @@ void	ft_child(t_px *px, int n)
 	sigaction(SIGQUIT, &sa, NULL);
 	if (px->type == BIc)
 	{
-		exit(1);
+		ft_execbi_child(px);
+		exit(1);			//provisional, liberar y cerrar mierdas
 	}
 	execve(px->path, px->full_cmd, NULL);
 }
@@ -223,15 +225,14 @@ void	pipex(t_px *px)
 	int		i;
 	struct sigaction	sa;
 
+	
 	sa.sa_handler = &ft_2nd_handler;
 	sigaction(SIGINT, &sa, NULL);
 	//sigaction(SIGQUIT, &sa, NULL);
 	ft_alloc_fd(px);
-
 	if (!px->info->fd)
 		return ;
 	i = 0;
-	printf("aqui!!\n");
 	while (i < px->info->cmd_amount)
 	{
 		if (px[i].type != BIp)

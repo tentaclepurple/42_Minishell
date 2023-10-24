@@ -6,15 +6,15 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/23 09:00:16 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:06:38 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../parse.h"
 
 /* ------------- */
-
-int	ft_lines(char *str, char **env)
+//int	ft_lines(char *str, char **env)
+int	ft_lines(char *str, t_info *info)
 {
 	char	**res;
 	t_px	*nodes;
@@ -28,21 +28,28 @@ int	ft_lines(char *str, char **env)
 		free (str);
 		return (2);
 	}
-	if (ft_check_var(res, env))
+	if (ft_check_var(res, info->envcp))
 		return(ft_free_split(res), 3);
 	res = ft_correc_special(res, "<>|&");
 	if (!res)
 		return (3);
 	if (!ft_clean_quotes(res))
 		return (ft_free_split(res), 1);
-	nodes = ft_parse(res, env);
+	nodes = ft_parse(res, info);
 	ft_free_split(res);
 	if (!nodes)
 		return (1);
-	/* if (nodes->info->cmd_amount == 1 || nodes->type == BIp)
-		execve_builtins_parents();
-	else */
-		pipex(nodes);
+	if (nodes->info->cmd_amount == 1 && nodes->type == BIp)
+		ft_execbi_parent(nodes);
+	//else
+/*	printf("\n***************************\n\n");
+	int n = 0;
+	while (nodes->info->envcp[n])
+	{
+		printf("%s\n", nodes->info->envcp[n]);
+		n++;
+	}*/
+	pipex(nodes);
 	free(str);
 	return (0);
 }
@@ -104,16 +111,18 @@ char	*get_prompt(char **env)
 	return (free(user), prompt);
 }
 
-void	terminal(char **env)
+//void	terminal(char **env)
+void	terminal(t_info *info)
 {
+	//int		cont;
 	char	*input;
 	char	*prompt;
 	struct sigaction	sa;
 
-	prompt = get_prompt(env);
+	//cont = 0;
+	prompt = get_prompt(info->envcp);
 	while (1)
 	{
-
 		sa.sa_handler = &ft_handle_client;
 		sigaction(SIGINT, &sa, NULL);
 		sa.sa_handler = SIG_IGN;
@@ -138,7 +147,7 @@ void	terminal(char **env)
 		if (!ft_strcmp("clear", input))
 			printf("\033[H\033[2J");
 		else if (ft_strlen(input))
-			ft_lines(input, env);
+			ft_lines(input, info);
 		free (input);
 	}
 	free(prompt);

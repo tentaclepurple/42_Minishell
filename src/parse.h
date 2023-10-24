@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/23 13:01:46 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 11:49:43 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct  s_info
     int     cmd_amount;
     int     **fd;
     char    **envcp;
+    char    *homepath;
 }               t_info;
 
 typedef struct  s_px
@@ -99,7 +100,8 @@ char	**ft_split_str(char const *s, char c);
 void	ft_free_split(char **str);
 
 int	    ft_node_quant(char **str);
-t_px	*ft_parse(char **str, char **env);
+//t_px	*ft_parse(char **str, char **env);
+t_px	*ft_parse(char **str, t_info *info);
 
 void	ft_handle_client(int sig);
 void	ft_2nd_handler(int sig);
@@ -112,7 +114,8 @@ char	*get_cmd_or_cmdpath(char **env, char *str);
 
 //terminal.c
 int	    check_no_env(char **env);
-void	terminal(char **env);
+//void	terminal(char **env);
+void	terminal(t_info *info);
 
 //envutils
 char	**ft_env_cpy(char **env);
@@ -122,7 +125,9 @@ char	**del_var(char **env, char *var);
 int 	found_in_env(char *var, char **env, char **path);
 
 //bt_cd.c
-void	ft_cd(char **env, char **cmdargs);
+
+//char	**ft_cd(char **env, char **cmdargs);
+char	**ft_cd(t_px *px);
 char	**ft_cd_update_env(char **env, char *path);
 
 //bt_env_pwd_echo.c
@@ -141,7 +146,8 @@ char	**ft_export_aux(char **env, char **cmdargs);
 char	**ft_export(char **env, char **cmdargs);
 
 //ft_manag.c
-void	ft_execbi(t_px *px);
+void	ft_execbi_parent(t_px *px);
+void	ft_execbi_child(t_px *px);
 
 int	g_stat;
 

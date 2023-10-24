@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/23 14:15:24 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:46:17 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 		else
 			node->path = ft_strdup(*str);
 		num_arg = ft_num_args(str);
-		node->full_cmd = malloc(sizeof(char *) * num_arg + 1);
+		node->full_cmd = malloc(sizeof(char *) * (num_arg + 1));
 		if (node->full_cmd)
 			node->full_cmd[i++] = node->path;
 		str++;
@@ -251,46 +251,48 @@ void	ft_free_nodes(t_px *nodes)
 //Returns the str info into an array of t_px
 //Mallocs space for array of t_px and for the general info
 //It does not free the str
-t_px	*ft_parse(char **str, char **env)
+//t_px	*ft_parse(char **str, char **env)
+t_px	*ft_parse(char **str, t_info *info)
 {
 	t_px	*nodes;
-	t_info	*info;
+	//t_info	*info;
 	int		i;
+	/*static int	cont;
 
+	if (!cont)
+		cont = 0;*/
 	i = 0;
-	info = malloc(sizeof(t_info));
+	/*info = malloc(sizeof(t_info));
 	if (!info)
-		return (ft_error(MEM, NULL, 2));
+		return (ft_error(MEM, NULL, 2));*/
 	info->cmd_amount = ft_node_quant(str);
 	info->fd = NULL;
-	info->envcp = env;
+	//info->envcp = env;
+	/*printf("cont: %i\n", cont);
+	if (cont == 0)
+		info->envcp = env;
+	cont += 1;*/
+
+	/*printf("\n***************************\n\n");
+	int n = 0;
+	while (info->envcp[n])
+	{
+		printf("%s\n", info->envcp[n]);
+		n++;
+	}*/
 	nodes = ft_init_nodes(info);
 	if (!nodes)
 		return (free(info), NULL);
 	while (i < info->cmd_amount)
 	{
-		str = ft_parse_loop(&nodes[i], str, env);
+		str = ft_parse_loop(&nodes[i], str, info->envcp);
 		i++;
 	}
 	if (ft_check_nodes(nodes))
 	{
 		return (ft_free_nodes(nodes), NULL);
-	//printf("Here\n");
-	/* int j=0;
-	while (j < info->cmd_amount)
-	{
-		i = 0;
-		printf("NODO %i\n", j + 1);
-		printf("PATH: %s\nOutput: %i\nInput: %i\nTipo: %i\n", nodes[j].path, nodes[j].out_flag, nodes[j].in_flag, nodes[j].type);
-		printf("Infile: %s\nOutfile: %s\nLimit: %s\n", nodes[j].infile, nodes[j].outfile, nodes[j].limit);
-		printf("ARGS: ");
-		while (nodes[j].full_cmd[i])
-		{
-			printf("%s ", nodes[j].full_cmd[i]);
-			i++;
-		}
-		printf("\n");
-		j++;
-	} */
+	}
+
 	return (nodes);
 }
+

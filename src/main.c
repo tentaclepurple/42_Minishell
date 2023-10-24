@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/10/23 09:05:52 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 11:30:20 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,21 @@ void	ft_2nd_handler(int sig)
 int	main(int argc, char **argv, char **env)
 {
 	(void)argv;
+	t_info	*info;
 	
 	g_stat = 0;
 	if (!check_no_env(env))
 		return (printf("Invalid env\n"), -1);
 	if (argc != 1)
 		return(printf("Invalid arguments\n"), -2);
-	terminal(env);
+	info = malloc(sizeof(t_info));
+	if (!info)
+		return (ft_error(MEM, NULL, 2), 2);
+	info->envcp = ft_env_cpy(env);
+	info->homepath = getenv("HOME");
+	if (!info->homepath)
+		return(printf("Invalid Home\n"), -1);
+	terminal(info);
 	//printf("status = %i\n", g_stat);
 	return (0);
 }

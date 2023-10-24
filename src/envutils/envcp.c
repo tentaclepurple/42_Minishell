@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:08:01 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/23 12:55:45 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 11:25:03 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ char	**add_var(char **env, char *var)
 	i = 0;
 	while (i < len)
 	{
-		envcp[i] = env[i];
+		envcp[i] = ft_strdup(env[i]);
 		i++;
 	}
 	envcp[i] = ft_strdup(var);
-	free (env);
+	ft_free_split (env);
 	return (envcp);
 }
 
@@ -100,6 +100,7 @@ char	**del_var(char **env, char *var)
 	envcpy = malloc(sizeof(char *) * (len));
 	envcpy[len - 1] = NULL;
 	del_var_aux(found, env, envcpy);
+	ft_free_split(env);
 /*	int n = 0;
 	while (envcpy[n])
 	{
