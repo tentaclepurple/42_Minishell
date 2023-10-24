@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/10/24 11:30:20 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:09:32 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(int argc, char **argv, char **env)
 	if (!info)
 		return (ft_error(MEM, NULL, 2), 2);
 	info->envcp = ft_env_cpy(env);
+	info->envcp = del_var(info->envcp, "OLDPWD");
 	info->homepath = getenv("HOME");
 	if (!info->homepath)
 		return(printf("Invalid Home\n"), -1);
