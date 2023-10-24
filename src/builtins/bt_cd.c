@@ -3,22 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   bt_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:32:00 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/24 12:20:35 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:17:28 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parse.h"
 
-//char	**ft_cd(char **env, char **cmdargs)
+int	ft_is_dir(const char *name)
+{
+	DIR	*dir;
+
+	dir = opendir(name);
+	if (dir)
+	{
+		closedir(dir);
+		return (0);
+	}
+	if (errno == ENOTDIR)
+		return (1);
+	return (-1);
+}
+
 char	**ft_cd(t_px *px)
 {
 	char	*path;
 	char	**envcpy;
 
-	//printf("%s\n", px->info->homepath);
 	envcpy = NULL;
 	if (px->full_cmd[1] == NULL || ft_strcmp(px->full_cmd[1], "--") == 0)
 	{
@@ -28,10 +41,10 @@ char	**ft_cd(t_px *px)
 			free(path);
 		}
 		else
-			perror("bash: cd: HOME not set"); //revisar error
+			ft_bt_error(HOMSET, "cd:", 1);
 	}
 	else if (ft_strcmp(px->full_cmd[1], "~") == 0)
-		envcpy = ft_cd_update_env(px->info->envcp, px->info->homepath); // OJO!!!!!!! Este path hay que substituirlo por el home guardado
+		envcpy = ft_cd_update_env(px->info->envcp, px->info->homepath);
 	else if (ft_strcmp(px->full_cmd[1], "-") == 0)
 	{
 		if (found_in_env("OLDPWD=", px->info->envcp, &path) == 1)
@@ -41,22 +54,24 @@ char	**ft_cd(t_px *px)
 			free(path);
 		}
 		else
-			perror("bash: cd: OLDPWD not set"); //revisar error
+			ft_bt_error(OPWDSET, "cd:", 1);
 	}
 	else
 	{
-		if (access(px->full_cmd[1], F_OK) == 0)
-        	envcpy = ft_cd_update_env(px->info->envcp, px->full_cmd[1]);
+		if (access(px->full_cmd[1], F_OK) == 0 && !ft_is_dir(px->full_cmd[1]))
+			envcpy = ft_cd_update_env(px->info->envcp, px->full_cmd[1]);
+		else if (ft_is_dir(px->full_cmd[1]) == 1)
+			ft_error(NOT_DIR, px->full_cmd[1], 1);
 		else
-			ft_error(NDIR, px->full_cmd[1], 30);
+			ft_error(NDIR, px->full_cmd[1], 1);
 	}
 	return (envcpy);
 }
 
 char	**ft_cd_update_env(char **env, char *path)
 {
-	char	 *var;
-	char	 *pwd;
+	char	*var;
+	char	*pwd;
 	char	**envcpy;
 
 	pwd = getcwd(NULL, 0);
@@ -74,4 +89,3 @@ char	**ft_cd_update_env(char **env, char *path)
 	free(pwd);
 	return (envcpy);
 }
-

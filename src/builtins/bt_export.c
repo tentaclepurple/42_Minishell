@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:08:01 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/23 10:46:19 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:13:56 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,36 +96,10 @@ char	**ft_export_aux(char **env, char **cmdargs)
 char	**ft_export(char **env, char **cmdargs)
 {
 	int		i;
-	//int		j;
-	//int		found;
-	//char	*var_only;
 
 	if (!cmdargs[1])
 		return (export_declare(env), env);
 	env = ft_export_aux(env, cmdargs);
-	/*i = 1;
-	found = 0;
-	while (cmdargs[i])
-	{
-		if (find_equal(cmdargs[i], &found) == 0)
-		{
-			i++;
-			continue ;
-		}
-		j = 0;
-		while (env[j])
-		{
-			if (ft_strncmp(cmdargs[i], env[j], found + 1) == 0)
-			{
-				var_only = ft_substr(cmdargs[i], 0, found);
-				env = del_var(env, var_only);
-				free(var_only);
-				j--;
-			}
-			j++;
-		}
-		i++;
-	}*/
 	i = 1;
 	while (cmdargs[i])
 	{
