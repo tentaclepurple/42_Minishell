@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/24 12:56:50 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:33:18 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,13 @@ int	ft_lines(char *str, t_info *info)
 	if (!nodes)
 		return (1);
 	if (nodes->info->cmd_amount == 1 && nodes->type == BIp)
-		ft_execbi_parent(nodes);
-	//else
-/*	printf("\n***************************\n\n");
-	int n = 0;
-	while (nodes->info->envcp[n])
 	{
-		printf("%s\n", nodes->info->envcp[n]);
-		n++;
-	}*/
+		if (ft_execbi_parent(nodes))
+		{
+			ft_free_nodes(nodes);
+			return (4);
+		}
+	}
 	pipex(nodes);
 	ft_free_nodes(nodes);
 	return (0);
@@ -129,11 +127,6 @@ void	terminal(t_info *info)
 		input = readline(prompt);
 		if (!input)
 			break ;
-		if (!ft_strcmp("exit", input))
-		{
-			free(input);
-			break ;
-		}
 		if (input[0])
 			add_history(input);
 		if (!ft_strcmp("perro", input))
@@ -146,7 +139,13 @@ void	terminal(t_info *info)
 		if (!ft_strcmp("clear", input))
 			printf("\033[H\033[2J");
 		else if (ft_strlen(input))
-			ft_lines(input, info);
+		{	
+			if (ft_lines(input, info) == 4)
+			{
+				free(input);
+				break ;
+			}
+		}
 		free (input);
 	}
 	free(prompt);

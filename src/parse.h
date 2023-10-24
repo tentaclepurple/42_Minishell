@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/24 12:58:32 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:12:58 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <sys/types.h>
+# include <dirent.h>
 
 /*# include "../colors.h"
 # include "../pipex.h"
@@ -57,7 +59,9 @@ typedef enum	e_mini_error
 	MEM = 11,
 	IS_DIR = 12,
 	NOT_DIR = 13,
-    NODE = 14
+    NODE = 14,
+    HOMSET,
+    OPWDSET
 }               t_mini_error;
 
 typedef enum    s_type
@@ -106,7 +110,9 @@ t_px	*ft_parse(char **str, t_info *info);
 void	ft_handle_client(int sig);
 void	ft_2nd_handler(int sig);
 
+//ERROR.C
 void	*ft_error(int err_type, char *param, int err);
+void	*ft_bt_error(int err_type, char *param, int err);
 //iban.c
 char	*ft_getline(int fd);
 void	pipex(t_px *px);
@@ -146,8 +152,11 @@ char	**ft_export_aux(char **env, char **cmdargs);
 char	**ft_export(char **env, char **cmdargs);
 
 //ft_manag.c
-void	ft_execbi_parent(t_px *px);
+int	ft_execbi_parent(t_px *px);
 void	ft_execbi_child(t_px *px);
+
+//bt_exit.c
+int	ft_bt_exit(t_px *node);
 
 int	g_stat;
 

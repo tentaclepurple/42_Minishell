@@ -1,4 +1,4 @@
-NAME = minichell
+NAME = minishell
 LIBNAME = libft.a
 SRC = 	./splitstr/split.c \
 		./splitstr/clean_quotes.c \
@@ -13,7 +13,8 @@ SRC = 	./splitstr/split.c \
 		./builtins/bt_env_pwd_echo.c \
 		./builtins/bt_export.c \
 		./builtins/bt_unset.c \
-		./builtins/btmanager.c
+		./builtins/btmanager.c \
+		./builtins/bt_exit.c
 
 OBJ = $(SRC:.c=.o)
 
