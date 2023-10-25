@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/24 16:07:42 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:11:14 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ int	ft_is_cm(char *str, t_px *node)
 
 char	**ft_inout_file(t_px *node, char **str)
 {
+	int	flag;
+
+	flag = 0;
 	if (*str && !ft_strncmp("<", *str, 2))
 	{
 		node->in_flag = 1;
@@ -94,6 +97,7 @@ char	**ft_inout_file(t_px *node, char **str)
 			node->infile = ft_strdup(*(str));
 		if (*str)
 			str++;
+		flag++;
 	}
 	else if (*str && (!ft_strncmp(*str, ">", 2) || !ft_strncmp(*str, ">>", 3)))
 	{
@@ -106,6 +110,7 @@ char	**ft_inout_file(t_px *node, char **str)
 			node->outfile = ft_strdup(*(str));
 		if (*str)
 			str++;
+		flag++;
 	}
 	else if (*str && !ft_strncmp(*str, "<<", 3))
 	{
@@ -115,7 +120,10 @@ char	**ft_inout_file(t_px *node, char **str)
 			node->limit = ft_strdup(*(str));
 		if (*str)
 			str++;
+		flag++;
 	}
+	if (flag)
+		str = ft_inout_file(node, str);
 	return (str);
 }
 
@@ -186,7 +194,7 @@ int	ft_err_node(t_px node)
 	if (node.out_flag && !node.outfile)
 		return (ft_error(SYNERR, NULL, 20), 4);
 	else if (node.out_flag && access(node.outfile, F_OK) < 0)
-		return (ft_error(NDIR, node.outfile, 30), 6);
+		printf("No file\n");
 	else if (node.out_flag && access(node.outfile, R_OK) < 0)
 		return (ft_error(NPERM, node.outfile, 10), 5);
 	if (node.in_flag == 1 && !node.infile)

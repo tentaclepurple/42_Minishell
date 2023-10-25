@@ -3,6 +3,7 @@
         "__functional_03": "c",
         "functional": "c",
         "libft.h": "c",
-        "__node_handle": "c"
+        "__node_handle": "c",
+        "algorithm": "c"
     }
 }

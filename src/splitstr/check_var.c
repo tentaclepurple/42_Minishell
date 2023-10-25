@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:43:53 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/20 10:15:11 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:36:54 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,23 @@
 size_t	ft_strlen_var(const char *s, int quote)
 {
 	size_t	i;
-	char	ch;
+	char	ch[2];
 
 	i = 0;
 	if (quote)
-		ch = '"';
+	{
+		ch[0] = '"';
+		ch[1] = '\'';
+	}
 	else
-		ch = ' ';
-	while (s[i] && s[i] != ' ' && s[i] != ch)
+	{
+		ch[0] = ' ';
+		ch[1] = ' ';
+	}
+	while (s[i] && s[i] != ' ' && (s[i] != ch[0] && s[i] != ch[1]))
+	{
 		i++;
+	}
 	return (i);
 }
 
@@ -35,7 +43,10 @@ char	*ft_fill_expand(char *env, char *str, int index, int quote)
 	int		i;
 
 	i = 0;
-	len_var = ft_strlen(&env[ft_strlen_var(&str[index + 1], quote)]);
+	if (env)
+		len_var = ft_strlen(&env[ft_strlen_var(&str[index + 1], quote)]);
+	else
+		len_var = 0;
 	len_post = ft_strlen(&str[index + 1
 			+ ft_strlen_var(&str[index + 1], quote)]);
 	res = malloc(len_var + len_post + index + 2);
@@ -47,9 +58,12 @@ char	*ft_fill_expand(char *env, char *str, int index, int quote)
 		i++;
 	}
 	res[i++] = '\0';
-	while (*env != '=')
+	if (env)
+	{
+		while (*env != '=')
+			env++;
 		env++;
-	env++;
+	}
 	ft_strlcat(res, env, len_var + len_post + index + 2);
 	ft_strlcat(res, &str[index + 1 + ft_strlen_var(&str[index + 1], quote)],
 		len_var + len_post + index + 2);
@@ -82,6 +96,12 @@ char	*ft_expand_var(char **envp, char *str, int index, int quote)
 		free(str);
 		return (res);
 	}
+	else
+	{
+		res = ft_fill_expand(NULL, str, index, quote);
+		free(str);
+		return (res);
+	}
 	return (str);
 }
 
@@ -99,7 +119,7 @@ int	ft_check_var(char **str, char **env)
 		{
 			if ((*str)[i] == '"')
 				quote++;
-			if ((*str)[i] == '\'')
+			if ((*str)[i] == '\'' && !quote)
 			{
 				i++;
 				while ((*str)[i] != '\'' && (*str)[i])
@@ -110,6 +130,8 @@ int	ft_check_var(char **str, char **env)
 				*str = ft_expand_var(env, *str, i, quote % 2);
 				if (!*str)
 					return (ft_free_split((str + 1)), (int)ft_error(MEM, NULL, 2));
+				printf("%s\n", *str);
+				i = 0;
 			}
 			i++;
 		}
