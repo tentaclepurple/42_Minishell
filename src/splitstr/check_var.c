@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:43:53 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/25 14:36:54 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:59:44 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ char	*ft_fill_expand(char *env, char *str, int index, int quote)
 		len_var = 0;
 	len_post = ft_strlen(&str[index + 1
 			+ ft_strlen_var(&str[index + 1], quote)]);
+	if (len_var + len_post + index == 0)
+	{
+		res = malloc(1);
+		res[0] = '\0';
+		return (res);
+	}
 	res = malloc(len_var + len_post + index + 2);
 	if (!res)
 		return (NULL);
@@ -117,6 +123,7 @@ int	ft_check_var(char **str, char **env)
 		i = 0;
 		while (*str && (*str)[i])
 		{
+			
 			if ((*str)[i] == '"')
 				quote++;
 			if ((*str)[i] == '\'' && !quote)
@@ -125,13 +132,12 @@ int	ft_check_var(char **str, char **env)
 				while ((*str)[i] != '\'' && (*str)[i])
 					i++;
 			}
-			else if ((*str)[i] == '$')
+			else if ((*str)[i] == '$' && (*str)[i + 1] != '\0')
 			{
 				*str = ft_expand_var(env, *str, i, quote % 2);
 				if (!*str)
 					return (ft_free_split((str + 1)), (int)ft_error(MEM, NULL, 2));
-				printf("%s\n", *str);
-				i = 0;
+				i = -1;
 			}
 			i++;
 		}
