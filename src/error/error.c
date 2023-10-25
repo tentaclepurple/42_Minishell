@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 12:26:06 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/20 11:10:45 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:58:47 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,14 @@ void	*ft_error(int err_type, char *param, int err)
 		ft_printf("minishell: Is a directory: %s\n", param);
 	else if (err_type == NOT_DIR)
 		ft_printf("minishell: Not a directory: %s\n", param);
+	return (NULL);
+}
+void	*ft_bt_error(int err_type, char *param, int err)
+{
+	g_stat = err;
+	if (err_type == HOMSET)
+		ft_printf("minishell: %s HOME not set\n", param);
+	else if (err_type == OPWDSET)
+		ft_printf("minishell: %s OLDPWD not set\n", param);
 	return (NULL);
 }

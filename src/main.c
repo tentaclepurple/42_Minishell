@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/10/24 13:09:32 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:18:58 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	main(int argc, char **argv, char **env)
 	if (!info->homepath)
 		return(printf("Invalid Home\n"), -1);
 	terminal(info);
+	free(info);
 	//printf("status = %i\n", g_stat);
-	return (0);
+	return (g_stat);
 }

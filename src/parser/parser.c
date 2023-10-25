@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/24 12:53:55 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/24 16:07:42 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ void	ft_free_nodes(t_px *nodes)
 			free(nodes[i].limit);
 		i++;
 	}
-	free((*nodes).info);
+	//free((*nodes).info);
 	free(nodes);
 }
 
