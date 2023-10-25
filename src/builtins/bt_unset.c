@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:08:01 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/24 18:14:27 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:41:41 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	**ft_unset(t_px *px)
 {
-	int	i;
+	int		i;
 	char	**envaux;
 
 	i = 1;
@@ -24,6 +24,4 @@ char	**ft_unset(t_px *px)
 		i++;
 	}
 	return (envaux);
-	
 }
-

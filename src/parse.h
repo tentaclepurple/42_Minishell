@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/24 18:12:58 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/25 20:02:24 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define BOLD		"\033[0;1m"
 # define X			"\033[0;0m"
 
-typedef enum	e_mini_error
+typedef enum e_mini_error
 {
 	QUOTE = 1,
 	NDIR = 2,
@@ -59,104 +59,134 @@ typedef enum	e_mini_error
 	MEM = 11,
 	IS_DIR = 12,
 	NOT_DIR = 13,
-    NODE = 14,
-    HOMSET,
-    OPWDSET
-}               t_mini_error;
+	NODE = 14,
+	HOMSET,
+	OPWDSET
+}	t_mini_error;
 
-typedef enum    s_type
+typedef enum s_type
 {
-    CMD=1,
-    BIp,
-    BIc,
-    PIPE,
-    AND,
-    OR
-}               t_type;
+	CMD=1,
+	BIp,
+	BIc,
+	PIPE,
+	AND,
+	OR
+}	t_type;
 
-typedef struct  s_info
+typedef struct s_info
 {
-    int     cmd_amount;
-    int     **fd;
-    char    **envcp;
-    char    *homepath;
-}               t_info;
+	int		cmd_amount;
+	int		**fd;
+	char	**envcp;
+	char	*homepath;
+}	t_info;
 
-typedef struct  s_px
+typedef struct s_px
 {
-    t_type  type;
-    char    *path;
-    char    **full_cmd;
-    int     in_flag;
-    int     out_flag;
-    char    *infile;
-    char    *outfile;
-    char    *limit;
-    t_info  *info;
-}               t_px;
+	t_type	type;
+	char	*path;
+	char	**full_cmd;
+	int		in_flag;
+	int		out_flag;
+	char	*infile;
+	char	*outfile;
+	char	*limit;
+	t_info	*info;
+}	t_px;
 
-int    ft_check_var(char **str, char **env);
+int		ft_check_var(char **str, char **env);
 char	**ft_correc_special(char **str, char *spec);
-int 	ft_clean_quotes(char **str);
+int		ft_clean_quotes(char **str);
 
 char	*ft_correct_str(char *str);
 char	**ft_split_str(char const *s, char c);
 void	ft_free_split(char **str);
 
-int	    ft_node_quant(char **str);
+int		ft_node_quant(char **str);
 void	ft_free_nodes(t_px *nodes);
 t_px	*ft_parse(char **str, t_info *info);
 
 void	ft_handle_client(int sig);
 void	ft_2nd_handler(int sig);
 
-//ERROR.C
+/*
+ERROR.C
+*/
 void	*ft_error(int err_type, char *param, int err);
 void	*ft_bt_error(int err_type, char *param, int err);
-//iban.c
-char	*ft_getline(int fd);
-void	pipex(t_px *px);
-char	*get_cmd_or_cmdpath(char **env, char *str);
 
-//terminal.c
-int	    check_no_env(char **env);
-//void	terminal(char **env);
+/*
+executor.c
+*/
+void	pipex(t_px *px);
+int		pipex_p(t_px *px);
+void	ft_output_redirect(t_px *px);
+void	ft_input_redirect(t_px *px);
+void	ft_fd_pipes(t_px *px, int n);
+void	ft_child(t_px *px, int n);
+char	*get_cmd_or_cmdpath(char **env, char *str);
+char	*ft_getline(int fd);
+char	**get_path(char **env);
+int		check_slash(char *str);
+void	ft_fd_close(t_px *px, int j);
+void	ft_alloc_fd(t_px *px);
+void	ft_free_fd(t_px *px);
+void	write_here_doc_tmp(t_px *px);
+
+/*
+terminal.c
+*/
+int		check_no_env(char **env);
 void	terminal(t_info *info);
 
-//envutils
+/*
+envutils
+*/
 char	**ft_env_cpy(char **env);
 char	**add_var(char **env, char *var);
 char	**del_var_aux(int found, char **env, char **envcpy);
 char	**del_var(char **env, char *var);
-int 	found_in_env(char *var, char **env, char **path);
+int		found_in_env(char *var, char **env, char **path);
 
-//bt_cd.c
-
-//char	**ft_cd(char **env, char **cmdargs);
+/*
+bt_cd.c
+*/
 char	**ft_cd(t_px *px);
 char	**ft_cd_update_env(char **env, char *path);
+void	ft_cd_home(t_px *px, char ***envcpy);
 
-//bt_env_pwd_echo.c
+/*
+bt_env_pwd_echo.c
+*/
 void	ft_pwd(void);
 void	ft_echo(t_px *px);
 void	ft_env(char **env);
 
-//unset.c
-char    **ft_unset(t_px *px);
+/*
+unset.c
+*/
+char	**ft_unset(t_px *px);
 
-//export.c
-int 	find_equal(char *var, int *found);
+/*
+export.c
+*/
+int		find_equal(char *var, int *found);
 void	export_declare(char **env);
 char	**ft_export_aux_del(char **env, char **cmdargs, int i, int found);
 char	**ft_export_aux(char **env, char **cmdargs);
 char	**ft_export(char **env, char **cmdargs);
 
-//ft_manag.c
-int	ft_execbi_parent(t_px *px);
+/*
+ft_manag.c
+*/
+int		ft_execbi_parent(t_px *px);
 void	ft_execbi_child(t_px *px);
 
-//bt_exit.c
-int	ft_bt_exit(t_px *node);
+/*
+bt_exit.c
+*/
+int		ft_bt_exit(t_px *node);
 
 int	g_stat;
 

@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:50:29 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/23 11:04:02 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:36:03 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	ft_env(char **env)
 	}
 }
 
-void	ft_pwd()
+void	ft_pwd(void)
 {
- 	char *cwd;
+	char	*cwd;
 
-    cwd = getcwd(NULL, 0);
+	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 		perror("PWD ERROR"); //error PWD
 	ft_putendl_fd(cwd, 1);

@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   bt_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:00:14 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/24 18:14:07 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:41:21 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../parse.h"
 
-int main() 
+int	pwd(void)
 {
-    char *cwd;
+	char	*cwd;
 
-    cwd = getcwd(NULL, 0);
+	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
-		perror("PWD ERROR");
+		perror("PWD ERROR"); //ERROR
 	ft_putendl_fd(cwd, 1);
 	free(cwd);
 }
