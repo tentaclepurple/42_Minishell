@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:43:53 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/26 14:00:05 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:24:02 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,9 @@ char	*ft_expand_var(char **envp, char *str, int index, int quote)
 	return (str);
 }
 
-static int	ft_check_var_aux(char **env, char **str, int *i, int quote)
+static int	ft_check_var_aux(char **env, char **str, int *i, int *quote)
 {
-	if ((*str)[*i] == '\'' && !quote)
+	if ((*str)[*i] == '\'' && !(*quote))
 	{
 		(*i)++;
 		while ((*str)[*i] != '\'' && (*str)[*i])
@@ -149,11 +149,13 @@ static int	ft_check_var_aux(char **env, char **str, int *i, int quote)
 	}
 	else if ((*str)[(*i)] == '$' && (*str)[(*i) + 1] != '\0')
 	{
-		*str = ft_expand_var(env, *str, *i, quote % 2);
+		*str = ft_expand_var(env, *str, *i, (*quote) % 2);
 		if (!*str)
 			return (ft_free_split((str + 1)), (int)ft_error(MEM, NULL, 2));
 		*i = -1;
 	}
+	else if ((*str)[*i] == '"' && (*quote))
+		(*quote)--;
 	return (0);
 }
 
@@ -163,15 +165,15 @@ int	ft_check_var(char **str, char **env)
 	int	i;
 	int	quote;
 
-	quote = 0;
 	while (*str)
 	{
+		quote = 0;
 		i = 0;
 		while (*str && (*str)[i])
 		{	
 			if ((*str)[i] == '"')
 				quote++;
-			if (ft_check_var_aux(env, &(*str), &i, quote))
+			if (ft_check_var_aux(env, &(*str), &i, &quote))
 				return (2);
 			i++;
 		}

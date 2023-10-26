@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:51:13 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/26 15:06:54 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:09:04 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,34 +84,3 @@ int	ft_clean_quotes(char **str)
 	}
 	return (1);
 }
-
-/* int	ft_clean_quotes(char **str)
-{
-	char	*new;
-	int		len;
-	int		i;
-	int		j;
-	
-	i = 1;
-	while (*str)
-	{
-		len = ft_strlen(*str);
-		if (((*str)[0] == '"' && (*str)[len - 1] == '"') ||
-				((*str)[0] == '\'' && (*str)[len - 1] == '\''))
-		{
-			new = malloc(sizeof(char) * (len - 2 + 1));
-			if (!new)
-				return (1);
-			while (i < len - 1)
-			{
-				new[i - 1] = (*str)[i];
-				i++;
-			}
-			new[i - 1] = '\0';
-			free (*str);
-			*str = new;
-		}
-		str++;
-	}
-	return (0);
-} */
