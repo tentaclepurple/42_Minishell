@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/24 17:33:18 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:22:14 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../parse.h"
 
-/* ------------- */
 //int	ft_lines(char *str, char **env)
 int	ft_lines(char *str, t_info *info)
 {
@@ -27,7 +26,7 @@ int	ft_lines(char *str, t_info *info)
 	if (!res)
 		return (2);
 	if (ft_check_var(res, info->envcp))
-		return(ft_free_split(res), 3);
+		return (ft_free_split(res), 3);
 	res = ft_correc_special(res, "<>|&");
 	if (!res)
 		return (3);
@@ -48,31 +47,6 @@ int	ft_lines(char *str, t_info *info)
 	pipex(nodes);
 	ft_free_nodes(nodes);
 	return (0);
-}
-/* --------TERMINAL---------- */
-
-/*
-	Returns 0 if any mthfckr suppresed env
-*/	
-int	check_no_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i] != NULL)
-		i++;
-	if (i == 0)
-		return (0);
-	else
-		return (1);
-}
-
-int	check_env_and_vars(char **env)
-{
-	if (check_no_env(env))
-		return (1);
-	else
-		return (0);
 }
 
 /* 
@@ -111,12 +85,10 @@ char	*get_prompt(char **env)
 //void	terminal(char **env)
 void	terminal(t_info *info)
 {
-	//int		cont;
-	char	*input;
-	char	*prompt;
-	struct sigaction	sa = {0};
+	char				*input;
+	char				*prompt;
+	struct sigaction	sa;
 
-	//cont = 0;
 	prompt = get_prompt(info->envcp);
 	while (1)
 	{
@@ -129,13 +101,6 @@ void	terminal(t_info *info)
 			break ;
 		if (input[0])
 			add_history(input);
-		if (!ft_strcmp("perro", input))
-			rl_clear_history();
-		if (!ft_strcmp("redisp", input))
-			rl_redisplay();
-		if (!ft_strcmp("rep", input))
-			rl_replace_line("replaced!!", 0);
-		//rl_replace_line("replace", 0);
 		if (!ft_strcmp("clear", input))
 			printf("\033[H\033[2J");
 		else if (ft_strlen(input))

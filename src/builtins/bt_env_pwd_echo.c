@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:50:29 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/25 19:36:03 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:20:38 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ void	ft_env(char **env)
 	}
 }
 
+//error PWD
 void	ft_pwd(void)
 {
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
-		perror("PWD ERROR"); //error PWD
+		perror("PWD ERROR");
 	ft_putendl_fd(cwd, 1);
 	free(cwd);
 }

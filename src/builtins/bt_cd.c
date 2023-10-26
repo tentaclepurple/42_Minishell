@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:32:00 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/25 20:03:39 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:11:09 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,33 @@ void	ft_cd_home(t_px *px, char ***envcpy)
 		ft_bt_error(HOMSET, "cd:", 1);
 }
 
+void	ft_cd_oldpwd(t_px *px, char ***envcpy)
+{
+	char	*path;
+
+	if (found_in_env("OLDPWD=", px->info->envcp, &path) == 1)
+	{
+		*envcpy = ft_cd_update_env(px->info->envcp, path);
+		ft_pwd();
+		free(path);
+	}
+	else
+		ft_bt_error(OPWDSET, "cd:", 1);
+}
+
 char	**ft_cd(t_px *px)
 {
 	char	*path;
 	char	**envcpy;
 
 	path = NULL;
-	envcpy = NULL;
+	envcpy = px->info->envcp;
 	if (px->full_cmd[1] == NULL || ft_strcmp(px->full_cmd[1], "--") == 0)
-	{
 		ft_cd_home(px, &envcpy);
-		/*if (found_in_env("HOME=", px->info->envcp, &path) == 1)
-		{
-			envcpy = ft_cd_update_env(px->info->envcp, path);
-			free(path);
-		}
-		else
-			ft_bt_error(HOMSET, "cd:", 1);*/
-	}
 	else if (ft_strcmp(px->full_cmd[1], "~") == 0)
 		envcpy = ft_cd_update_env(px->info->envcp, px->info->homepath);
 	else if (ft_strcmp(px->full_cmd[1], "-") == 0)
-	{
-		if (found_in_env("OLDPWD=", px->info->envcp, &path) == 1)
-		{
-			envcpy = ft_cd_update_env(px->info->envcp, path);
-			ft_pwd();
-			free(path);
-		}
-		else
-			ft_bt_error(OPWDSET, "cd:", 1);
-	}
+		ft_cd_oldpwd(px, &envcpy);
 	else
 	{
 		if (access(px->full_cmd[1], F_OK) == 0 && !ft_is_dir(px->full_cmd[1]))

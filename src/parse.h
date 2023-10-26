@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/25 20:02:24 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:19:32 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,12 +133,14 @@ void	ft_fd_close(t_px *px, int j);
 void	ft_alloc_fd(t_px *px);
 void	ft_free_fd(t_px *px);
 void	write_here_doc_tmp(t_px *px);
+void	ft_getline_aux(char c, char **str);
 
 /*
 terminal.c
 */
 int		check_no_env(char **env);
 void	terminal(t_info *info);
+int		check_env_and_vars(char **env);
 
 /*
 envutils
@@ -155,6 +157,7 @@ bt_cd.c
 char	**ft_cd(t_px *px);
 char	**ft_cd_update_env(char **env, char *path);
 void	ft_cd_home(t_px *px, char ***envcpy);
+void	ft_cd_oldpwd(t_px *px, char ***envcpy);
 
 /*
 bt_env_pwd_echo.c

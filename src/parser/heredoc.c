@@ -6,32 +6,53 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:52:08 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/25 19:32:08 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:39:07 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../parse.h"
 
+void	ft_getline_aux(char c, char **str)
+{
+	char	*aux;
+	char	*tmp;
+
+	aux = *str;
+	tmp = malloc(2 * sizeof(char));
+	tmp[0] = c;
+	tmp[1] = 0;
+	*str = ft_strjoin(*str, tmp);
+	free(tmp);
+	free(aux);
+}
+
 char	*ft_getline(int fd)
 {
 	char	c;
 	char	*str;
-	char	*tmp;
-	char	*aux;
+	//char	*tmp;
+	//char	*aux;
+	int		re;
 
 	str = malloc(1 * sizeof(char));
 	str[0] = 0;
-	while (read(fd, &c, 1) > 0)
+	re = read(fd, &c, 1);
+	while (re >= 0)
 	{
-		aux = str;
+		if (!str[0] && re == 0)
+			return (NULL);
+		ft_getline_aux(c, &str);
+		/*aux = str;
 		tmp = malloc(2 * sizeof(char));
 		tmp[0] = c;
 		tmp[1] = 0;
 		str = ft_strjoin(str, tmp);
 		free(tmp);
-		free(aux);
+		free(aux);*/
 		if (c == '\n')
 			break ;
+		c = 0;
+		re = read(fd, &c, 1);
 	}
 	return (str);
 }
@@ -46,9 +67,7 @@ void	write_here_doc_tmp(t_px *px)
 	while (1)
 	{
 		line = ft_getline(0);
-		if (!ft_strncmp("\0", line, 1) && ft_strlen(line) == 0)
-			break ;
-		else if (!ft_strncmp("\0", line, 1))
+		if (line == NULL)
 			break ;
 		limit_n = ft_strjoin(px->limit, "\n");
 		if (ft_strcmp(limit_n, line) == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envcp.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:08:01 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/24 18:10:28 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:17:41 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ char	**del_var_aux(int found, char **env, char **envcpy)
 		else
 			i++;
 	}
-	//ft_free_split(env);
 	return (envcpy);
 }
+
 /* 	deletes the var and returns a copy of env
 	if not found, returns env */
 char	**del_var(char **env, char *var)
@@ -118,76 +118,10 @@ int	found_in_env(char *var, char **env, char **path)
 		if (ft_strncmp(var, env[i], ft_strlen(var)) == 0)
 		{
 			find_equal(env[i], &foundeq);
-			*path = ft_substr(env[i], foundeq + 1, ft_strlen(env[i]) - foundeq );
+			*path = ft_substr(env[i], foundeq + 1, ft_strlen(env[i]) - foundeq);
 			return (1);
 		}
 		i++;
 	}
 	return (0);
 }
-
-
-/*int	main(int c, char **v, char **env)
-{
-	(void)c;
-	(void)v;
-	char	**envcpy = ft_env_cpy(env);
-	char	*cmdargs[6] = {"cd", ".."};
-	
-	int i = 0;
-	while (envcpy[i])
-	{
-		printf("%s :: %i\n", envcpy[i], i);
-		i++;	
-	}
-	printf("*****************************************************************************\n");
-	
-	printf("\n..........................................\n\n");
-	printf("BEFORE: %s\n", (getcwd(NULL, 0)));
-	printf("\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\n");
-	ft_cd(envcpy, cmdargs);
-	
-	
-	printf("\n..........................................\n\n");
-	printf("AFTER: %s\n", (getcwd(NULL, 0)));
-	
-	
-	cmdargs[1] = "-";
-	
-	ft_cd(envcpy, cmdargs);
-	
-	printf("\n..........................................\n\n");
-	printf("AFTER LAST: %s\n", (getcwd(NULL, 0)));
-
-
-
-	
-	return (0);
-}*/
-/*int	main(int c, char **v, char **env)
-{
-	(void)c;
-	(void)v;
-	char	**envcpy = ft_env_cpy(env);
-	char	*cmdargs[6] = {"export"};
-
-	printf("..........................................\n");
- 
-	int i = 0;
-	while (env[i])
-	{
-		printf("%s :: %i\n", env[i], i);
-		i++;	
-	}
-	printf("\n|||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\n");
-	envcpy = ft_export(envcpy, cmdargs);
-	i = 0;
-	while (envcpy[i])
-	{
-		printf("%s :: %i\n", envcpy[i], i);
-		i++;	
-	}
-	printf("*****************************************************************************\n");
-	ft_free_split(envcpy);
-	return (0);
-}*/

@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:37:05 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/25 19:39:54 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:33:04 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ static int	ft_atoi_exit(const char *str, long *nbr)
 	}
 	if (!str[i])
 	{
-		*nbr *= sign;
-		return (0);
+		return (*nbr *= sign, 0);
 	}
 	return (-1);
 }
@@ -51,7 +50,8 @@ int	ft_bt_exit(t_px *node)
 		return (1);
 	if (ft_atoi_exit(node->full_cmd[1], nbr) < 0)
 	{
-		ft_printf("minishell: exit: %s: numeric argument required\n", node->full_cmd[1]);
+		ft_printf("minishell: exit: %s: numeric argument required\n", \
+			node->full_cmd[1]);
 		g_stat = 255;
 	}
 	else if (node->full_cmd[2])
