@@ -19,7 +19,7 @@ SRC = 	./splitstr/split.c \
 
 OBJ = $(SRC:.c=.o)
 
-FLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 READFLAG =  -lreadline -L/Users/$(USER)/.brew/opt/readline/lib
 READINCLUDE = -I/Users/$(USER)/.brew/opt/readline/include
 NONE='\033[0m'
