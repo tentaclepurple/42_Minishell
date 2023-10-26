@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:51:13 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/20 08:39:03 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:06:54 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_quote_cut_len(char *str)
 	int		j;
 	char	quote;
 	int		cut;
-	
+
 	quote = 0;
 	j = 0;
 	cut = 0;
@@ -28,43 +28,53 @@ int	ft_quote_cut_len(char *str)
 			cut += 2;
 			quote = 0;
 		}
-		else if (!quote && (str[j] == '\'' ||str[j] == '"'))
+		else if (!quote && (str[j] == '\'' || str[j] == '"'))
 			quote = str[j];
 		j++;
 	}
 	return (j - cut);
 }
 
+static char	*ft_new_quote(int len, char **str, char *quote)
+{
+	int		i;
+	int		j;
+	char	*new;
+
+	i = 0;
+	j = 0;
+	new = malloc(sizeof(char) * (len + 1));
+	if (!new)
+		return (ft_error(MEM, NULL, 2));
+	while ((*str)[j])
+	{
+		if (*quote && (*str)[j] == *quote)
+			*quote = 0;
+		else if (!(*quote) && ((*str)[j] == '\'' || (*str)[j] == '"'))
+			*quote = (*str)[j];
+		else
+			new[i++] = (*str)[j];
+		j++;
+	}
+	new[i] = '\0';
+	return (new);
+}
+
 int	ft_clean_quotes(char **str)
 {
 	char		*new;
 	size_t		len;
-	int			i;
-	int			j;
 	char		quote;
-	
+
 	while (*str)
 	{
-		i = 0;
-		j = 0;
 		quote = 0;
 		len = ft_quote_cut_len(*str);
 		if (len != ft_strlen(*str))
 		{
-			new = malloc(sizeof(char) * (len + 1));
+			new = ft_new_quote(len, str, &quote);
 			if (!new)
 				return (1);
-			while ((*str)[j])
-			{
-				if (quote && (*str)[j] == quote)
-					quote = 0;
-				else if (!quote && ((*str)[j] == '\'' || (*str)[j] == '"'))
-					quote = (*str)[j];
-				else
-					new[i++] = (*str)[j];
-				j++;
-			}
-			new[i] = '\0';
 			free (*str);
 			*str = new;
 			if (quote)
@@ -74,7 +84,6 @@ int	ft_clean_quotes(char **str)
 	}
 	return (1);
 }
-
 
 /* int	ft_clean_quotes(char **str)
 {
