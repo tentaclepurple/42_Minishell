@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/26 19:19:32 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/27 11:24:12 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ terminal.c
 int		check_no_env(char **env);
 void	terminal(t_info *info);
 int		check_env_and_vars(char **env);
+void	terminal_options(char *input);
 
 /*
 envutils

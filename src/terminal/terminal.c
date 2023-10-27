@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/26 19:22:14 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/27 11:31:18 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,8 @@ void	terminal(t_info *info)
 		input = readline(prompt);
 		if (!input)
 			break ;
-		if (input[0])
-			add_history(input);
-		if (!ft_strcmp("clear", input))
-			printf("\033[H\033[2J");
-		else if (ft_strlen(input))
+		terminal_options(input);
+		if (ft_strlen(input))
 		{	
 			if (ft_lines(input, info) == 4)
 			{
@@ -114,4 +111,17 @@ void	terminal(t_info *info)
 		free (input);
 	}
 	free(prompt);
+}
+
+/*if (input[0])
+	add_history(input);
+if (!ft_strcmp("clear", input))
+	printf("\033[H\033[2J");*/
+
+void	terminal_options(char *input)
+{
+	if (input[0])
+		add_history(input);
+	if (!ft_strcmp("clear", input))
+		printf("\033[H\033[2J");
 }

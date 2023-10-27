@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:52:08 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/26 19:39:07 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:40:05 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ char	*ft_getline(int fd)
 {
 	char	c;
 	char	*str;
-	//char	*tmp;
-	//char	*aux;
 	int		re;
 
 	str = malloc(1 * sizeof(char));
@@ -42,13 +40,6 @@ char	*ft_getline(int fd)
 		if (!str[0] && re == 0)
 			return (NULL);
 		ft_getline_aux(c, &str);
-		/*aux = str;
-		tmp = malloc(2 * sizeof(char));
-		tmp[0] = c;
-		tmp[1] = 0;
-		str = ft_strjoin(str, tmp);
-		free(tmp);
-		free(aux);*/
 		if (c == '\n')
 			break ;
 		c = 0;
