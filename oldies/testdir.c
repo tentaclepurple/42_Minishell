@@ -16,9 +16,15 @@ int main()
         printf("Nombre de archivo o directorio: %s\n", entry->d_name);
         entry = readdir(dir);
     }
+    while (entry != NULL) 
+    {
+        printf("Nombre de archivo o directorio: %s\n", entry->d_name);
+        entry = readdir(dir);
+    }
+
     closedir(dir);
 
-	ft_strnstr(haystack, needle, len);
-	ft_strncmp(s1, s2, size);
+    
+
     return 0;
 }
