@@ -1,24 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wc_rec.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/30 09:13:29 by imontero          #+#    #+#             */
+/*   Updated: 2023/10/30 17:02:18 by imontero         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 
-int custom_fnmatch(const char *pattern, const char *str) 
+int find_wild_match(char *pattern, char *str) 
 {
     while (*pattern)
 	{
-        if (*pattern == '*') {
+        if (*pattern == '*')
+        {
             while (*pattern == '*')
                 pattern++;
             if (*pattern == '\0')
-                return 1;
+                return (1);
             while (*str)
 			{
-                if (*str == *pattern && custom_fnmatch(pattern, str))
-                    return 1;
+                if (*str == *pattern && find_wild_match(pattern, str))
+                    return (1);
                 str++;
             }
             return 0;
         }
         if (*str == '\0' || (*pattern != *str))
-            return 0;
+            return (0);
         pattern++;
         str++;
     }
@@ -26,9 +39,9 @@ int custom_fnmatch(const char *pattern, const char *str)
 }
 
 int main() {
-    const char *pattern = "mi*.*";
+    const char *pattern = "*.c";
     const char *str = "minishell.c";
-    if (custom_fnmatch(pattern, str)) {
+    if (find_wild_match(pattern, str)) {
         printf("Matched: %s\n", str);
     } else {
         printf("No match found.\n");

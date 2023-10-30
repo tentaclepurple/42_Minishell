@@ -16,11 +16,6 @@ int main()
         printf("Nombre de archivo o directorio: %s\n", entry->d_name);
         entry = readdir(dir);
     }
-    while (entry != NULL) 
-    {
-        printf("Nombre de archivo o directorio: %s\n", entry->d_name);
-        entry = readdir(dir);
-    }
 
     closedir(dir);
 

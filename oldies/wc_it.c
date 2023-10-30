@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wc_it.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/30 09:03:47 by imontero          #+#    #+#             */
+/*   Updated: 2023/10/30 09:12:28 by imontero         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 
 /* 
@@ -7,7 +19,7 @@ it returns 0 for no match. After the loop,
 it skips any remaining asterisk wildcards in the pattern. 
 If the end of the pattern is reached, it's considered a match.
 */
-int custom_fnmatch(char *pattern, char *str) 
+int wc_find_match(char *pattern, char *str) 
 {
     int str_idx = 0;
     int pat_idx = 0;
@@ -32,20 +44,20 @@ int custom_fnmatch(char *pattern, char *str)
             str_idx = ++str_b;
         }
 		else
-            return 0; // No hay coincidencia
+            return 0;
     }
     while (pattern[pat_idx] == '*')
-        pat_idx++; // Saltar comodines restantes
+        pat_idx++;
     return (pattern[pat_idx] == '\0');
 }
 
-int main() {
+int main(void) 
+{
     char *pattern = "mi*ni*";
     char *str = "minishell.c";
-    if (custom_fnmatch(pattern, str)) {
+    if (wc_find_match(pattern, str))
         printf("Matched: %s\n", str);
-    } else {
+    else
         printf("No match found.\n");
-    }
-    return 0;
+    return (0);
 }
