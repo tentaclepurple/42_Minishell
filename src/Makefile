@@ -8,6 +8,7 @@ SRC = 	./splitstr/split.c \
 		./parser/executor.c \
 		./parser/heredoc.c \
 		./parser/getpaths.c \
+		./parser/parser_util.c \
 		./terminal/terminal.c main.c \
 		./error/error.c \
 		./envutils/envcp.c \

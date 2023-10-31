@@ -6,124 +6,30 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/25 12:11:14 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/25 19:17:55 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../parse.h"
 
-//Returns the node quantity tto be allocated for the parsing of str
-int	ft_node_quant(char **str)
-{
-	int	i;
-	int	flag;
-
-	i = 0;
-	flag = 0;
-	while (*str)
-	{
-		if (ft_strncmp(*str, "|", 2) && ft_strncmp(*str, "&&", 3)
-			&& ft_strncmp(*str, "||", 3))
-		{
-			if (!flag)
-			{
-				flag = 1;
-				i++;
-			}
-		}
-		else
-		{
-			//i++;
-			flag = 0;	
-		}
-		str++;
-	}
-	return (i);
-}
-
-//Returns value of how many different arguments do we have (including the cmd command)
-int	ft_num_args(char **str)
+//Function to fill the complete args array
+char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
 {
 	int	i;
 
 	i = 0;
-	/* while (*str && ft_strncmp(*str, "|", 2) && ft_strncmp(*str, ">", 2)
-		&& ft_strncmp(*str, ">>", 3) && ft_strncmp(*str, "&&", 3)
-		&& ft_strncmp(*str, "||", 3) && ft_strncmp(*str, "<<", 3)
-		&& ft_strncmp(*str, "<", 3)) */
-	while (*str && ft_strncmp(*str, "|", 2) && ft_strncmp(*str, "&&", 3)
-		&& ft_strncmp(*str, "||", 3))
+	node->full_cmd = malloc(sizeof(char *) * (num_arg + 1));
+	if (node->full_cmd)
+		node->full_cmd[i++] = node->path;
+	str++;
+	while (i < num_arg && node->full_cmd)
 	{
-		if (!ft_strncmp(*str, ">>", 3) || !ft_strncmp(*str, ">", 2) || !ft_strncmp(*str, "<<", 3) || !ft_strncmp(*str, "<", 3))
-		{
-			if (*(str + 1))
-				i -= 2;
-			else
-				i--;
-		}
-		i++;
-		str++;
-	}
-	return (i);
-}
-
-int	ft_is_cm(char *str, t_px *node)
-{
-	if (!ft_strcmp(str, "export") || !ft_strcmp(str, "cd") || !ft_strcmp(str, "unset") ||
-			!ft_strcmp(str, "exit"))
-	{
-		node->type = BIp;
-		return (1);
-	}
-	else if (!ft_strcmp(str, "echo") || !ft_strcmp(str, "pwd") || !ft_strcmp(str, "env"))
-	{
-		node->type = BIc;
-		return (1);
-	}
-	node->type = CMD;
-	return (0);
-}
-
-char	**ft_inout_file(t_px *node, char **str)
-{
-	int	flag;
-
-	flag = 0;
-	if (*str && !ft_strncmp("<", *str, 2))
-	{
-		node->in_flag = 1;
-		str++;
-		if (*str && !ft_strchr("<|>", **str))
-			node->infile = ft_strdup(*(str));
-		if (*str)
-			str++;
-		flag++;
-	}
-	else if (*str && (!ft_strncmp(*str, ">", 2) || !ft_strncmp(*str, ">>", 3)))
-	{
-		if (!ft_strncmp(*str, ">", 2))
-			node->out_flag = 1;
-		else
-			node->out_flag = 2;
-		str++;
-		if (*str && !ft_strchr("<|>", **str))
-			node->outfile = ft_strdup(*(str));
-		if (*str)
-			str++;
-		flag++;
-	}
-	else if (*str && !ft_strncmp(*str, "<<", 3))
-	{
-		node->in_flag = 2;
-		str++;
-		if (*str && !ft_strchr("<|>", **str))
-			node->limit = ft_strdup(*(str));
-		if (*str)
-			str++;
-		flag++;
-	}
-	if (flag)
 		str = ft_inout_file(node, str);
+		node->full_cmd[i++] = ft_strdup(*str);
+		str++;
+	}
+	if (node->full_cmd)
+		node->full_cmd[i] = NULL;
 	return (str);
 }
 
@@ -138,22 +44,11 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 	while (*str && ft_strncmp("|", *str, 2))
 	{
 		if (!ft_is_cm(*str, node))
-			node->path = get_cmd_or_cmdpath(env, *str);//Funcion de iban que devvuelve el path completo del comando
+			node->path = get_cmd_or_cmdpath(env, *str);
 		else
 			node->path = ft_strdup(*str);
 		num_arg = ft_num_args(str);
-		node->full_cmd = malloc(sizeof(char *) * (num_arg + 1));
-		if (node->full_cmd)
-			node->full_cmd[i++] = node->path;
-		str++;
-		while (i < num_arg && node->full_cmd)
-		{
-			str = ft_inout_file(node, str);
-			node->full_cmd[i++] = ft_strdup(*str);
-			str++;
-		}
-		if (node->full_cmd)
-			node->full_cmd[i] = NULL;
+		str = ft_fill_full_cmd(node, num_arg, str);
 		str = ft_inout_file(node, str);
 	}
 	return (++str);
@@ -205,7 +100,8 @@ int	ft_err_node(t_px node)
 		return (ft_error(NPERM, node.infile, 10), 5);
 	if (node.in_flag == 2 && !node.limit)
 		return (ft_error(SYNERR, NULL, 20), 4);
-	if (node.in_flag == 2 && (access(".tmp", F_OK) == 0 && access(".tmp", W_OK) < 0))
+	if (node.in_flag == 2 && (access(".tmp", F_OK) == 0
+			&& access(".tmp", W_OK) < 0))
 		return (ft_error(NPERM, ".temp", 10), 5);
 	return (0);
 }
@@ -252,7 +148,6 @@ void	ft_free_nodes(t_px *nodes)
 			free(nodes[i].limit);
 		i++;
 	}
-	//free((*nodes).info);
 	free(nodes);
 }
 
@@ -263,31 +158,11 @@ void	ft_free_nodes(t_px *nodes)
 t_px	*ft_parse(char **str, t_info *info)
 {
 	t_px	*nodes;
-	//t_info	*info;
 	int		i;
-	/*static int	cont;
 
-	if (!cont)
-		cont = 0;*/
 	i = 0;
-	/*info = malloc(sizeof(t_info));
-	if (!info)
-		return (ft_error(MEM, NULL, 2));*/
 	info->cmd_amount = ft_node_quant(str);
 	info->fd = NULL;
-	//info->envcp = env;
-	/*printf("cont: %i\n", cont);
-	if (cont == 0)
-		info->envcp = env;
-	cont += 1;*/
-
-	/*printf("\n***************************\n\n");
-	int n = 0;
-	while (info->envcp[n])
-	{
-		printf("%s\n", info->envcp[n]);
-		n++;
-	}*/
 	nodes = ft_init_nodes(info);
 	if (!nodes)
 		return (free(info), NULL);
@@ -300,7 +175,5 @@ t_px	*ft_parse(char **str, t_info *info)
 	{
 		return (ft_free_nodes(nodes), NULL);
 	}
-
 	return (nodes);
 }
-

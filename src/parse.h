@@ -107,6 +107,10 @@ int		ft_node_quant(char **str);
 void	ft_free_nodes(t_px *nodes);
 t_px	*ft_parse(char **str, t_info *info);
 
+char	**ft_inout_file(t_px *node, char **str);
+int 	ft_is_cm(char *str, t_px *node);
+int 	ft_num_args(char **str);
+
 void	ft_handle_client(int sig);
 void	ft_2nd_handler(int sig);
 
