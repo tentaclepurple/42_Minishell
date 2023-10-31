@@ -6,11 +6,11 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/25 19:31:57 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/31 12:56:21 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../parse.h"
+#include "../../inc/parse.h"
 
 /* 
 	if there is more than 1 command, make dups.
@@ -118,7 +118,10 @@ int	pipex_p(t_px *px)
 				ft_child(&px[i], i);
 			ft_fd_close(px, i);
 			waitpid(pid, &g_stat, 0);
-			g_stat = WEXITSTATUS(g_stat);
+			if (WIFSIGNALED(g_stat))
+				g_stat = 130;
+			else
+				g_stat = WEXITSTATUS(g_stat);
 		}
 		else
 			ft_fd_close(px, i);
@@ -133,6 +136,7 @@ void	pipex(t_px *px)
 
 	sa.sa_handler = &ft_2nd_handler;
 	sigaction(SIGINT, &sa, NULL);
+	//sigaction(SIGQUIT, &sa, NULL);
 	ft_alloc_fd(px);
 	if (!px->info->fd)
 		return ;

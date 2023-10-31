@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 12:26:06 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/24 17:58:47 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:19:00 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../parse.h"
+#include "../../inc/parse.h"
 
 void	*ft_error(int err_type, char *param, int err)
 {
@@ -39,6 +39,7 @@ void	*ft_error(int err_type, char *param, int err)
 		ft_printf("minishell: Not a directory: %s\n", param);
 	return (NULL);
 }
+
 void	*ft_bt_error(int err_type, char *param, int err)
 {
 	g_stat = err;

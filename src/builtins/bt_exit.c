@@ -6,11 +6,11 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:37:05 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/26 12:33:04 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/31 12:14:20 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parse.h"
+#include "../../inc/parse.h"
 
 static int	ft_atoi_exit(const char *str, long *nbr)
 {
@@ -47,7 +47,10 @@ int	ft_bt_exit(t_px *node)
 
 	ft_printf("exit\n");
 	if (!node->full_cmd[1])
+	{
+		g_stat = 0;
 		return (1);
+	}
 	if (ft_atoi_exit(node->full_cmd[1], nbr) < 0)
 	{
 		ft_printf("minishell: exit: %s: numeric argument required\n", \

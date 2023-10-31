@@ -6,11 +6,11 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/25 19:13:03 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:16:41 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../parse.h"
+#include "../../inc/parse.h"
 
 int	check_slash(char *str)
 {

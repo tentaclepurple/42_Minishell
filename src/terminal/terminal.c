@@ -6,11 +6,45 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/27 11:31:18 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/31 13:11:08 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../parse.h"
+#include "../../inc/parse.h"
+
+int	ft_lines2(char *str, t_info *info, char ***res)
+{
+	str = ft_correct_str(str);
+	if (!str)
+		return (1);
+	*res = ft_split_str(str, ' ');
+	free (str);
+	if (!(*res))
+		return (2);
+	if (ft_check_var(*res, info->envcp))
+		return (ft_free_split(*res), 3);
+	*res = ft_correc_special(*res, "<>|&");
+	if (!(*res))
+		return (3);
+	return (0);
+}
+
+void	ft_open_outfiles(t_px *nodes)
+{
+	int	i;
+	int	fd;
+
+	i = 0;
+	while (i < nodes->info->cmd_amount)
+	{
+		if (nodes[i].outfile)
+		{
+			fd = open(nodes[i].outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			close(fd);
+		}
+		i++;
+	}
+}
 
 //int	ft_lines(char *str, char **env)
 int	ft_lines(char *str, t_info *info)
@@ -18,18 +52,8 @@ int	ft_lines(char *str, t_info *info)
 	char	**res;
 	t_px	*nodes;
 
-	str = ft_correct_str(str);
-	if (!str)
+	if (ft_lines2(str, info, &res))
 		return (1);
-	res = ft_split_str(str, ' ');
-	free (str);
-	if (!res)
-		return (2);
-	if (ft_check_var(res, info->envcp))
-		return (ft_free_split(res), 3);
-	res = ft_correc_special(res, "<>|&");
-	if (!res)
-		return (3);
 	if (!ft_clean_quotes(res))
 		return (ft_free_split(res), 1);
 	nodes = ft_parse(res, info);
@@ -44,6 +68,7 @@ int	ft_lines(char *str, t_info *info)
 			return (4);
 		}
 	}
+	ft_open_outfiles(nodes);
 	pipex(nodes);
 	ft_free_nodes(nodes);
 	return (0);
@@ -82,20 +107,26 @@ char	*get_prompt(char **env)
 	return (free(user), prompt);
 }
 
+void	ft_set_sig(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = &ft_handle_client;
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
+}	
+
 //void	terminal(char **env)
 void	terminal(t_info *info)
 {
 	char				*input;
 	char				*prompt;
-	struct sigaction	sa;
 
 	prompt = get_prompt(info->envcp);
 	while (1)
 	{
-		sa.sa_handler = &ft_handle_client;
-		sigaction(SIGINT, &sa, NULL);
-		sa.sa_handler = SIG_IGN;
-		sigaction(SIGQUIT, &sa, NULL);
+		ft_set_sig();
 		input = readline(prompt);
 		if (!input)
 			break ;
@@ -112,11 +143,6 @@ void	terminal(t_info *info)
 	}
 	free(prompt);
 }
-
-/*if (input[0])
-	add_history(input);
-if (!ft_strcmp("clear", input))
-	printf("\033[H\033[2J");*/
 
 void	terminal_options(char *input)
 {

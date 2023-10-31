@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wilcard.c                                          :+:      :+:    :+:   */
+/*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:02:32 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/31 10:12:35 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/31 20:15:22 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../src/parse.h"
+#include"../inc/parse.h"
 
 
 
@@ -42,11 +42,12 @@ int	count_dir(void)
 	return (count);
 }
 
-char	**create_exp_cmdargs(char **cmdargs)
+char	**create_exp_cmdargs(char **cmdargs, int *size)
 {
 	char	**exp_cmdargs;
 
-	exp_cmdargs = malloc(sizeof(char *) * (ft_matlen(cmdargs) * count_dir()));
+	*size = (ft_matlen(cmdargs) * count_dir()) + 1;
+	exp_cmdargs = malloc(sizeof(char *) * *size);
 	ft_bzero(exp_cmdargs, sizeof(char *) * (ft_matlen(cmdargs) * count_dir()));
 	exp_cmdargs[0] = ft_strdup(cmdargs[0]);
 	return (exp_cmdargs);
@@ -78,12 +79,6 @@ int	find_wild_match(char *pattern, char *str)
 	return (*str == '\0');
 }
 
-
-
-
-
-
-
 void	fill_exp_cmdargs(char *pattern, char ***exp_cmdargs)
 {
 	static int		j = 1;
@@ -94,7 +89,15 @@ void	fill_exp_cmdargs(char *pattern, char ***exp_cmdargs)
 	entry = readdir(dir);
 	while (entry != NULL)
 	{	
-		if (find_wild_match(pattern, entry->d_name))
+		if (!ft_strcmp("*", pattern))
+		{
+			if (entry->d_name[0] != '.')
+			{
+				(*exp_cmdargs)[j] = ft_strdup(entry->d_name);
+				j++;
+			}
+		}
+		else if (find_wild_match(pattern, entry->d_name))
 		{
 			(*exp_cmdargs)[j] = ft_strdup(entry->d_name);
 			j++;
@@ -103,30 +106,63 @@ void	fill_exp_cmdargs(char *pattern, char ***exp_cmdargs)
 	}
 	closedir(dir);
 }
+char	**trim_excess(char **exp, int size)
+{
+	char	**trim;
+	int		len;
+	int		i;
+
+	(void)size;
+	len = ft_matlen(exp);
+	printf("Mamones\n");
+	trim = malloc(sizeof(char *) * (len + 1));
+	trim[len] = NULL;
+	i = 0;
+	printf("len: %i\n", len);
+	while (i < len)
+	{
+		trim[i] = ft_strdup(exp[i]);
+		i++;
+	}
+	ft_free_split(exp);
+	return (trim);	
+}
+
 
 void	ft_wildcard(char ***cmdargs)
 {
 	int		i;
+	int		size;
 	char	**exp_cmdargs;
+	char	**exp_trim;
 
 	i = 1;
-	exp_cmdargs = create_exp_cmdargs(*cmdargs);
+	exp_cmdargs = create_exp_cmdargs(*cmdargs, &size);
 	while ((*cmdargs)[i])
 	{
 		if (ft_strchr((*cmdargs)[i], '*'))
-		{
 			fill_exp_cmdargs((*cmdargs)[i], &exp_cmdargs);
-		}
 		i++;
 	}
-	i = 0;
+		
+	
+
+	
+	exp_trim = trim_excess(exp_cmdargs, size);
 	//liberar cmdargs;
 	//cmdargs = exp_cmdargs;
-	while (exp_cmdargs[i])
+	
+	i = 0;
+	while (exp_trim[i])
+	{
+		printf("el cmdargs expandido %i : %s\n", i, exp_trim[i]);
+		i++;
+	}  
+/*	while (exp_cmdargs[i])
 	{
 		printf("el cmdargs expandido %i : %s\n", i, exp_cmdargs[i]);
 		i++;
-	}  
+	}  */
 }
 
 int	main()
@@ -136,10 +172,10 @@ int	main()
 	cmdargs = malloc(sizeof(char *) * 10);
 	cmdargs[0] = ft_strdup("ls");
 	//cmdargs[1] = ft_strdup("*no*i*.*x*");
-	cmdargs[1] = ft_strdup(".*");
-	//cmdargs[3] = ft_strdup("man*");
-	//cmdargs[2] = ft_strdup("*");
-	cmdargs[2] = NULL;
+	cmdargs[1] = ft_strdup("*");
+	cmdargs[2] = ft_strdup("man*");
+	cmdargs[3] = ft_strdup("*a*t*.*");
+	cmdargs[4] = NULL;
 	ft_wildcard(&cmdargs);
 	return (0);
 }

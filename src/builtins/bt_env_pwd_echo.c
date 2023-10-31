@@ -6,11 +6,11 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:50:29 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/27 10:32:00 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:16:23 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parse.h"
+#include "../../inc/parse.h"
 
 void	ft_env(char **env)
 {

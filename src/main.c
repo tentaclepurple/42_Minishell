@@ -6,11 +6,11 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/10/26 19:22:39 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/31 12:41:24 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"parse.h"
+#include"../inc/parse.h"
 #include<libc.h>
 
 //Function to handle SIGINT signal received
@@ -21,6 +21,7 @@ void	ft_handle_client(int sig)
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
+		g_stat = 1;
 	}
 }
 
@@ -30,6 +31,7 @@ void	ft_2nd_handler(int sig)
 	if (sig == SIGINT)
 	{
 		ft_printf("\n");
+		g_stat = 130;
 	}
 	else if (sig == SIGQUIT)
 	{

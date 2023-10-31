@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:17:01 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/25 19:17:32 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:16:41 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../parse.h"
+#include "../../inc/parse.h"
 
 //Returns the node quantity tto be allocated for the parsing of str
 int	ft_node_quant(char **str)

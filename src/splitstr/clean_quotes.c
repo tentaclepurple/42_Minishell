@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:51:13 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/26 15:09:04 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:16:41 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../parse.h"
+#include "../../inc/parse.h"
 
 int	ft_quote_cut_len(char *str)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   correc_special.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:39:38 by josu              #+#    #+#             */
-/*   Updated: 2023/10/20 08:49:50 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:44:36 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../parse.h"
+#include "../../inc/parse.h"
 
 static int	ft_correc_len(char **str, char *spec)
 {
@@ -45,10 +45,29 @@ char	*ft_fill_wrd(char *str)
 	return (n_wrd);
 }
 
-static int ft_correc_fill(char **res, char **str, char *spec)
+static int	ft_fill_wrd_cnd(char **res, char ***str, char *spec, int *len)
+{
+	char	*n_wrd;
+
+	if (ft_strchr(spec, (*str)[0][0]) && ((*str)[0][0] == (*str)[1][0])
+			&& ft_strlen((*str)[0]) == 1 && ft_strlen((*str)[1]) == 1)
+	{
+		n_wrd = ft_fill_wrd((*str)[0]);
+		if (!n_wrd)
+			return (ft_free_split((*str)), 1);
+		free((*str)[0]);
+		free((*str)[1]);
+		res[(*len)++] = n_wrd;
+		(*str)++;
+	}
+	else
+		res[(*len)++] = **str;
+	return (0);
+}
+
+static int	ft_correc_fill(char **res, char **str, char *spec)
 {
 	int		len;
-	char	*n_wrd;
 	char	**str_mem;
 
 	len = 0;
@@ -57,19 +76,8 @@ static int ft_correc_fill(char **res, char **str, char *spec)
 		return (0);
 	while (str[0] && str[1])
 	{
-		if (ft_strchr(spec, str[0][0]) && (str[0][0] == str[1][0])
-			&& ft_strlen(str[0]) == 1 && ft_strlen(str[1]) == 1)
-		{
-			n_wrd = ft_fill_wrd(str[0]);
-			if (!n_wrd)
-				return (ft_free_split(str), 1);
-			free(str[0]);
-			free(str[1]);
-			res[len++] = n_wrd;
-			str ++;
-		}
-		else
-			res[len++] = *str;
+		if (ft_fill_wrd_cnd(res, &str, spec, &len))
+			return (1);
 		str++;
 	}
 	if (str)

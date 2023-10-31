@@ -6,11 +6,11 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:08:01 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/25 19:40:11 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:16:23 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parse.h"
+#include "../../inc/parse.h"
 
 int	find_equal(char *var, int *found)
 {

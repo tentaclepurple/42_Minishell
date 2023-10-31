@@ -1,5 +1,5 @@
 
-#include"../parse.h"
+#include "../../inc/parse.h"
 
 void	ft_fd_close(t_px *px, int j)
 {

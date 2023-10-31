@@ -6,11 +6,11 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:52:08 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/26 19:40:05 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:16:41 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../parse.h"
+#include "../../inc/parse.h"
 
 void	ft_getline_aux(char c, char **str)
 {

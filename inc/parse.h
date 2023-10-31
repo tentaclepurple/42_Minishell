@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/31 10:25:37 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/31 19:49:55 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,31 @@ int		ft_check_var(char **str, char **env);
 char	**ft_correc_special(char **str, char *spec);
 int		ft_clean_quotes(char **str);
 
+//Spllit
+int		ft_str_chlen(char const *s, char c);
+int		ft_nbr_wrd(char const *s, char c);
+char	*ft_fill_word(char *wrd, char *str, int len);
+void	ft_mv_in_quotes(char const *s, unsigned int *i);
 char	*ft_correct_str(char *str);
 char	**ft_split_str(char const *s, char c);
 void	ft_free_split(char **str);
 
-int		ft_node_quant(char **str);
-void	ft_free_nodes(t_px *nodes);
-t_px	*ft_parse(char **str, t_info *info);
-
 char	**ft_inout_file(t_px *node, char **str);
-int 	ft_is_cm(char *str, t_px *node);
-int 	ft_num_args(char **str);
+int		ft_is_cm(char *str, t_px *node);
+int		ft_num_args(char **str);
 
 void	ft_handle_client(int sig);
 void	ft_2nd_handler(int sig);
+
+/* 
+parse
+*/
+t_px	*ft_parse(char **str, t_info *info);
+int		ft_node_quant(char **str);
+void	ft_free_nodes(t_px *nodes);
+char	**ft_parse_loop(t_px *node, char **str, char **env);
+t_px	*ft_init_nodes(t_info *info);
+int		ft_check_nodes(t_px *nodes);
 
 /*
 ERROR.C
@@ -203,8 +214,9 @@ void	fill_exp_cmdargs(char *pattern, char ***exp_cmdargs);
 void	ft_wildcard(char ***cmdargs);
 int		ft_matlen(char **mat);
 int		count_dir(void);
-char	**create_exp_cmdargs(char **cmdargs);
+char	**create_exp_cmdargs(char **cmdargs, int *size);
 int		find_wild_match(char *pattern, char *str);
+char	**trim_excess(char **exp, int size);
 
 int	g_stat;
 

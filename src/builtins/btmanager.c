@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   btmanager.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:00:14 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/24 18:14:39 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/10/31 11:16:23 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../parse.h"
+#include "../../inc/parse.h"
 
 void	ft_execbi_child(t_px *px)
 {

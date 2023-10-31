@@ -1,23 +1,26 @@
 NAME = minishell
 LIBNAME = libft.a
-SRC = 	./splitstr/split.c \
-		./splitstr/clean_quotes.c \
-		./splitstr/check_var.c  \
-		./splitstr/correc_special.c \
-		./parser/parser.c \
-		./parser/executor.c \
-		./parser/heredoc.c \
-		./parser/getpaths.c \
-		./parser/parser_util.c \
-		./terminal/terminal.c main.c \
-		./error/error.c \
-		./envutils/envcp.c \
-		./builtins/bt_cd.c \
-		./builtins/bt_env_pwd_echo.c \
-		./builtins/bt_export.c \
-		./builtins/bt_unset.c \
-		./builtins/btmanager.c \
-		./builtins/bt_exit.c
+SRC = 	./src/splitstr/split.c \
+		./src/splitstr/split_utils.c \
+		./src/splitstr/clean_quotes.c \
+		./src/splitstr/check_var.c  \
+		./src/splitstr/correc_special.c \
+		./src/parser/parser.c \
+		./src/parser/executor.c \
+		./src/parser/heredoc.c \
+		./src/parser/getpaths.c \
+		./src/parser/parser_util.c \
+		./src/parser/parser_util2.c \
+		./src/terminal/terminal.c \
+		./src/main.c \
+		./src/error/error.c \
+		./src/envutils/envcp.c \
+		./src/builtins/bt_cd.c \
+		./src/builtins/bt_env_pwd_echo.c \
+		./src/builtins/bt_export.c \
+		./src/builtins/bt_unset.c \
+		./src/builtins/btmanager.c \
+		./src/builtins/bt_exit.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -38,8 +41,8 @@ $(NAME): $(OBJ) $(LIBNAME)
 
 $(LIBNAME):
 	@echo $(CURSIVE)$(GRAY) "     - Compiling LIBFT $(LIBNAME)..." $(NONE)
-	@$(MAKE) -C ../libft all
-	@cp ../libft/libft.a $(LIBNAME)
+	@$(MAKE) -C ./libft all
+	@cp ./libft/libft.a $(LIBNAME)
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
 %.o: %.c
@@ -47,12 +50,12 @@ $(LIBNAME):
 
 clean:
 	@echo $(CURSIVE)$(GRAY) "     - Removing object files..." $(NONE)
-	@$(MAKE) -C ../libft clean
+	@$(MAKE) -C ./libft clean
 	@rm -rf $(OBJ)
 
 fclean: clean
 	@echo $(CURSIVE)$(GRAY) "     - Removing $(NAME) And $(LIBNAME)..." $(NONE)
-	@$(MAKE) -C ../libft fclean
+	@$(MAKE) -C ./libft fclean
 	@rm -rf $(NAME) $(LIBNAME)
 
 re: fclean all
