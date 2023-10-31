@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/27 11:24:12 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/31 10:25:37 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,16 @@ void	ft_execbi_child(t_px *px);
 bt_exit.c
 */
 int		ft_bt_exit(t_px *node);
+
+/* 
+wildcard
+ */
+void	fill_exp_cmdargs(char *pattern, char ***exp_cmdargs);
+void	ft_wildcard(char ***cmdargs);
+int		ft_matlen(char **mat);
+int		count_dir(void);
+char	**create_exp_cmdargs(char **cmdargs);
+int		find_wild_match(char *pattern, char *str);
 
 int	g_stat;
 
