@@ -4,6 +4,7 @@
         "functional": "c",
         "libft.h": "c",
         "__node_handle": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "locale": "c"
     }
 }

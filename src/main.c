@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/10/25 10:18:58 by imontero         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:22:39 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,32 +35,29 @@ void	ft_2nd_handler(int sig)
 	{
 		perror("Quit");
 	}
-	//	ft_printf("Quit: %i\n", errno);
 }
 
-/* 
-	comp -lreadline terminal.c libft.a -L/Users/$USER/.brew/opt/readline/lib -I/Users/$USER/.brew/opt/readline/include && ./a.out
-*/
 int	main(int argc, char **argv, char **env)
 {
-	(void)argv;
 	t_info	*info;
-	
+
+	(void)argv;
 	g_stat = 0;
 	if (!check_no_env(env))
 		return (printf("Invalid env\n"), -1);
 	if (argc != 1)
-		return(printf("Invalid arguments\n"), -2);
+		return (printf("Invalid arguments\n"), -2);
 	info = malloc(sizeof(t_info));
 	if (!info)
 		return (ft_error(MEM, NULL, 2), 2);
 	info->envcp = ft_env_cpy(env);
+	info->envcp = del_var(info->envcp, "_");
+	info->envcp = add_var(info->envcp, "_=/usr/bin/env");
 	info->envcp = del_var(info->envcp, "OLDPWD");
 	info->homepath = getenv("HOME");
 	if (!info->homepath)
-		return(printf("Invalid Home\n"), -1);
+		return (printf("Invalid Home\n"), -1);
 	terminal(info);
 	free(info);
-	//printf("status = %i\n", g_stat);
 	return (g_stat);
 }

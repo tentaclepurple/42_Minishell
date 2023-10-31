@@ -5,8 +5,10 @@ SRC = 	./splitstr/split.c \
 		./splitstr/check_var.c  \
 		./splitstr/correc_special.c \
 		./parser/parser.c \
+		./parser/executor.c \
+		./parser/heredoc.c \
+		./parser/getpaths.c \
 		./parser/parser_util.c \
-		./parser/iban.c \
 		./terminal/terminal.c main.c \
 		./error/error.c \
 		./envutils/envcp.c \
