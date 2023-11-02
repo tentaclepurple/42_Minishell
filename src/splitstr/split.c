@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/31 11:53:09 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/02 09:11:49 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	ft_strcorr_len(char	*str, char *act)
 		ft_mv_in_quotes(str, &i);
 		if (ft_strchr(act, str[i]))
 			extra += 2;
-		i++;
+		if (str[i])
+			i++;
 	}
 	return (i + extra);
 }
@@ -132,7 +133,8 @@ char	*ft_correct_str(char *str)
 	while (str[i])
 	{
 		ft_aux_correct_str(res, str, &i, &extra);
-		i++;
+		if (str[i])
+			i++;
 	}
 	res[i + extra] = '\0';
 	return (res);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_var.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:43:53 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/31 11:16:41 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/02 09:46:37 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,10 +172,14 @@ int	ft_check_var(char **str, char **env)
 		while (*str && (*str)[i])
 		{	
 			if ((*str)[i] == '"')
+			{
+				i++;
 				quote++;
+			}
 			if (ft_check_var_aux(env, &(*str), &i, &quote))
 				return (2);
-			i++;
+			if (i == -1 || (*str)[i])
+				i++;
 		}
 		str++;
 	}
