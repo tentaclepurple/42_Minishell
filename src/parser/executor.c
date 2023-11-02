@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/11/02 11:05:31 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:14:43 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,7 @@ int	pipex_p(t_px *px)
 				ft_child(&px[i], i);
 			ft_fd_close(px, i);
 			waitpid(pid, &g_stat, 0);
-			struct sigaction	sa;
-
-			sa.sa_handler = SIG_IGN;
-			sigaction(SIGQUIT, &sa, NULL);
-			if (WIFSIGNALED(g_stat))
-				g_stat = 130;
-			else
-				g_stat = WEXITSTATUS(g_stat);
+			ft_stat_signaled();
 		}
 		else
 			ft_fd_close(px, i);
@@ -140,7 +133,6 @@ void	pipex(t_px *px)
 
 	sa.sa_handler = &ft_2nd_handler;
 	sigaction(SIGINT, &sa, NULL);
-	//sigaction(SIGQUIT, &sa, NULL);
 	ft_alloc_fd(px);
 	if (!px->info->fd)
 		return ;

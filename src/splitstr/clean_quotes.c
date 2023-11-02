@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:51:13 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/02 09:23:34 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:16:24 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int	ft_quote_cut_len(char *str, char *quote)
 {
 	int		j;
-	//char	quote;
 	int		cut;
 
 	*quote = 0;

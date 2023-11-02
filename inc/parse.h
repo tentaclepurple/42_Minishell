@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/31 19:49:55 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:14:11 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	ft_free_nodes(t_px *nodes);
 char	**ft_parse_loop(t_px *node, char **str, char **env);
 t_px	*ft_init_nodes(t_info *info);
 int		ft_check_nodes(t_px *nodes);
+void	ft_stat_signaled(void);
 
 /*
 ERROR.C

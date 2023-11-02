@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_util2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/31 11:16:41 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:13:50 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,12 @@ t_px	*ft_parse(char **str, t_info *info)
 		return (ft_free_nodes(nodes), NULL);
 	}
 	return (nodes);
+}
+
+void	ft_stat_signaled(void)
+{
+	if (WIFSIGNALED(g_stat))
+		g_stat = 130;
+	else
+		g_stat = WEXITSTATUS(g_stat);
 }
