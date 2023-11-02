@@ -144,28 +144,17 @@ void	ft_wildcard(char ***cmdargs)
 			fill_exp_cmdargs((*cmdargs)[i], &exp_cmdargs);
 		i++;
 	}
-		
-	
-
-	
 	exp_trim = trim_excess(exp_cmdargs, size);
-	
 	i = 0;
 	while (exp_trim[i])
 	{
 		printf("el cmdargs expandido %i : %s\n", i, exp_trim[i]);
 		i++;
-	}  
-/*	while (exp_cmdargs[i])
-	{
-		printf("el cmdargs expandido %i : %s\n", i, exp_cmdargs[i]);
-		i++;
-	}  */
-	//liberar cmdargs;
+	}
 	ft_free_split(*cmdargs);
 
-	//cmdargs = exp_cmdargs;
-	ft_free_split(exp_trim); //este es el bueno
+	*cmdargs = exp_trim;
+	//ft_free_split(exp_trim); //este es el bueno
 }
 
 int	main()
