@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include"../inc/parse.h"
+#include"../libft/libft.h"
 
 
 
@@ -114,7 +115,6 @@ char	**trim_excess(char **exp, int size)
 
 	(void)size;
 	len = ft_matlen(exp);
-	printf("Mamones\n");
 	trim = malloc(sizeof(char *) * (len + 1));
 	trim[len] = NULL;
 	i = 0;
@@ -149,8 +149,6 @@ void	ft_wildcard(char ***cmdargs)
 
 	
 	exp_trim = trim_excess(exp_cmdargs, size);
-	//liberar cmdargs;
-	//cmdargs = exp_cmdargs;
 	
 	i = 0;
 	while (exp_trim[i])
@@ -163,6 +161,11 @@ void	ft_wildcard(char ***cmdargs)
 		printf("el cmdargs expandido %i : %s\n", i, exp_cmdargs[i]);
 		i++;
 	}  */
+	//liberar cmdargs;
+	ft_free_split(*cmdargs);
+
+	//cmdargs = exp_cmdargs;
+	ft_free_split(exp_trim); //este es el bueno
 }
 
 int	main()
@@ -177,5 +180,6 @@ int	main()
 	cmdargs[3] = ft_strdup("*a*t*.*");
 	cmdargs[4] = NULL;
 	ft_wildcard(&cmdargs);
+	ft_free_split(cmdargs);
 	return (0);
 }
