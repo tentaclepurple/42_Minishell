@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/10/31 12:41:24 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/02 11:09:53 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@ void	ft_handle_client(int sig)
 //Function to handle SIGINT signal received
 void	ft_2nd_handler(int sig)
 {
-	if (sig == SIGINT)
+	if (sig == SIGQUIT)
+	{
+		ft_printf("Quit\n");
+	}
+	else if (sig == SIGINT)
 	{
 		ft_printf("\n");
-		g_stat = 130;
-	}
-	else if (sig == SIGQUIT)
-	{
-		perror("Quit");
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:52:08 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/31 11:16:41 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/02 11:07:54 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	ft_child(t_px *px, int n)
 	if (px->out_flag > 0)
 		ft_output_redirect(px);
 	ft_fd_close(px, px->info->cmd_amount - 1);
-	sa.sa_handler = &ft_2nd_handler;
+	sa.sa_handler = SIG_DFL;
 	sigaction(SIGQUIT, &sa, NULL);
 	if (px->type == BIc)
 	{

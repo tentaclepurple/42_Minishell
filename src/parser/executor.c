@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/31 12:56:21 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/02 11:05:31 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,10 @@ int	pipex_p(t_px *px)
 				ft_child(&px[i], i);
 			ft_fd_close(px, i);
 			waitpid(pid, &g_stat, 0);
+			struct sigaction	sa;
+
+			sa.sa_handler = SIG_IGN;
+			sigaction(SIGQUIT, &sa, NULL);
 			if (WIFSIGNALED(g_stat))
 				g_stat = 130;
 			else

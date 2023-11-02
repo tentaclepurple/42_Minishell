@@ -3,33 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   clean_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:51:13 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/31 11:16:41 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/02 09:23:34 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-int	ft_quote_cut_len(char *str)
+//Function to calc the new length of the string once quote-cleaned
+int	ft_quote_cut_len(char *str, char *quote)
 {
 	int		j;
-	char	quote;
+	//char	quote;
 	int		cut;
 
-	quote = 0;
+	*quote = 0;
 	j = 0;
 	cut = 0;
 	while (str[j])
 	{
-		if (quote && str[j] == quote)
+		if (*quote && str[j] == *quote)
 		{
 			cut += 2;
-			quote = 0;
+			*quote = 0;
 		}
-		else if (!quote && (str[j] == '\'' || str[j] == '"'))
-			quote = str[j];
+		else if (!*quote && (str[j] == '\'' || str[j] == '"'))
+			*quote = str[j];
 		j++;
 	}
 	return (j - cut);
@@ -69,17 +70,18 @@ int	ft_clean_quotes(char **str)
 	while (*str)
 	{
 		quote = 0;
-		len = ft_quote_cut_len(*str);
+		len = ft_quote_cut_len(*str, &quote);
 		if (len != ft_strlen(*str))
 		{
+			quote = 0;
 			new = ft_new_quote(len, str, &quote);
 			if (!new)
 				return (1);
 			free (*str);
 			*str = new;
-			if (quote)
-				return ((int)ft_error(QUOTE, NULL, 1));
 		}
+		if (quote)
+			return ((int)ft_error(QUOTE, NULL, 1));
 		str++;
 	}
 	return (1);
