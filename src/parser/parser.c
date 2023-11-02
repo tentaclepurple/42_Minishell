@@ -37,9 +37,9 @@ char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
 char	**ft_parse_loop(t_px *node, char **str, char **env)
 {
 	int		num_arg;
-	int		i;
+	//int		i;
 
-	i = 0;
+	//i = 0;
 	str = ft_inout_file(node, str);
 	while (*str && ft_strncmp("|", *str, 2))
 	{

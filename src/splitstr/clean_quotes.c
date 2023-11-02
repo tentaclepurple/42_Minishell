@@ -80,7 +80,7 @@ int	ft_clean_quotes(char **str)
 			*str = new;
 		}
 		if (quote)
-			return ((int)ft_error(QUOTE, NULL, 1));
+			return (ft_error(QUOTE, NULL, 1), 0);
 		str++;
 	}
 	return (1);

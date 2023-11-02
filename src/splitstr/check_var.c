@@ -151,7 +151,7 @@ static int	ft_check_var_aux(char **env, char **str, int *i, int *quote)
 	{
 		*str = ft_expand_var(env, *str, *i, (*quote) % 2);
 		if (!*str)
-			return (ft_free_split((str + 1)), (int)ft_error(MEM, NULL, 2));
+			return (ft_free_split((str + 1)), ft_error(MEM, NULL, 2), 0);
 		*i = -1;
 	}
 	else if ((*str)[*i] == '"' && (*quote))

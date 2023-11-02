@@ -56,10 +56,10 @@ void	ft_cd_oldpwd(t_px *px, char ***envcpy)
 
 char	**ft_cd(t_px *px)
 {
-	char	*path;
+	//char	*path;
 	char	**envcpy;
 
-	path = NULL;
+	//path = NULL;
 	envcpy = px->info->envcp;
 	if (px->full_cmd[1] == NULL || ft_strcmp(px->full_cmd[1], "--") == 0)
 		ft_cd_home(px, &envcpy);
