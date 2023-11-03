@@ -158,6 +158,8 @@ int		check_no_env(char **env);
 void	terminal(t_info *info);
 int		check_env_and_vars(char **env);
 void	terminal_options(char *input);
+void	ft_open_outfiles(t_px *nodes);
+int		ft_lines2(char *str, t_info *info, char ***res);
 
 /*
 envutils

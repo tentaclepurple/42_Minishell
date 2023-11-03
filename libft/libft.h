@@ -13,11 +13,11 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include<stdlib.h>
-# include<unistd.h>
-# include<stdarg.h>
-# include<stdint.h>
-# include<fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdarg.h>
+# include <stdint.h>
+# include <fcntl.h>
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -107,8 +107,7 @@ t_flag	ft_flags_zeros(void);
 int		ft_process_flags(int i, t_flag *flags, const char *str);
 int		ft_print_width(int tot_width, int filled, int zeros);
 
-
-//Get Next Line
+/* Get Next Line */
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif

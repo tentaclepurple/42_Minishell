@@ -61,6 +61,7 @@ int	main(int argc, char **argv, char **env)
 	if (!info->homepath)
 		return (printf("Invalid Home\n"), -1);
 	terminal(info);
+	ft_free_split(info->envcp);
 	free(info);
 	return (g_stat);
 }

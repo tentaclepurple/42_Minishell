@@ -55,14 +55,13 @@ char	*get_cmd_or_cmdpath(char **env, char *str)
 	char	*path_and_cmd;
 
 	env_path = NULL;
-	i = 0;
 	if (check_slash(str) > 0 && !access(str, F_OK))
 		return (ft_strdup(str));
 	else if (check_slash(str) == 0)
 	{
 		env_path = get_path(env);
 		i = 0;
-		while (env_path[i])
+		while (env_path && env_path[i])
 		{
 			aux = ft_strjoin(env_path[i++], "/");
 			path_and_cmd = ft_strjoin(aux, str);
@@ -71,7 +70,8 @@ char	*get_cmd_or_cmdpath(char **env, char *str)
 				return (ft_free_split(env_path), path_and_cmd);
 			free(path_and_cmd);
 		}
-		ft_free_split(env_path);
+		if (env_path)
+			ft_free_split(env_path);
 	}
 	return (NULL);
 }

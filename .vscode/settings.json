@@ -5,6 +5,7 @@
         "libft.h": "c",
         "__node_handle": "c",
         "algorithm": "c",
-        "locale": "c"
+        "locale": "c",
+        "parse.h": "c"
     }
 }

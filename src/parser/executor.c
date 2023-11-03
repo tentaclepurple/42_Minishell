@@ -102,10 +102,17 @@ int	pipex_p(t_px *px)
 {
 	pid_t				pid;
 	int					i;
+	struct sigaction	sa;
 
 	i = 0;
 	while (i < px->info->cmd_amount)
 	{
+		if (px[i].in_flag == 2)
+		{
+			
+			sa.sa_handler = SIG_IGN;
+			sigaction(SIGQUIT, &sa, NULL);
+		}
 		if (px[i].type != BIp)
 		{
 			pid = fork();
@@ -119,6 +126,8 @@ int	pipex_p(t_px *px)
 			ft_fd_close(px, i);
 			waitpid(pid, &g_stat, 0);
 			ft_stat_signaled();
+			sa.sa_handler = &ft_2nd_handler;
+			sigaction(SIGQUIT, &sa, NULL);
 		}
 		else
 			ft_fd_close(px, i);
@@ -133,11 +142,12 @@ void	pipex(t_px *px)
 
 	sa.sa_handler = &ft_2nd_handler;
 	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 	ft_alloc_fd(px);
 	if (!px->info->fd)
 		return ;
 	if (pipex_p(px))
 		return ;
-	if (px->info->cmd_amount > 1)
-		ft_free_fd(px);
+	//if (px->info->cmd_amount > 1)
+	ft_free_fd(px);
 }

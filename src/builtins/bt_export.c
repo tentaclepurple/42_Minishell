@@ -71,9 +71,9 @@ char	**ft_export_aux(char **env, char **cmdargs)
 	int		j;
 	int		found;
 
-	i = 0;
+	i = 1;
 	found = 0;
-	while (cmdargs[++i])
+	while (cmdargs[i])
 	{
 		if (find_equal(cmdargs[i], &found) == 0)
 		{
@@ -89,6 +89,7 @@ char	**ft_export_aux(char **env, char **cmdargs)
 				j--;
 			}
 		}
+		i++;
 	}
 	return (env);
 }
