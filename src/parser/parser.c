@@ -6,7 +6,7 @@
 /*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/10/31 12:33:57 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/03 12:07:51 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
 char	**ft_parse_loop(t_px *node, char **str, char **env)
 {
 	int		num_arg;
-	//int		i;
 
-	//i = 0;
 	str = ft_inout_file(node, str);
 	while (*str && ft_strncmp("|", *str, 2))
 	{

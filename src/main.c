@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/11/02 11:09:53 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/03 12:03:38 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"../inc/parse.h"
-//#include <libc.h>
+#include <libc.h>
 #include <sys/ioctl.h>
-
 
 //Function to handle SIGINT signal received
 void	ft_handle_client(int sig)

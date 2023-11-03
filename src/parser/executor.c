@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/11/02 12:14:43 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/03 12:11:05 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int	pipex_p(t_px *px)
 	{
 		if (px[i].in_flag == 2)
 		{
-			
 			sa.sa_handler = SIG_IGN;
 			sigaction(SIGQUIT, &sa, NULL);
 		}
@@ -117,10 +116,7 @@ int	pipex_p(t_px *px)
 		{
 			pid = fork();
 			if (pid < 0)
-			{
-				ft_error(FORKERR, NULL, 4);
-				return (1);
-			}
+				return (ft_error(FORKERR, NULL, 4), 1);
 			if (pid == 0)
 				ft_child(&px[i], i);
 			ft_fd_close(px, i);
@@ -148,6 +144,5 @@ void	pipex(t_px *px)
 		return ;
 	if (pipex_p(px))
 		return ;
-	//if (px->info->cmd_amount > 1)
 	ft_free_fd(px);
 }
