@@ -150,6 +150,7 @@ void	ft_alloc_fd(t_px *px);
 void	ft_free_fd(t_px *px);
 void	write_here_doc_tmp(t_px *px);
 void	ft_getline_aux(char c, char **str);
+void	pipex_p_aux(t_px *px, int i, pid_t pid);
 
 /*
 terminal.c
@@ -160,6 +161,7 @@ int		check_env_and_vars(char **env);
 void	terminal_options(char *input);
 void	ft_open_outfiles(t_px *nodes);
 int		ft_lines2(char *str, t_info *info, char ***res);
+void	ft_open_outfiles(t_px *nodes);
 
 /*
 envutils

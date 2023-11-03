@@ -12,6 +12,7 @@ SRC = 	./src/splitstr/split.c \
 		./src/parser/parser_util.c \
 		./src/parser/parser_util2.c \
 		./src/terminal/terminal.c \
+		./src/terminal/terminal_aux.c \
 		./src/main.c \
 		./src/error/error.c \
 		./src/envutils/envcp.c \

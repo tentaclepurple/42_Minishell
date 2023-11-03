@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include"../inc/parse.h"
-#include <libc.h>
+//#include <libc.h>
 #include <sys/ioctl.h>
 
 //Function to handle SIGINT signal received
