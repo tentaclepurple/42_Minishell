@@ -57,12 +57,22 @@ void	ft_cd_oldpwd(t_px *px, char ***envcpy)
 char	**ft_cd(t_px *px)
 {
 	char	**envcpy;
+	char	*path;
 
 	envcpy = px->info->envcp;
 	if (px->full_cmd[1] == NULL || ft_strcmp(px->full_cmd[1], "--") == 0)
 		ft_cd_home(px, &envcpy);
 	else if (ft_strcmp(px->full_cmd[1], "~") == 0)
-		envcpy = ft_cd_update_env(px->info->envcp, px->info->homepath);
+	{
+		if (found_in_env("HOME=", px->info->envcp, &path))
+		{
+			envcpy = ft_cd_update_env(px->info->envcp, path);
+			printf("home = %s\n", path);
+			free(path);
+		}
+		else
+			envcpy = ft_cd_update_env(px->info->envcp, px->info->homepath);
+	}
 	else if (ft_strcmp(px->full_cmd[1], "-") == 0)
 		ft_cd_oldpwd(px, &envcpy);
 	else
