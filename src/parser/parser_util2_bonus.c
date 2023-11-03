@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_util2_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/03 09:48:58 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/03 11:30:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/parse_bonus.h"
 
 //Function to fill the complete args array
 char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
@@ -41,15 +41,19 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 
 	//i = 0;
 	str = ft_inout_file(node, str);
-	while (*str && ft_strncmp("|", *str, 2))
+	while (*str && ft_strncmp(*str, "|", 2) && ft_strncmp(*str, "&&", 3)
+		&& ft_strncmp(*str, "||", 3) && ft_strncmp(*str, ")", 2) && ft_strncmp(*str, "(", 2))
 	{
 		if (!ft_is_cm(*str, node))
 			node->path = get_cmd_or_cmdpath(env, *str);
-		else
+		else if (node->type == BIp || node->type == BIc)
 			node->path = ft_strdup(*str);
+		else
+			break ;
 		num_arg = ft_num_args(str);
 		str = ft_fill_full_cmd(node, num_arg, str);
-		str = ft_inout_file(node, str);
+		if (*str)
+			str = ft_inout_file(node, str);
 	}
 	return (++str);
 }
@@ -73,6 +77,7 @@ t_px	*ft_init_nodes(t_info *info)
 		nodes[i].limit = NULL;
 		nodes[i].in_flag = 0;
 		nodes[i].out_flag = 0;
+		nodes[i].type = 0;
 		nodes[i].info = info;
 		i++;
 	}
@@ -82,7 +87,7 @@ t_px	*ft_init_nodes(t_info *info)
 //Check inapropriate node, returns 0 if OK
 int	ft_err_node(t_px node)
 {
-	if (!node.path)
+	if (!node.path && (node.type == CMD || node.type == BIc || node.type == BIp))
 		return (ft_error(NCMD, NULL, 127), 2);
 	if (!node.full_cmd)
 		return (1);

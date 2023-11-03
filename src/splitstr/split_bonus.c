@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split.c                                            :+:      :+:    :+:   */
+/*   split_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:14:34 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/03 09:47:27 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/03 09:47:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	ft_aux_correct_str(char *res, char *str, int *i, int *extra)
 			(*i)++;
 		}
 	}
-	if (ft_strchr("<>|&", str[*i]))
+	if (ft_strchr("<>|&()", str[*i]))
 	{
 		res[*i + *extra] = ' ';
 		res[*i + *extra + 1] = str[*i];
@@ -127,7 +127,7 @@ char	*ft_correct_str(char *str)
 
 	i = 0;
 	extra = 0;
-	res = malloc(ft_strcorr_len(str, "<>|&") + 1);
+	res = malloc(ft_strcorr_len(str, "<>|&()") + 1);
 	if (!res)
 		return (ft_error(MEM, NULL, 2));
 	while (str[i])

@@ -1,4 +1,5 @@
 NAME = minishell
+NAMEBONUS = minishell_bonus
 LIBNAME = libft.a
 SRC = 	./src/splitstr/split.c \
 		./src/splitstr/split_utils.c \
@@ -21,8 +22,30 @@ SRC = 	./src/splitstr/split.c \
 		./src/builtins/bt_unset.c \
 		./src/builtins/btmanager.c \
 		./src/builtins/bt_exit.c
+SRCBONUS = 	./src/splitstr/split_bonus.c \
+		./src/splitstr/split_utils.c \
+		./src/splitstr/clean_quotes.c \
+		./src/splitstr/check_var.c  \
+		./src/splitstr/correc_special.c \
+		./src/parser/parser_bonus.c \
+		./src/parser/executor.c \
+		./src/parser/heredoc.c \
+		./src/parser/getpaths.c \
+		./src/parser/parser_util_bonus.c \
+		./src/parser/parser_util2_bonus.c \
+		./src/terminal/terminal_bonus.c \
+		./src/main.c \
+		./src/error/error.c \
+		./src/envutils/envcp.c \
+		./src/builtins/bt_cd.c \
+		./src/builtins/bt_env_pwd_echo.c \
+		./src/builtins/bt_export.c \
+		./src/builtins/bt_unset.c \
+		./src/builtins/btmanager.c \
+		./src/builtins/bt_exit.c
 
 OBJ = $(SRC:.c=.o)
+OBJBONUS = $(SRCBONUS:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 READFLAG =  -lreadline -L/Users/$(USER)/.brew/opt/readline/lib
@@ -39,6 +62,11 @@ $(NAME): $(OBJ) $(LIBNAME)
 	@gcc $(FLAGS)   $(OBJ) $(LIBNAME) $(READFLAG)  -o $(NAME)
 	@echo $(GREEN)"- Compiled -"$(NONE)
 
+bonus: $(OBJBONUS) $(LIBNAME)
+	@echo $(CURSIVE)$(GRAY) "     - Compiling $(NAMEBONUS)..." $(NONE)
+	@gcc $(FLAGS)   $(OBJBONUS) $(LIBNAME) $(READFLAG)  -o $(NAMEBONUS)
+	@echo $(GREEN)"- Compiled -"$(NONE)
+
 $(LIBNAME):
 	@echo $(CURSIVE)$(GRAY) "     - Compiling LIBFT $(LIBNAME)..." $(NONE)
 	@$(MAKE) -C ./libft all
@@ -51,7 +79,7 @@ $(LIBNAME):
 clean:
 	@echo $(CURSIVE)$(GRAY) "     - Removing object files..." $(NONE)
 	@$(MAKE) -C ./libft clean
-	@rm -rf $(OBJ)
+	@rm -rf $(OBJ) $(OBJBONUS)
 
 fclean: clean
 	@echo $(CURSIVE)$(GRAY) "     - Removing $(NAME) And $(LIBNAME)..." $(NONE)

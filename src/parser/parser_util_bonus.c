@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_util.c                                      :+:      :+:    :+:   */
+/*   parser_util_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:17:01 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/03 11:10:06 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/03 10:08:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/parse_bonus.h"
 
 //Returns the node quantity tto be allocated for the parsing of str
 int	ft_node_quant(char **str)
@@ -37,7 +37,7 @@ int	ft_node_quant(char **str)
 		}
 		str++;
 	}
-	return (i);
+	return (2*i - 1);
 }
 
 //Returns value of how many different arguments 
@@ -48,7 +48,7 @@ int	ft_num_args(char **str)
 
 	i = 0;
 	while (*str && ft_strncmp(*str, "|", 2) && ft_strncmp(*str, "&&", 3)
-		&& ft_strncmp(*str, "||", 3) && ft_strncmp(*str, ")", 2) && ft_strncmp(*str, "(", 2))
+		&& ft_strncmp(*str, "||", 3))
 	{
 		if (!ft_strncmp(*str, ">>", 3) || !ft_strncmp(*str, ">", 2)
 			|| !ft_strncmp(*str, "<<", 3) || !ft_strncmp(*str, "<", 3))
@@ -64,20 +64,28 @@ int	ft_num_args(char **str)
 	return (i);
 }
 
+//Function to fill the node type
+//Rerturns 0 if it is a cmd, 1 if not
 int	ft_is_cm(char *str, t_px *node)
 {
 	if (!ft_strcmp(str, "export") || !ft_strcmp(str, "cd")
 		|| !ft_strcmp(str, "unset") || !ft_strcmp(str, "exit"))
-	{
 		node->type = BIp;
-		return (1);
-	}
 	else if (!ft_strcmp(str, "echo") || !ft_strcmp(str, "pwd")
 		|| !ft_strcmp(str, "env"))
-	{
 		node->type = BIc;
+	else if (!ft_strcmp(str, "&&"))
+		node->type = T_AND;
+	else if (!ft_strcmp(str, "||"))
+		node->type = T_OR;
+	else if (!ft_strcmp(str, "|"))
+		node->type = T_PIPE;
+	else if (!ft_strcmp(str, "("))
+		node->type = L_PAR;
+	else if (!ft_strcmp(str, ")"))
+		node->type = R_PAR;
+	if (node->type != NONE)
 		return (1);
-	}
 	node->type = CMD;
 	return (0);
 }
