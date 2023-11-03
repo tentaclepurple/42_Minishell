@@ -64,14 +64,28 @@ char	**ft_cd(t_px *px)
 		ft_cd_home(px, &envcpy);
 	else if (ft_strcmp(px->full_cmd[1], "~") == 0)
 	{
-		if (found_in_env("HOME=", px->info->envcp, &path))
+		if (found_in_env("HOME=", px->info->envcp, &path) && !ft_is_dir(path))
 		{
+			printf("aki. HOME=   %s\n", path);
 			envcpy = ft_cd_update_env(px->info->envcp, path);
-			printf("home = %s\n", path);
+			free(path);
+		}
+		else if (ft_is_dir(path) == 1)
+		{
+			printf("AKIIIII home = %s\n", path);
+			ft_error(NOT_DIR, path, 1);
+			free(path);
+		}
+		else if (ft_is_dir(path) == -1)
+		{
+			ft_error(NDIR, path, 1);
 			free(path);
 		}
 		else
+		{
+			printf("ELSE home = %s\n", path);
 			envcpy = ft_cd_update_env(px->info->envcp, px->info->homepath);
+		}
 	}
 	else if (ft_strcmp(px->full_cmd[1], "-") == 0)
 		ft_cd_oldpwd(px, &envcpy);
