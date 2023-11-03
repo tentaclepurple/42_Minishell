@@ -110,5 +110,5 @@ void	ft_child(t_px *px, int n)
 		ft_execbi_child(px);
 		exit(1);
 	}
-	execve(px->path, px->full_cmd, NULL);
+	execve(px->path, px->full_cmd, px->info->envcp);
 }

@@ -74,3 +74,16 @@ void	ft_stat_signaled(void)
 	else
 		g_stat = WEXITSTATUS(g_stat);
 }
+
+void	pipex_p_aux(t_px *px, int i, pid_t pid)
+{
+	struct sigaction	sa;
+	
+	if (pid == 0)
+		ft_child(&px[i], i);
+	ft_fd_close(px, i);
+	waitpid(pid, &g_stat, 0);
+	ft_stat_signaled();
+	sa.sa_handler = &ft_2nd_handler;
+	sigaction(SIGQUIT, &sa, NULL);
+}
