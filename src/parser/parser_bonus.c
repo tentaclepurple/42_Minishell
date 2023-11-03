@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/03 11:11:06 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/03 18:10:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ t_px	*ft_parse(char **str, t_info *info)
 		i++;
 	}
 	if (ft_check_nodes(nodes))
-	{
-		printf("Not checker passed\n");
 		return (ft_free_nodes(nodes), NULL);
-	}
 	return (nodes);
 }
 

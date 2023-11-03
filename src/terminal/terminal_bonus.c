@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/11/03 10:54:41 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/03 18:05:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_lines2(char *str, t_info *info, char ***res)
 		return (2);
 	if (ft_check_var(*res, info->envcp))
 		return (ft_free_split(*res), 3);
-	*res = ft_correc_special(*res, "<>|&");
+	*res = ft_correc_special(*res, "<>|&()");
 	if (!(*res))
 		return (3);
 	return (0);
@@ -59,6 +59,8 @@ void	ft_print_nodes(t_px	*nodes)
 			tipo = "Comando";
 		else if (nodes[i].type == T_AND)
 			tipo = "AND";
+		else if (nodes[i].type == T_PIPE)
+			tipo = "PIPE";
 		else if (nodes[i].type == T_OR)
 			tipo = "OR";
 		else if (nodes[i].type == L_PAR)
@@ -68,7 +70,7 @@ void	ft_print_nodes(t_px	*nodes)
 		printf("Type: %s - Path: %s\n", tipo, nodes[i].path);
 		j = 0;
 		printf("Full Args: ");
-		while (nodes[i].full_cmd[j])
+		while (nodes[i].full_cmd && nodes[i].full_cmd[j])
 		{
 			printf("*%s*", nodes[i].full_cmd[j]);
 			j++;

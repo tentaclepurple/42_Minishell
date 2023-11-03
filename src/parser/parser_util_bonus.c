@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:17:01 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/03 10:08:15 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/03 18:09:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_node_quant(char **str)
 	while (*str)
 	{
 		if (ft_strncmp(*str, "|", 2) && ft_strncmp(*str, "&&", 3)
-			&& ft_strncmp(*str, "||", 3))
+			&& ft_strncmp(*str, "||", 3) && ft_strncmp(*str, "(", 2)
+			&& ft_strncmp(*str, ")", 2))
 		{
 			if (!flag)
 			{
@@ -34,10 +35,11 @@ int	ft_node_quant(char **str)
 		else
 		{
 			flag = 0;
+			i++;
 		}
 		str++;
 	}
-	return (2*i - 1);
+	return (i);
 }
 
 //Returns value of how many different arguments 
@@ -48,7 +50,7 @@ int	ft_num_args(char **str)
 
 	i = 0;
 	while (*str && ft_strncmp(*str, "|", 2) && ft_strncmp(*str, "&&", 3)
-		&& ft_strncmp(*str, "||", 3))
+		&& ft_strncmp(*str, "||", 3) && ft_strncmp(*str, "(", 2) && ft_strncmp(*str, ")", 2))
 	{
 		if (!ft_strncmp(*str, ">>", 3) || !ft_strncmp(*str, ">", 2)
 			|| !ft_strncmp(*str, "<<", 3) || !ft_strncmp(*str, "<", 3))
@@ -68,6 +70,8 @@ int	ft_num_args(char **str)
 //Rerturns 0 if it is a cmd, 1 if not
 int	ft_is_cm(char *str, t_px *node)
 {
+	if (!str)
+		return (1);
 	if (!ft_strcmp(str, "export") || !ft_strcmp(str, "cd")
 		|| !ft_strcmp(str, "unset") || !ft_strcmp(str, "exit"))
 		node->type = BIp;

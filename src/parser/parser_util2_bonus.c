@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/03 11:30:01 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/03 18:10:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,20 @@ char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
 char	**ft_parse_loop(t_px *node, char **str, char **env)
 {
 	int		num_arg;
-	//int		i;
 
-	//i = 0;
 	str = ft_inout_file(node, str);
-	while (*str && ft_strncmp(*str, "|", 2) && ft_strncmp(*str, "&&", 3)
-		&& ft_strncmp(*str, "||", 3) && ft_strncmp(*str, ")", 2) && ft_strncmp(*str, "(", 2))
-	{
-		if (!ft_is_cm(*str, node))
-			node->path = get_cmd_or_cmdpath(env, *str);
-		else if (node->type == BIp || node->type == BIc)
-			node->path = ft_strdup(*str);
-		else
-			break ;
-		num_arg = ft_num_args(str);
-		str = ft_fill_full_cmd(node, num_arg, str);
-		if (*str)
-			str = ft_inout_file(node, str);
-	}
-	return (++str);
+	if (!ft_is_cm(*str, node))
+		node->path = get_cmd_or_cmdpath(env, *str);
+	else if (node->type == BIp || node->type == BIc)
+		node->path = ft_strdup(*str);
+	else
+		return (++str);
+	
+	num_arg = ft_num_args(str);
+	str = ft_fill_full_cmd(node, num_arg, str);
+	if (*str)
+		str = ft_inout_file(node, str);
+	return (str);
 }
 
 //Function to init in zeros the array of t_px
@@ -89,7 +84,7 @@ int	ft_err_node(t_px node)
 {
 	if (!node.path && (node.type == CMD || node.type == BIc || node.type == BIp))
 		return (ft_error(NCMD, NULL, 127), 2);
-	if (!node.full_cmd)
+	if (!node.full_cmd && (node.type == CMD || node.type == BIc || node.type == BIp))
 		return (1);
 	if (node.out_flag && !node.outfile)
 		return (ft_error(SYNERR, NULL, 20), 4);
