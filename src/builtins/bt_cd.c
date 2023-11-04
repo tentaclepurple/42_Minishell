@@ -12,32 +12,20 @@
 
 #include "../../inc/parse.h"
 
-int	ft_is_dir(const char *name)
-{
-	DIR	*dir;
-
-	dir = opendir(name);
-	if (dir)
-	{
-		closedir(dir);
-		return (0);
-	}
-	if (errno == ENOTDIR)
-		return (1);
-	return (-1);
-}
-
 void	ft_cd_home(t_px *px, char ***envcpy)
 {
 	char	*path;
+	int 	found;
 
-	if (found_in_env("HOME=", px->info->envcp, &path) == 1)
-	{
+	found = found_in_env("HOME=", px->info->envcp, &path);
+	if (found && ft_is_dir(path) == -1)
+		ft_error(NDIR, path, 1);
+	else if (found)
 		*envcpy = ft_cd_update_env(px->info->envcp, path);
-		free(path);
-	}
 	else
 		ft_bt_error(HOMSET, "cd:", 1);
+	if (found)
+		free(path);
 }
 
 void	ft_cd_oldpwd(t_px *px, char ***envcpy)
@@ -53,40 +41,31 @@ void	ft_cd_oldpwd(t_px *px, char ***envcpy)
 	else
 		ft_bt_error(OPWDSET, "cd:", 1);
 }
+void	ft_cd_tilde(t_px *px, char ***envcpy)
+{
+	int 	found;
+	char	*path;
+
+	found = found_in_env("HOME=", px->info->envcp, &path);
+	if (found && !ft_is_dir(path))
+		*envcpy = ft_cd_update_env(px->info->envcp, path);
+	else if (found && ft_is_dir(path) == -1)
+		ft_error(NDIR, path, 1);
+	else
+		*envcpy = ft_cd_update_env(px->info->envcp, px->info->homepath);
+	if (found)
+		free(path);
+}
 
 char	**ft_cd(t_px *px)
 {
 	char	**envcpy;
-	char	*path;
 
 	envcpy = px->info->envcp;
 	if (px->full_cmd[1] == NULL || ft_strcmp(px->full_cmd[1], "--") == 0)
 		ft_cd_home(px, &envcpy);
 	else if (ft_strcmp(px->full_cmd[1], "~") == 0)
-	{
-		if (found_in_env("HOME=", px->info->envcp, &path) && !ft_is_dir(path))
-		{
-			printf("aki. HOME=   %s\n", path);
-			envcpy = ft_cd_update_env(px->info->envcp, path);
-			free(path);
-		}
-		else if (ft_is_dir(path) == 1)
-		{
-			printf("AKIIIII home = %s\n", path);
-			ft_error(NOT_DIR, path, 1);
-			free(path);
-		}
-		else if (ft_is_dir(path) == -1)
-		{
-			ft_error(NDIR, path, 1);
-			free(path);
-		}
-		else
-		{
-			printf("ELSE home = %s\n", path);
-			envcpy = ft_cd_update_env(px->info->envcp, px->info->homepath);
-		}
-	}
+		ft_cd_tilde(px, &envcpy);
 	else if (ft_strcmp(px->full_cmd[1], "-") == 0)
 		ft_cd_oldpwd(px, &envcpy);
 	else

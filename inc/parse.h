@@ -171,6 +171,7 @@ char	**add_var(char **env, char *var);
 char	**del_var_aux(int found, char **env, char **envcpy);
 char	**del_var(char **env, char *var);
 int		found_in_env(char *var, char **env, char **path);
+int		ft_is_dir(const char *name);
 
 /*
 bt_cd.c
@@ -179,6 +180,7 @@ char	**ft_cd(t_px *px);
 char	**ft_cd_update_env(char **env, char *path);
 void	ft_cd_home(t_px *px, char ***envcpy);
 void	ft_cd_oldpwd(t_px *px, char ***envcpy);
+void	ft_cd_tilde(t_px *px, char ***envcpy);
 
 /*
 bt_env_pwd_echo.c
