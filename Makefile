@@ -84,6 +84,6 @@ clean:
 fclean: clean
 	@echo $(CURSIVE)$(GRAY) "     - Removing $(NAME) And $(LIBNAME)..." $(NONE)
 	@$(MAKE) -C ./libft fclean
-	@rm -rf $(NAME) $(LIBNAME)
+	@rm -rf $(NAME) $(NAMEBONUS) $(LIBNAME)
 
 re: fclean all
