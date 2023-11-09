@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/03 18:10:19 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/09 12:58:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,38 @@ char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
 	return (str);
 }
 
+void	ft_num_node_cmd(t_px *nodes)
+{
+	int	i;
+	int	i_init;
+	int	cnt;
+
+	i = 0;
+	while (i < nodes->info->cmd_amount)
+	{
+		cnt = 0;
+		if (nodes[i].type == CMD || nodes[i].type == BIc)
+		{
+			i_init = i;
+			while (i < nodes->info->cmd_amount && (nodes[i].type == CMD || nodes[i].type == BIc || nodes[i].type == T_PIPE))
+			{
+				if (nodes[i].type != T_PIPE)
+					cnt++;
+				i++;
+			}
+			i = i_init;
+			/* nodes[i].cmd_num = cnt;
+			nodes[i].cmd_real_num = 2 * cnt - 1; */
+			while (i < nodes->info->cmd_amount && (nodes[i].type == CMD || nodes[i].type == BIc || nodes[i].type == T_PIPE))
+			{
+				nodes[i].cmd_real_num = 2 * cnt - 1;
+				nodes[i++].cmd_num = cnt;
+			}
+		}
+		i++;
+	}
+}
+
 //Function to process and fill info of a single node
 char	**ft_parse_loop(t_px *node, char **str, char **env)
 {
@@ -45,7 +77,6 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 		node->path = ft_strdup(*str);
 	else
 		return (++str);
-	
 	num_arg = ft_num_args(str);
 	str = ft_fill_full_cmd(node, num_arg, str);
 	if (*str)
@@ -74,6 +105,7 @@ t_px	*ft_init_nodes(t_info *info)
 		nodes[i].out_flag = 0;
 		nodes[i].type = 0;
 		nodes[i].info = info;
+		nodes[i].cmd_num = 0;
 		i++;
 	}
 	return (nodes);

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/03 18:10:00 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/09 11:24:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_px	*ft_parse(char **str, t_info *info)
 		str = ft_parse_loop(&nodes[i], str, info->envcp);
 		i++;
 	}
+	ft_num_node_cmd(nodes);
 	if (ft_check_nodes(nodes))
 		return (ft_free_nodes(nodes), NULL);
 	return (nodes);

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:17:01 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/03 18:09:28 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/09 10:30:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ int	ft_is_cm(char *str, t_px *node)
 		return (1);
 	if (!ft_strcmp(str, "export") || !ft_strcmp(str, "cd")
 		|| !ft_strcmp(str, "unset") || !ft_strcmp(str, "exit"))
-		node->type = BIp;
+		return (node->type = BIp, 1);
 	else if (!ft_strcmp(str, "echo") || !ft_strcmp(str, "pwd")
 		|| !ft_strcmp(str, "env"))
-		node->type = BIc;
+		return (node->type = BIc, 1);
 	else if (!ft_strcmp(str, "&&"))
 		node->type = T_AND;
 	else if (!ft_strcmp(str, "||"))
@@ -89,7 +89,7 @@ int	ft_is_cm(char *str, t_px *node)
 	else if (!ft_strcmp(str, ")"))
 		node->type = R_PAR;
 	if (node->type != NONE)
-		return (1);
+		return (2);
 	node->type = CMD;
 	return (0);
 }

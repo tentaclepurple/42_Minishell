@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/03 10:07:14 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/09 12:53:40 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ typedef struct s_px
 	char	*outfile;
 	char	*limit;
 	t_info	*info;
+	int		cmd_num;
+	int		cmd_real_num;
 }	t_px;
 
 int		ft_check_var(char **str, char **env);
@@ -128,6 +130,7 @@ char	**ft_parse_loop(t_px *node, char **str, char **env);
 t_px	*ft_init_nodes(t_info *info);
 int		ft_check_nodes(t_px *nodes);
 void	ft_stat_signaled(void);
+void		ft_num_node_cmd(t_px *nodes);
 
 /*
 ERROR.C

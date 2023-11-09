@@ -28,9 +28,9 @@ SRCBONUS = 	./src/splitstr/split_bonus.c \
 		./src/splitstr/check_var.c  \
 		./src/splitstr/correc_special.c \
 		./src/parser/parser_bonus.c \
-		./src/parser/executor.c \
-		./src/parser/heredoc.c \
-		./src/parser/getpaths.c \
+		./src/parser/executor_bonus.c \
+		./src/parser/heredoc_bonus.c \
+		./src/parser/getpaths_bonus.c \
 		./src/parser/parser_util_bonus.c \
 		./src/parser/parser_util2_bonus.c \
 		./src/terminal/terminal_bonus.c \

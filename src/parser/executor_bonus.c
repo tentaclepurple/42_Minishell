@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   executor_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/11/09 11:55:51 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/09 13:08:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse.h"
+#include "../../inc/parse_bonus.h"
 
 /* 
 	if there is more than 1 command, make dups.
@@ -19,19 +19,22 @@
 		- middle cmd: dup2 stdin & stdout (if there is no >, >> or <, <<)
 		- last cmd: dup2 stdin (if there is no <, <<)
 */
-void	ft_fd_pipes(t_px *px, int n)
+void	ft_fd_pipes(t_px *px, int qn)
 {
+	int	n;
+
+	n = (qn / 2) + (qn % 2);
 	if (n == 0 && px->out_flag == 0)
 	{
 		if (dup2(px->info->fd[n][1], STDOUT_FILENO) < 0)
 			ft_error(DUPERR, NULL, 5);
 	}
-	else if (n == px->info->cmd_amount - 1 && px->in_flag == 0)
+	else if (n == px->cmd_num - 1 && px->in_flag == 0)
 	{
 		if (dup2(px->info->fd[n - 1][0], STDIN_FILENO) < 0)
 			ft_error(DUPERR, NULL, 5);
 	}
-	else if (n > 0 && n < px->info->cmd_amount - 1)
+	else if (n > 0 && n < px->cmd_num - 1)
 	{
 		if (px->out_flag == 0)
 		{
@@ -104,8 +107,13 @@ int	pipex_p(t_px *px)
 	int					i;
 
 	i = 0;
-	while (i < px->info->cmd_amount)
+	while (i < px->cmd_real_num)
 	{
+		if (px[i].type == T_PIPE)
+		{
+			i++;
+			continue ;
+		}
 		if (px[i].type != BIp)
 		{
 			pid = fork();
@@ -138,6 +146,6 @@ void	pipex(t_px *px)
 		return ;
 	if (pipex_p(px))
 		return ;
-	if (px->info->cmd_amount > 1)
+	if (px->cmd_num > 1)
 		ft_free_fd(px);
 }
