@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 11:18:46 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/08 12:48:27 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/08 14:50:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	compute_expr(char **nodes, int *i, int min_prec, int nodes_len)
 
 int	main(void)
 {
-	char	*expr = "2 + 2 * 2";
+	char	*expr = "( 2 + 2 ) * 3";
 	char	**split;
 	int i = 0;
 
@@ -127,6 +127,6 @@ int	main(void)
 	//split[0] = "56";
 	//split[1] = "/";
 	//split[2] = "2";
-	printf("Result: %i\n", compute_expr(split, &i, 1, 3));
+	printf("Result: %i\n", compute_expr(split, &i, 1, 7));
 	return (0);
 }
