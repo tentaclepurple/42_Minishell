@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/11/09 12:59:33 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/09 15:53:59 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_lines2(char *str, t_info *info, char ***res)
 		return (2);
 	if (ft_check_var(*res, info->envcp))
 		return (ft_free_split(*res), 3);
-	*res = ft_correc_special(*res, "<>|&()");
+	*res = ft_correc_special(*res, "<>|&");
 	if (!(*res))
 		return (3);
 	return (0);
@@ -81,27 +81,52 @@ void	ft_print_nodes(t_px	*nodes)
 	}
 }
 
-void	ft_loop_pipex(t_px *nodes)
+void	ft_loop_pipex(t_px *nodes, int *i)
 {
-	int	i;
+	int	par;
 
-	i = 0;
-	while (i < nodes->info->cmd_amount)
+	par = 0;
+	while (*i < nodes->info->cmd_amount)
 	{
-		if ((nodes[i].type == T_AND && g_stat == 0) || (nodes[i].type == T_OR && g_stat != 0))
+		if (nodes[*i].type == L_PAR)
 		{
-			i++;
+			(*i)++;
+			ft_loop_pipex(nodes, i);
 			continue ;
 		}
-		else if ((nodes[i].type == T_AND && g_stat != 0) || (nodes[i].type == T_OR && g_stat == 0))
+		else if (nodes[*i].type == R_PAR)
 		{
-			i++;
-			if (i < nodes->info->cmd_amount)
-				i += nodes[i].cmd_real_num;
+			(*i)++;
+			return ;
+		}
+		else if ((nodes[*i].type == T_AND && g_stat == 0) || (nodes[*i].type == T_OR && g_stat != 0))
+		{
+			(*i)++;
 			continue ;
 		}
-		pipex(&nodes[i]);
-		i += nodes[i].cmd_real_num;
+		else if ((nodes[*i].type == T_AND && g_stat != 0) || (nodes[*i].type == T_OR && g_stat == 0))
+		{
+			(*i)++;
+			if (nodes[*i].type == L_PAR)
+			{
+				par = 1;
+				(*i)++;
+				while (*i < nodes->info->cmd_amount && par)
+				{
+					if (nodes[*i].type == L_PAR)
+						par++;
+					else if (nodes[*i].type == R_PAR)
+						par--;
+					(*i)++;
+				}
+				(*i)++;
+			}
+			else if (*i < nodes->info->cmd_amount)
+				*i += nodes[*i].cmd_real_num;
+			continue ;
+		}
+		pipex(&nodes[*i]);
+		*i += nodes[*i].cmd_real_num;
 	}
 }
 
@@ -110,6 +135,7 @@ int	ft_lines(char *str, t_info *info)
 {
 	char	**res;
 	t_px	*nodes;
+	int		i;
 
 	if (ft_lines2(str, info, &res))
 		return (1);
@@ -128,9 +154,8 @@ int	ft_lines(char *str, t_info *info)
 		}
 	}
 	ft_open_outfiles(nodes);
-	//pipex(nodes);
-	ft_loop_pipex(nodes);
-	//ft_print_nodes(nodes);
+	i = 0;
+	ft_loop_pipex(nodes, &i);
 	ft_free_nodes(nodes);
 	return (0);
 }
