@@ -40,6 +40,29 @@ void	ft_free_nodes(t_px *nodes)
 	free(nodes);
 }
 
+void	ft_print_nodes(t_px	*nodes)
+{
+	int	i;
+	int	j;
+	//char	*tipo;
+
+	i = 0;
+	while(i < nodes->info->cmd_amount)
+	{
+		j = 0;
+		printf("CMD: %s\n", nodes[i].path);
+		printf("Full Args: ");
+		while (nodes[i].full_cmd && nodes[i].full_cmd[j])
+		{
+			printf("*%s*", nodes[i].full_cmd[j]);
+			j++;
+		}
+		printf("\n--------------------------\n");
+		i++;
+	}
+}
+
+
 //Returns the str info into an array of t_px
 //Mallocs space for array of t_px and for the general info
 //It does not free the str
@@ -60,8 +83,10 @@ t_px	*ft_parse(char **str, t_info *info)
 		str = ft_parse_loop(&nodes[i], str, info->envcp);
 		i++;
 	}
+	ft_print_nodes(nodes);
 	if (ft_check_nodes(nodes))
 	{
+		ft_print_nodes(nodes);
 		return (ft_free_nodes(nodes), NULL);
 	}
 	return (nodes);

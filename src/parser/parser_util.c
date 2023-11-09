@@ -50,10 +50,12 @@ int	ft_num_args(char **str)
 	while (*str && ft_strncmp(*str, "|", 2) && ft_strncmp(*str, "&&", 3)
 		&& ft_strncmp(*str, "||", 3))
 	{
+		printf("**%s\n", *str);
 		if (!ft_strncmp(*str, ">>", 3) || !ft_strncmp(*str, ">", 2)
-			|| !ft_strncmp(*str, "<<", 3) || !ft_strncmp(*str, "<", 3))
+			|| !ft_strncmp(*str, "<<", 3) || !ft_strncmp(*str, "<", 2))
 		{
-			if (*(str + 1))
+			if (*(str + 1) && ft_strncmp(*str, ">>", 3) && ft_strncmp(*str, ">", 2)
+			&& ft_strncmp(*str, "<<", 3) && ft_strncmp(*str, "<", 2))
 				i -= 2;
 			else
 				i--;
