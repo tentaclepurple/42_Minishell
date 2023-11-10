@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/09 11:24:22 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/10 08:27:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_free_nodes(t_px *nodes)
 		if (nodes[i].full_cmd)
 		{
 			ft_free_split(nodes[i].full_cmd);
-			nodes[i].path = NULL;
+			//nodes[i].path = NULL;
 		}
 		if (nodes[i].path)
 			free(nodes[i].path);
@@ -39,6 +39,7 @@ void	ft_free_nodes(t_px *nodes)
 	}
 	free(nodes);
 }
+void	ft_print_nodes(t_px	*nodes);
 
 //Returns the str info into an array of t_px
 //Mallocs space for array of t_px and for the general info
@@ -53,10 +54,11 @@ t_px	*ft_parse(char **str, t_info *info)
 	info->fd = NULL;
 	nodes = ft_init_nodes(info);
 	if (!nodes)
-		return (free(info), NULL);
+		return (ft_free_info(info), NULL);
 	while (i < info->cmd_amount)
 	{
 		str = ft_parse_loop(&nodes[i], str, info->envcp);
+		ft_wildcard(&nodes[i]);
 		i++;
 	}
 	ft_num_node_cmd(nodes);

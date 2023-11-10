@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/11/02 11:09:53 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/10 08:29:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ void	ft_2nd_handler(int sig)
 		ft_printf("\n");
 	}
 }
+void	ft_free_info(t_info *info)
+{
+	if (info->envcp)
+		ft_free_split(info->envcp);
+	/*if (info->homepath)
+		free(info->homepath);*/
+	free (info);
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -61,6 +69,6 @@ int	main(int argc, char **argv, char **env)
 	if (!info->homepath)
 		return (printf("Invalid Home\n"), -1);
 	terminal(info);
-	free(info);
+	ft_free_info(info);
 	return (g_stat);
 }

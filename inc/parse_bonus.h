@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/09 12:53:40 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/10 08:27:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ char	**ft_parse_loop(t_px *node, char **str, char **env);
 t_px	*ft_init_nodes(t_info *info);
 int		ft_check_nodes(t_px *nodes);
 void	ft_stat_signaled(void);
-void		ft_num_node_cmd(t_px *nodes);
+void	ft_num_node_cmd(t_px *nodes);
 
 /*
 ERROR.C
@@ -218,12 +218,16 @@ int		ft_bt_exit(t_px *node);
 wildcard
  */
 void	fill_exp_cmdargs(char *pattern, char ***exp_cmdargs);
-void	ft_wildcard(char ***cmdargs);
+void	ft_wildcard(t_px *node);
+//void	ft_wildcard(char ***cmdargs);
 int		ft_matlen(char **mat);
 int		count_dir(void);
 char	**create_exp_cmdargs(char **cmdargs, int *size);
 int		find_wild_match(char *pattern, char *str);
 char	**trim_excess(char **exp, int size);
+
+//main.c
+void	ft_free_info(t_info *info);
 
 int	g_stat;
 
