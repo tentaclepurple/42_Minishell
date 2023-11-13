@@ -25,29 +25,3 @@ t_list	*ft_lstlast(t_list	*lst)
 	}
 	return (node);
 }
-/*
-#include<stdio.h>
-int	main(void)
-{
-	int		a;
-	int		b;
-	t_list	*node;
-	t_list	**lst;
-
-	lst = malloc(sizeof(node));
-	a = 42;
-	b = 24;
-	node = ft_lstnew(&a);
-	*lst = NULL;
-	ft_lstadd_front(lst, node);
-	printf("Content_end: %i\nPointer_end: %p\n", *(int*)ft_lstlast(*lst)->content,\
-	 ft_lstlast(*lst)->next);
-	node = ft_lstnew(&b);
-	ft_lstadd_front(lst, node);
-	printf("Content_1: %i\nPointer_1: %p\n", *(int*)(*lst)->content, (*lst)->next);
-	printf("Content_end: %i\nPointer_end: %p\n", *(int*)ft_lstlast(*lst)->content,\
-	 ft_lstlast(*lst)->next);
-	free(node);
-	free(lst);
-	return (0);
-}*/

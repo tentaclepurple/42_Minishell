@@ -4,6 +4,7 @@ SRC = 	./src/splitstr/split.c \
 		./src/splitstr/split_utils.c \
 		./src/splitstr/clean_quotes.c \
 		./src/splitstr/check_var.c  \
+		./src/splitstr/check_var2.c  \
 		./src/splitstr/correc_special.c \
 		./src/parser/parser.c \
 		./src/parser/executor.c \

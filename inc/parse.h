@@ -13,7 +13,7 @@
 #ifndef PARSE_H
 # define PARSE_H
 
-# include"../libft/libft.h"
+# include "../libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -99,7 +99,7 @@ int		ft_check_var(char **str, char **env);
 char	**ft_correc_special(char **str, char *spec);
 int		ft_clean_quotes(char **str);
 
-//Spllit
+//Split
 int		ft_str_chlen(char const *s, char c);
 int		ft_nbr_wrd(char const *s, char c);
 char	*ft_fill_word(char *wrd, char *str, int len);
@@ -107,13 +107,14 @@ void	ft_mv_in_quotes(char const *s, unsigned int *i);
 char	*ft_correct_str(char *str);
 char	**ft_split_str(char const *s, char c);
 void	ft_free_split(char **str);
-
 char	**ft_inout_file(t_px *node, char **str);
 int		ft_is_cm(char *str, t_px *node);
 int		ft_num_args(char **str);
-
 void	ft_handle_client(int sig);
 void	ft_2nd_handler(int sig);
+size_t	ft_strlen_var(const char *s, int quote);
+int		ft_len_var_cond(char *env, char *str, int index, int quote);
+char	*ft_expand_concat(char *env, int len, char *res, char ch);
 
 /* 
 parse

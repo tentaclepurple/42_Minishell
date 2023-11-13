@@ -15,7 +15,7 @@
 void	ft_cd_home(t_px *px, char ***envcpy)
 {
 	char	*path;
-	int 	found;
+	int		found;
 
 	found = found_in_env("HOME=", px->info->envcp, &path);
 	if (found && ft_is_dir(path) == -1)
@@ -41,9 +41,10 @@ void	ft_cd_oldpwd(t_px *px, char ***envcpy)
 	else
 		ft_bt_error(OPWDSET, "cd:", 1);
 }
+
 void	ft_cd_tilde(t_px *px, char ***envcpy)
 {
-	int 	found;
+	int		found;
 	char	*path;
 
 	found = found_in_env("HOME=", px->info->envcp, &path);

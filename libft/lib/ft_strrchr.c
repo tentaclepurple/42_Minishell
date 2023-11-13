@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../libft.h"
+#include "../libft.h"
 
 //Returns a ponter to the first character 'c' found i  str. NULL if not found
 char	*ft_strrchr(const char *s, int c)

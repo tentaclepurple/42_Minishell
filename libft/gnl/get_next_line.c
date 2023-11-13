@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../libft.h"
+#include "../libft.h"
 
 //Function to get the whole first line of str (Until \n or \0)
 char	*ft_fst_line(char *str)

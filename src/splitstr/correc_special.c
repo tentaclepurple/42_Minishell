@@ -30,7 +30,7 @@ static int	ft_correc_len(char **str, char *spec)
 		str++;
 	}
 	return (len);
-}	
+}
 
 char	*ft_fill_wrd(char *str)
 {
@@ -85,7 +85,7 @@ static int	ft_correc_fill(char **res, char **str, char *spec)
 	free(str_mem);
 	res[len] = NULL;
 	return (0);
-}	
+}
 
 char	**ft_correc_special(char **str, char *spec)
 {

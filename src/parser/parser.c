@@ -18,7 +18,6 @@ char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
 	int	i;
 
 	i = 0;
-
 	node->full_cmd = malloc(sizeof(char *) * (num_arg + 1));
 	if (node->full_cmd)
 		node->full_cmd[i++] = node->path;
@@ -31,10 +30,7 @@ char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
 		str++;
 	}
 	if (node->full_cmd)
-	{
-		printf("akiiiiii %i,   num args: %i, str: %s\n", i, num_arg, *str);
 		node->full_cmd[i] = NULL;
-	}
 	return (str);
 }
 
@@ -51,7 +47,6 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 		else
 			node->path = ft_strdup(*str);
 		num_arg = ft_num_args(str);
-		printf("Nº**%i\n", num_arg);
 		str = ft_fill_full_cmd(node, num_arg, str);
 		str = ft_inout_file(node, str);
 	}
@@ -87,7 +82,8 @@ t_px	*ft_init_nodes(t_info *info)
 int	ft_err_node(t_px node)
 {
 	if (!node.path)
-		return (ft_error(NCMD, NULL, 127), node.full_cmd[0] = ft_strdup("(null)"), 2);
+		return (ft_error(NCMD, NULL, 127), node.full_cmd[0] = \
+			ft_strdup("(null)"), 2);
 	if (!node.full_cmd)
 		return (1);
 	if (node.out_flag && !node.outfile)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../libft.h"
+#include "../libft.h"
 
 //Boolean function. Returns 1 if 'ch' is in str. 0 if not
 int	ft_isin_str(char *str, char ch)
