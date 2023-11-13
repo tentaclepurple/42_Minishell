@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/10 08:09:03 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/13 10:25:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,13 @@ void	ft_num_node_cmd(t_px *nodes)
 		if (nodes[i].type == CMD || nodes[i].type == BIc)
 		{
 			i_init = i;
-			while (i < nodes->info->cmd_amount && (nodes[i].type == CMD || nodes[i].type == BIc || nodes[i].type == T_PIPE))
-			{
-				if (nodes[i].type != T_PIPE)
+			while (i < nodes->info->cmd_amount && (nodes[i].type == CMD
+					|| nodes[i].type == BIc || nodes[i].type == T_PIPE))
+				if (nodes[i++].type != T_PIPE)
 					cnt++;
-				i++;
-			}
 			i = i_init;
-			/* nodes[i].cmd_num = cnt;
-			nodes[i].cmd_real_num = 2 * cnt - 1; */
-			while (i < nodes->info->cmd_amount && (nodes[i].type == CMD || nodes[i].type == BIc || nodes[i].type == T_PIPE))
+			while (i < nodes->info->cmd_amount && (nodes[i].type == CMD
+					|| nodes[i].type == BIc || nodes[i].type == T_PIPE))
 			{
 				nodes[i].cmd_real_num = 2 * cnt - 1;
 				nodes[i++].cmd_num = cnt;
@@ -114,9 +111,11 @@ t_px	*ft_init_nodes(t_info *info)
 //Check inapropriate node, returns 0 if OK
 int	ft_err_node(t_px node)
 {
-	if (!node.path && (node.type == CMD || node.type == BIc || node.type == BIp))
+	if (!node.path && (node.type == CMD || node.type == BIc
+			|| node.type == BIp))
 		return (ft_error(NCMD, NULL, 127), 2);
-	if (!node.full_cmd && (node.type == CMD || node.type == BIc || node.type == BIp))
+	if (!node.full_cmd && (node.type == CMD || node.type == BIc
+			|| node.type == BIp))
 		return (1);
 	if (node.out_flag && !node.outfile)
 		return (ft_error(SYNERR, NULL, 20), 4);

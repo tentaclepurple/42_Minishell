@@ -6,14 +6,12 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/11/10 08:29:20 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/13 11:21:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../inc/parse.h"
-//#include <libc.h>
+#include "../inc/parse.h"
 #include <sys/ioctl.h>
-
 
 //Function to handle SIGINT signal received
 void	ft_handle_client(int sig)
@@ -39,12 +37,12 @@ void	ft_2nd_handler(int sig)
 		ft_printf("\n");
 	}
 }
+
+//Function to free all the content in INFO
 void	ft_free_info(t_info *info)
 {
 	if (info->envcp)
 		ft_free_split(info->envcp);
-	/*if (info->homepath)
-		free(info->homepath);*/
 	free (info);
 }
 

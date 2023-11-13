@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:17:01 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/09 10:30:56 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/13 10:01:42 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	ft_num_args(char **str)
 
 	i = 0;
 	while (*str && ft_strncmp(*str, "|", 2) && ft_strncmp(*str, "&&", 3)
-		&& ft_strncmp(*str, "||", 3) && ft_strncmp(*str, "(", 2) && ft_strncmp(*str, ")", 2))
+		&& ft_strncmp(*str, "||", 3) && ft_strncmp(*str, "(", 2)
+		&& ft_strncmp(*str, ")", 2))
 	{
 		if (!ft_strncmp(*str, ">>", 3) || !ft_strncmp(*str, ">", 2)
 			|| !ft_strncmp(*str, "<<", 3) || !ft_strncmp(*str, "<", 3))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   correc_special.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:39:38 by josu              #+#    #+#             */
-/*   Updated: 2023/10/31 11:44:36 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/13 10:38:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ft_correc_len(char **str, char *spec)
 		str++;
 	}
 	return (len);
-}	
+}
 
 char	*ft_fill_wrd(char *str)
 {
@@ -85,7 +85,7 @@ static int	ft_correc_fill(char **res, char **str, char *spec)
 	free(str_mem);
 	res[len] = NULL;
 	return (0);
-}	
+}
 
 char	**ft_correc_special(char **str, char *spec)
 {

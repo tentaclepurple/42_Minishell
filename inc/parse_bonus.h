@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/10 08:27:19 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/13 08:40:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ int		ft_bt_exit(t_px *node);
 /* 
 wildcard
  */
-void	fill_exp_cmdargs(char *pattern, char ***exp_cmdargs);
+void	fill_exp_cmdargs(char *pattern, char ***exp_cmdargs, int *j);
 void	ft_wildcard(t_px *node);
 //void	ft_wildcard(char ***cmdargs);
 int		ft_matlen(char **mat);

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/11/10 08:04:42 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/13 11:19:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void	ft_open_outfiles(t_px *nodes)
 	}
 }
 
-void	ft_print_nodes(t_px	*nodes)
+/* void	ft_print_nodes(t_px	*nodes)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*tipo;
 
 	i = 0;
-	while(i < nodes->info->cmd_amount)
+	while (i < nodes->info->cmd_amount)
 	{
 		if (nodes[i].type == CMD || nodes[i].type == BIc || nodes[i].type == BIp)
 			tipo = "Comando";
@@ -79,50 +79,55 @@ void	ft_print_nodes(t_px	*nodes)
 		printf("\n--------------------------\n");
 		i++;
 	}
-}
+} */
 
-void	ft_loop_pipex(t_px *nodes, int *i)
+//Function to advance i to the next possibly eectuable command
+void	ft_advance_unused(t_px *nodes, int *i)
 {
 	int	par;
 
 	par = 0;
+	if (nodes[*i].type == L_PAR)
+	{
+		par = 1;
+		(*i)++;
+		while (*i < nodes->info->cmd_amount && par)
+		{
+			if (nodes[*i].type == L_PAR)
+				par++;
+			else if (nodes[*i].type == R_PAR)
+				par--;
+			(*i)++;
+		}
+		(*i)++;
+	}
+	else if (*i < nodes->info->cmd_amount)
+		*i += nodes[*i].cmd_real_num;
+}
+
+//Function to execute pipex repeatedly deppending on
+//commands &&, || and ()
+void	ft_loop_pipex(t_px *nodes, int *i)
+{
+	t_type	tp;
+
 	while (*i < nodes->info->cmd_amount)
 	{
-		if (nodes[*i].type == L_PAR)
-		{
+		tp = nodes[*i].type;
+		if (tp == L_PAR || tp == R_PAR || tp == T_AND || tp == T_OR)
 			(*i)++;
+		if (tp == L_PAR)
+		{
 			ft_loop_pipex(nodes, i);
 			continue ;
 		}
-		else if (nodes[*i].type == R_PAR)
-		{
-			(*i)++;
+		else if (tp == R_PAR)
 			return ;
-		}
-		else if ((nodes[*i].type == T_AND && g_stat == 0) || (nodes[*i].type == T_OR && g_stat != 0))
-		{
-			(*i)++;
+		else if ((tp == T_AND && g_stat == 0) || (tp == T_OR && g_stat != 0))
 			continue ;
-		}
-		else if ((nodes[*i].type == T_AND && g_stat != 0) || (nodes[*i].type == T_OR && g_stat == 0))
+		else if ((tp == T_AND && g_stat != 0) || (tp == T_OR && g_stat == 0))
 		{
-			(*i)++;
-			if (nodes[*i].type == L_PAR)
-			{
-				par = 1;
-				(*i)++;
-				while (*i < nodes->info->cmd_amount && par)
-				{
-					if (nodes[*i].type == L_PAR)
-						par++;
-					else if (nodes[*i].type == R_PAR)
-						par--;
-					(*i)++;
-				}
-				(*i)++;
-			}
-			else if (*i < nodes->info->cmd_amount)
-				*i += nodes[*i].cmd_real_num;
+			ft_advance_unused(nodes, i);
 			continue ;
 		}
 		pipex(&nodes[*i]);
@@ -201,7 +206,7 @@ void	ft_set_sig(void)
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
-}	
+}
 
 //void	terminal(char **env)
 void	terminal(t_info *info)
@@ -218,7 +223,7 @@ void	terminal(t_info *info)
 			break ;
 		terminal_options(input);
 		if (ft_strlen(input))
-		{	
+		{
 			if (ft_lines(input, info) == 4)
 			{
 				free(input);

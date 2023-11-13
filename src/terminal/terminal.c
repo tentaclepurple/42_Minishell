@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/31 13:11:08 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/13 10:46:43 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	ft_set_sig(void)
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
-}	
+}
 
 //void	terminal(char **env)
 void	terminal(t_info *info)
@@ -132,7 +132,7 @@ void	terminal(t_info *info)
 			break ;
 		terminal_options(input);
 		if (ft_strlen(input))
-		{	
+		{
 			if (ft_lines(input, info) == 4)
 			{
 				free(input);

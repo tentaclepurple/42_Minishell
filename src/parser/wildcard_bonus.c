@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../../inc/parse_bonus.h"
+#include "../../inc/parse_bonus.h"
 
 int	ft_matlen(char **mat)
 {
@@ -78,33 +78,33 @@ int	find_wild_match(char *pattern, char *str)
 	return (*str == '\0');
 }
 
-void	fill_exp_cmdargs(char *pattern, char ***exp_cmdargs)
+void	fill_exp_cmdargs(char *pattern, char ***exp_cmdargs, int *j)
 {
-	static int		j = 1;
 	DIR				*dir;
 	struct dirent	*entry;
 
 	dir = opendir(".");
 	entry = readdir(dir);
 	while (entry != NULL)
-	{	
+	{
 		if (!ft_strcmp("*", pattern))
 		{
 			if (entry->d_name[0] != '.')
 			{
-				(*exp_cmdargs)[j] = ft_strdup(entry->d_name);
-				j++;
+				(*exp_cmdargs)[*j] = ft_strdup(entry->d_name);
+				(*j)++;
 			}
 		}
 		else if (find_wild_match(pattern, entry->d_name))
 		{
-			(*exp_cmdargs)[j] = ft_strdup(entry->d_name);
-			j++;
+			(*exp_cmdargs)[*j] = ft_strdup(entry->d_name);
+			(*j)++;
 		}
 		entry = readdir(dir);
 	}
 	closedir(dir);
 }
+
 char	**trim_excess(char **exp, int size)
 {
 	char	**trim;
@@ -116,47 +116,42 @@ char	**trim_excess(char **exp, int size)
 	trim = malloc(sizeof(char *) * (len + 1));
 	trim[len] = NULL;
 	i = 0;
-	//printf("len: %i\n", len);
 	while (i < len)
 	{
 		trim[i] = ft_strdup(exp[i]);
 		i++;
 	}
 	ft_free_split(exp);
-	return (trim);	
+	return (trim);
 }
-
 
 void	ft_wildcard(t_px *node)
 {
 	int		i;
 	int		size;
 	char	**exp_cmdargs;
-	char	**exp_trim;
-	char	**cmdargs;
+	int		j;
 
-	i = 1;
+	i = 0;
 	if (!node->full_cmd)
 		return ;
-	cmdargs = node->full_cmd;
-	exp_cmdargs = create_exp_cmdargs(cmdargs, &size);
-	while ((cmdargs)[i])
+	j = 1;
+	exp_cmdargs = create_exp_cmdargs(node->full_cmd, &size);
+	while ((node->full_cmd)[++i])
 	{
-		printf("CMND ARG %i: %s\n", i, (cmdargs)[i]);
-		if (ft_strchr((cmdargs)[i], '*'))
-			fill_exp_cmdargs((cmdargs)[i], &exp_cmdargs);
-		i++;
+		if (ft_strchr((node->full_cmd)[i], '*'))
+			fill_exp_cmdargs((node->full_cmd)[i], &exp_cmdargs, &j);
+		else
+			exp_cmdargs[j++] = ft_strdup((node->full_cmd)[i]);
 	}
-	exp_trim = trim_excess(exp_cmdargs, size);
+	exp_cmdargs = trim_excess(exp_cmdargs, size);
 	i = 0;
-	while (exp_trim[i])
+	while (exp_cmdargs[i])
 	{
-		printf("el cmdargs expandido %i : %s\n", i, exp_trim[i]);
 		i++;
 	}
-	ft_free_split(cmdargs);
-	node->full_cmd = exp_trim;
-	//ft_free_split(exp_trim); //este es el bueno
+	ft_free_split(node->full_cmd);
+	node->full_cmd = exp_cmdargs;
 }
 
 /*int	main()

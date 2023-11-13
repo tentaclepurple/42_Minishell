@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/11/09 13:08:18 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/13 10:17:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@
 		- middle cmd: dup2 stdin & stdout (if there is no >, >> or <, <<)
 		- last cmd: dup2 stdin (if there is no <, <<)
 */
-void	ft_fd_pipes(t_px *px, int qn)
+void	ft_fd_pipes(t_px *px, int n)
 {
-	int	n;
-
-	n = (qn / 2) + (qn % 2);
+	n = (n / 2) + (n % 2);
 	if (n == 0 && px->out_flag == 0)
 	{
 		if (dup2(px->info->fd[n][1], STDOUT_FILENO) < 0)
@@ -109,12 +107,7 @@ int	pipex_p(t_px *px)
 	i = 0;
 	while (i < px->cmd_real_num)
 	{
-		if (px[i].type == T_PIPE)
-		{
-			i++;
-			continue ;
-		}
-		if (px[i].type != BIp)
+		if (px[i].type != BIp && px[i].type != T_PIPE)
 		{
 			pid = fork();
 			if (pid < 0)
@@ -128,7 +121,7 @@ int	pipex_p(t_px *px)
 			waitpid(pid, &g_stat, 0);
 			ft_stat_signaled();
 		}
-		else
+		else if (px[i].type != T_PIPE)
 			ft_fd_close(px, i);
 		i++;
 	}
@@ -146,6 +139,5 @@ void	pipex(t_px *px)
 		return ;
 	if (pipex_p(px))
 		return ;
-	if (px->cmd_num > 1)
-		ft_free_fd(px);
+	ft_free_fd(px);
 }
