@@ -37,7 +37,9 @@ SRCBONUS = 	./src/splitstr/split_bonus.c \
 		./src/parser/parser_util_bonus.c \
 		./src/parser/parser_util2_bonus.c \
 		./src/parser/wildcard_bonus.c \
+		./src/parser/wildcard_aux_bonus.c \
 		./src/terminal/terminal_bonus.c \
+		./src/terminal/terminal_aux_bonus.c \
 		./src/main.c \
 		./src/error/error.c \
 		./src/envutils/envcp.c \

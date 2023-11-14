@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/14 10:42:13 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 11:17:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ char	**ft_parse_loop(t_px *node, char **str, char **env);
 t_px	*ft_init_nodes(t_info *info);
 int		ft_check_nodes(t_px *nodes);
 void	ft_stat_signaled(void);
+char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str);
 
 /*
 ERROR.C

@@ -6,33 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 10:44:41 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 11:17:07 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse_bonus.h"
-
-//Function to fill the complete args array
-char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
-{
-	int	i;
-
-	i = 0;
-	node->full_cmd = malloc(sizeof(char *) * (num_arg + 1));
-	if (node->full_cmd)
-		node->full_cmd[i++] = ft_strdup(node->path);
-	str++;
-	while (i < num_arg && node->full_cmd)
-	{
-		str = ft_inout_file(node, str);
-		node->full_cmd[i] = ft_strdup(*str);
-		i++;
-		str++;
-	}
-	if (node->full_cmd)
-		node->full_cmd[i] = NULL;
-	return (str);
-}
 
 void	ft_num_node_cmd(t_px *nodes)
 {

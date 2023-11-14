@@ -12,34 +12,6 @@
 
 #include "../../inc/parse_bonus.h"
 
-int	ft_matlen(char **mat)
-{
-	int	len;
-
-	len = 0;
-	while (mat[len])
-		len++;
-	return (len);
-}
-
-int	count_dir(void)
-{
-	DIR				*dir;
-	struct dirent	*entry;
-	int				count;
-
-	count = 0;
-	dir = opendir(".");
-	entry = readdir(dir);
-	while (entry != NULL)
-	{
-		entry = readdir(dir);
-		count++;
-	}
-	closedir(dir);
-	return (count);
-}
-
 char	**create_exp_cmdargs(char **cmdargs, int *size)
 {
 	char	**exp_cmdargs;

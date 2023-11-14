@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 10:32:43 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 11:16:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ void	ft_free_nodes(t_px *nodes)
 	while (i < len)
 	{
 		if (nodes[i].full_cmd)
-		{
 			ft_free_split(nodes[i].full_cmd);
-		//	nodes[i].path = NULL;
-		}
 		if (nodes[i].path)
 			free(nodes[i].path);
 		if (nodes[i].infile)
