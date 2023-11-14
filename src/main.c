@@ -6,12 +6,11 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 16:10:54 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/14 18:37:14 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/parse.h"
-//#include <libc.h>
 #include <sys/ioctl.h>
 
 //Function to handle SIGINT signal received
