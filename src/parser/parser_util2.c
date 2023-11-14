@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_util2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/02 12:13:50 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:32:43 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_free_nodes(t_px *nodes)
 		if (nodes[i].full_cmd)
 		{
 			ft_free_split(nodes[i].full_cmd);
-			nodes[i].path = NULL;
+		//	nodes[i].path = NULL;
 		}
 		if (nodes[i].path)
 			free(nodes[i].path);

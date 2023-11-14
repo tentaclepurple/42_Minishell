@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/03 12:07:51 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:44:14 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
 	i = 0;
 	node->full_cmd = malloc(sizeof(char *) * (num_arg + 1));
 	if (node->full_cmd)
-		node->full_cmd[i++] = node->path;
+		node->full_cmd[i++] = ft_strdup(node->path);
 	str++;
 	while (i < num_arg && node->full_cmd)
 	{
@@ -72,6 +72,7 @@ t_px	*ft_init_nodes(t_info *info)
 		nodes[i].limit = NULL;
 		nodes[i].in_flag = 0;
 		nodes[i].out_flag = 0;
+		nodes[i].type = 0;
 		nodes[i].info = info;
 		i++;
 	}

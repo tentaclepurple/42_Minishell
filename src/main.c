@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/11/03 12:03:38 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/14 10:58:41 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ void	ft_2nd_handler(int sig)
 	}
 }
 
+//Function to free all the content in INFO
+void	ft_free_info(t_info *info)
+{
+	if (info->envcp)
+		ft_free_split(info->envcp);
+	free (info);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_info	*info;
@@ -60,7 +68,6 @@ int	main(int argc, char **argv, char **env)
 	if (!info->homepath)
 		return (printf("Invalid Home\n"), -1);
 	terminal(info);
-	ft_free_split(info->envcp);
-	free(info);
+	ft_free_info(info);
 	return (g_stat);
 }
