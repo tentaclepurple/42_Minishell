@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/11/13 11:19:46 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 10:50:45 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,41 +45,6 @@ void	ft_open_outfiles(t_px *nodes)
 		i++;
 	}
 }
-
-/* void	ft_print_nodes(t_px	*nodes)
-{
-	int		i;
-	int		j;
-	char	*tipo;
-
-	i = 0;
-	while (i < nodes->info->cmd_amount)
-	{
-		if (nodes[i].type == CMD || nodes[i].type == BIc || nodes[i].type == BIp)
-			tipo = "Comando";
-		else if (nodes[i].type == T_AND)
-			tipo = "AND";
-		else if (nodes[i].type == T_PIPE)
-			tipo = "PIPE";
-		else if (nodes[i].type == T_OR)
-			tipo = "OR";
-		else if (nodes[i].type == L_PAR)
-			tipo = "L_PAR";
-		else if (nodes[i].type == R_PAR)
-			tipo = "R_PAR";
-		printf("Type: %s - Path: %s\n", tipo, nodes[i].path);
-		j = 0;
-		printf("Full Args: ");
-		while (nodes[i].full_cmd && nodes[i].full_cmd[j])
-		{
-			printf("*%s*", nodes[i].full_cmd[j]);
-			j++;
-		}
-		printf("\nNº: %i", nodes[i].cmd_num);
-		printf("\n--------------------------\n");
-		i++;
-	}
-} */
 
 //Function to advance i to the next possibly eectuable command
 void	ft_advance_unused(t_px *nodes, int *i)

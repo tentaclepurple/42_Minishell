@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/11/09 13:10:29 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 10:28:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ char	*get_cmd_or_cmdpath(char **env, char *str)
 	char	*path_and_cmd;
 
 	env_path = NULL;
-	i = 0;
 	if (check_slash(str) > 0 && !access(str, F_OK))
 		return (ft_strdup(str));
 	else if (check_slash(str) == 0)
@@ -71,7 +70,8 @@ char	*get_cmd_or_cmdpath(char **env, char *str)
 				return (ft_free_split(env_path), path_and_cmd);
 			free(path_and_cmd);
 		}
-		ft_free_split(env_path);
+		if (env_path)
+			ft_free_split(env_path);
 	}
 	return (NULL);
 }

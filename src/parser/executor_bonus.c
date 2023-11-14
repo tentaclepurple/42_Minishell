@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/11/13 10:17:03 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 10:23:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,19 +107,17 @@ int	pipex_p(t_px *px)
 	i = 0;
 	while (i < px->cmd_real_num)
 	{
+		if (px[i].in_flag == 2)
+		{
+			sa.sa_handler = SIG_IGN;
+			sigaction(SIGQUIT, &sa, NULL);
+		}
 		if (px[i].type != BIp && px[i].type != T_PIPE)
 		{
 			pid = fork();
 			if (pid < 0)
-			{
-				ft_error(FORKERR, NULL, 4);
-				return (1);
-			}
-			if (pid == 0)
-				ft_child(&px[i], i);
-			ft_fd_close(px, i);
-			waitpid(pid, &g_stat, 0);
-			ft_stat_signaled();
+				return (ft_error(FORKERR, NULL, 4), 1);
+			pipex_p_aux(px, i, pid);
 		}
 		else if (px[i].type != T_PIPE)
 			ft_fd_close(px, i);
@@ -134,6 +132,7 @@ void	pipex(t_px *px)
 
 	sa.sa_handler = &ft_2nd_handler;
 	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 	ft_alloc_fd(px);
 	if (!px->info->fd)
 		return ;

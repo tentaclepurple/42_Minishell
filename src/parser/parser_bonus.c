@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/13 10:01:05 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 10:33:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	ft_free_nodes(t_px *nodes)
 	}
 	free(nodes);
 }
-void	ft_print_nodes(t_px	*nodes);
 
 //Returns the str info into an array of t_px
 //Mallocs space for array of t_px and for the general info
@@ -72,4 +71,17 @@ void	ft_stat_signaled(void)
 		g_stat = 130;
 	else
 		g_stat = WEXITSTATUS(g_stat);
+}
+
+void	pipex_p_aux(t_px *px, int i, pid_t pid)
+{
+	struct sigaction	sa;
+
+	if (pid == 0)
+		ft_child(&px[i], i);
+	ft_fd_close(px, i);
+	waitpid(pid, &g_stat, 0);
+	ft_stat_signaled();
+	sa.sa_handler = &ft_2nd_handler;
+	sigaction(SIGQUIT, &sa, NULL);
 }

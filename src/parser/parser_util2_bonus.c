@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/13 10:25:23 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 10:44:41 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
 	while (i < num_arg && node->full_cmd)
 	{
 		str = ft_inout_file(node, str);
-		node->full_cmd[i++] = ft_strdup(*str);
+		node->full_cmd[i] = ft_strdup(*str);
+		i++;
 		str++;
 	}
 	if (node->full_cmd)
@@ -113,7 +114,8 @@ int	ft_err_node(t_px node)
 {
 	if (!node.path && (node.type == CMD || node.type == BIc
 			|| node.type == BIp))
-		return (ft_error(NCMD, NULL, 127), 2);
+		return (ft_error(NCMD, NULL, 127), node.full_cmd[0] = \
+			ft_strdup("(null)"), 2);
 	if (!node.full_cmd && (node.type == CMD || node.type == BIc
 			|| node.type == BIp))
 		return (1);
@@ -121,7 +123,7 @@ int	ft_err_node(t_px node)
 		return (ft_error(SYNERR, NULL, 20), 4);
 	else if (node.out_flag && access(node.outfile, F_OK) < 0)
 		return (0);
-	else if (node.out_flag && access(node.outfile, R_OK) < 0)
+	else if (node.out_flag && access(node.outfile, W_OK) < 0)
 		return (ft_error(NPERM, node.outfile, 126), 5);
 	if (node.in_flag == 1 && !node.infile)
 		return (ft_error(SYNERR, NULL, 20), 4);
