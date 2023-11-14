@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 12:48:21 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 18:01:37 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_lines(char *str, t_info *info)
 		return (1);
 	if (!ft_clean_quotes(res))
 		return (ft_free_split(res), 1);
+	if (ft_check_inout(res))
+		return (ft_free_split(res), 2);
 	nodes = ft_parse(res, info);
 	ft_free_split(res);
 	if (!nodes)

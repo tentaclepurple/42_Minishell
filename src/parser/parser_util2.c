@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_util2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 11:16:24 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 18:34:48 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,12 @@ t_px	*ft_parse(char **str, t_info *info)
 void	ft_stat_signaled(void)
 {
 	if (WIFSIGNALED(g_stat))
-		g_stat = 130;
+	{
+		if (WTERMSIG(g_stat) == 2)
+			g_stat = 130;
+		else if (WTERMSIG(g_stat) == 3)
+			g_stat = 131;
+	}
 	else
 		g_stat = WEXITSTATUS(g_stat);
 }

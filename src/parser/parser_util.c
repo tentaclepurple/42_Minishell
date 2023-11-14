@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:17:01 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/10/31 11:16:41 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:08:03 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ int	ft_num_args(char **str)
 		if (!ft_strncmp(*str, ">>", 3) || !ft_strncmp(*str, ">", 2)
 			|| !ft_strncmp(*str, "<<", 3) || !ft_strncmp(*str, "<", 2))
 		{
-			if (*(str + 1) && ft_strncmp(*str, ">>", 3)
-				&& ft_strncmp(*str, ">", 2) && ft_strncmp(*str, "<<", 3)
-				&& ft_strncmp(*str, "<", 2))
+			if (*(str + 1) && !ft_strchr("<|>", **(str + 1)))
 				i -= 2;
 			else
 				i--;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   btmanager.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:00:14 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/31 11:16:23 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:42:12 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	ft_execbi_child(t_px *px)
 {
 	if (!ft_strcmp(px->full_cmd[0], "echo"))
-		ft_echo(px);
+		g_stat = ft_echo(px);
 	else if (!ft_strcmp(px->full_cmd[0], "pwd"))
-		ft_pwd();
+		g_stat = ft_pwd();
 	else if (!ft_strcmp(px->full_cmd[0], "env"))
-		ft_env(px->info->envcp);
+		g_stat = ft_env(px->info->envcp);
 }
 
 int	ft_execbi_parent(t_px *px)

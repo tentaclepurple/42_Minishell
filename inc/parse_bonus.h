@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/14 11:24:01 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 18:28:29 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	ft_2nd_handler(int sig);
 size_t	ft_strlen_var(const char *s, int quote);
 int		ft_len_var_cond(char *env, char *str, int index, int quote);
 char	*ft_expand_concat(char *env, int len, char *res, char ch);
+int		ft_check_inout(char **str);
 
 /* 
 parse

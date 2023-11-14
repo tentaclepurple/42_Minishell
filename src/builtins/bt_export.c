@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:08:01 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/31 11:16:23 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:44:51 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ char	**ft_export(char **env, char **cmdargs)
 {
 	int		i;
 
+	g_stat = 0;
 	if (!cmdargs[1])
 		return (export_declare(env), env);
 	env = ft_export_aux(env, cmdargs);

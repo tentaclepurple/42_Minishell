@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/11/14 11:23:03 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 17:59:00 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

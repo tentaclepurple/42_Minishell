@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 10:32:00 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/31 11:16:23 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:43:12 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	**ft_cd(t_px *px)
 		else
 			ft_error(NDIR, px->full_cmd[1], 1);
 	}
+	g_stat = 0;
 	return (envcpy);
 }
 

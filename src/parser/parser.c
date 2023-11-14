@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 12:09:09 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 16:45:39 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	**ft_parse_loop(t_px *node, char **str, char **env)
 		else
 			node->path = ft_strdup(*str);
 		num_arg = ft_num_args(str);
+		if (num_arg == -1)
+			exit (1);
 		str = ft_fill_full_cmd(node, num_arg, str);
 		str = ft_inout_file(node, str);
 	}

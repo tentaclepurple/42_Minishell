@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:52:08 by imontero          #+#    #+#             */
-/*   Updated: 2023/11/02 11:07:54 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:48:23 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	ft_child(t_px *px, int n)
 	if (px->type == BIc)
 	{
 		ft_execbi_child(px);
-		exit(1);
+		exit(g_stat);
 	}
 	execve(px->path, px->full_cmd, px->info->envcp);
 }

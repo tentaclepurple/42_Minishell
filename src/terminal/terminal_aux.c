@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   terminal.c                                         :+:      :+:    :+:   */
+/*   terminal_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/31 13:11:08 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/14 18:02:34 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_open_outfiles(t_px *nodes)
 	{
 		if (nodes[i].outfile)
 		{
-			fd = open(nodes[i].outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			fd = open(nodes[i].outfile, O_CREAT, 0644);
 			close(fd);
 		}
 		i++;

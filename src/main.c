@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:50:48 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 10:58:41 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 16:10:54 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_2nd_handler(int sig)
 {
 	if (sig == SIGQUIT)
 	{
-		ft_printf("Quit\n");
+		ft_printf("Quit: 3\n");
 	}
 	else if (sig == SIGINT)
 	{

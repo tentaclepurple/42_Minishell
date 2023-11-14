@@ -6,6 +6,7 @@ SRC = 	./src/splitstr/split.c \
 		./src/splitstr/clean_quotes.c \
 		./src/splitstr/check_var.c  \
 		./src/splitstr/check_var2.c  \
+		./src/splitstr/check_files.c  \
 		./src/splitstr/correc_special.c \
 		./src/parser/parser.c \
 		./src/parser/executor.c \
@@ -30,6 +31,7 @@ SRCBONUS = 	./src/splitstr/split_bonus.c \
 		./src/splitstr/check_var.c  \
 		./src/splitstr/check_var2.c  \
 		./src/splitstr/correc_special.c \
+		./src/splitstr/check_files.c  \
 		./src/parser/parser_bonus.c \
 		./src/parser/executor_bonus.c \
 		./src/parser/heredoc_bonus.c \

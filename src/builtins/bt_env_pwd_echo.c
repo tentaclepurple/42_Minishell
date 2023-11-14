@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   bt_env_pwd_echo.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:50:29 by imontero          #+#    #+#             */
-/*   Updated: 2023/10/31 11:16:23 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:41:45 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse.h"
 
-void	ft_env(char **env)
+int	ft_env(char **env)
 {
 	int		i;
 
@@ -22,9 +22,10 @@ void	ft_env(char **env)
 		ft_putendl_fd(env[i], 1);
 		i++;
 	}
+	return (0);
 }
 
-void	ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	*cwd;
 
@@ -32,13 +33,15 @@ void	ft_pwd(void)
 	if (cwd == NULL)
 	{
 		perror("pwd:");
-		exit(-1);
+		//exit(-1);
+		return (1);
 	}
 	ft_putendl_fd(cwd, 1);
 	free(cwd);
+	return (0);
 }
 
-void	ft_echo(t_px *px)
+int	ft_echo(t_px *px)
 {
 	int	i;
 	int	flag;
@@ -59,6 +62,7 @@ void	ft_echo(t_px *px)
 	}
 	if (flag == 0)
 		write(1, "\n", 1);
+	return (0);
 }
 
 int	ft_is_dir(const char *name)

@@ -1,0 +1,10 @@
+Makefile
+docs
+inc
+libft
+libft.a
+ls
+minishell
+out
+out2
+src
