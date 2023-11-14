@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal_aux_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:13:07 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/14 13:01:20 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 15:13:19 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,6 @@ void	ft_loop_pipex(t_px *nodes, int *i)
 	while (*i < nodes->info->cmd_amount)
 	{
 		tp = nodes[*i].type;
-		if (ft_check_nodes(&nodes[*i]))
-		{
-			ft_advance_unused(nodes, i);
-			continue ;
-		}
 		if (tp == L_PAR || tp == R_PAR || tp == T_AND || tp == T_OR)
 			(*i)++;
 		if (tp == L_PAR)
@@ -95,7 +90,8 @@ void	ft_loop_pipex(t_px *nodes, int *i)
 			return ;
 		else if ((tp == T_AND && g_stat == 0) || (tp == T_OR && g_stat != 0))
 			continue ;
-		else if ((tp == T_AND && g_stat != 0) || (tp == T_OR && g_stat == 0))
+		else if ((tp == T_AND && g_stat != 0) || (tp == T_OR && g_stat == 0)
+			|| ft_check_nodes(&nodes[*i]))
 		{
 			ft_advance_unused(nodes, i);
 			continue ;
