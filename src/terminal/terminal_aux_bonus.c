@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:13:07 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/14 11:13:49 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 13:01:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ void	ft_loop_pipex(t_px *nodes, int *i)
 	while (*i < nodes->info->cmd_amount)
 	{
 		tp = nodes[*i].type;
+		if (ft_check_nodes(&nodes[*i]))
+		{
+			ft_advance_unused(nodes, i);
+			continue ;
+		}
 		if (tp == L_PAR || tp == R_PAR || tp == T_AND || tp == T_OR)
 			(*i)++;
 		if (tp == L_PAR)

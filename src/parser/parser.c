@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 10:44:14 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 12:09:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str)
 
 	i = 0;
 	node->full_cmd = malloc(sizeof(char *) * (num_arg + 1));
-	if (node->full_cmd)
+	if (node->full_cmd && node->path)
 		node->full_cmd[i++] = ft_strdup(node->path);
+	else if (node->full_cmd)
+		node->full_cmd[i++] = ft_strdup(("null"));
 	str++;
 	while (i < num_arg && node->full_cmd)
 	{
@@ -83,8 +85,7 @@ t_px	*ft_init_nodes(t_info *info)
 int	ft_err_node(t_px node)
 {
 	if (!node.path)
-		return (ft_error(NCMD, NULL, 127), node.full_cmd[0] = \
-			ft_strdup("(null)"), 2);
+		return (ft_error(NCMD, NULL, 127), 2);
 	if (!node.full_cmd)
 		return (1);
 	if (node.out_flag && !node.outfile)

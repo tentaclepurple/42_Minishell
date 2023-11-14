@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/10/31 13:11:08 by imontero         ###   ########.fr       */
+/*   Updated: 2023/11/14 12:48:21 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ void	terminal(t_info *info)
 		ft_set_sig();
 		input = readline(prompt);
 		if (!input)
+		{
+			printf("exit\n");
 			break ;
+		}
 		terminal_options(input);
 		if (ft_strlen(input))
 		{

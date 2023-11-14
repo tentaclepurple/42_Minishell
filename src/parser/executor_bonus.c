@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/11/14 10:23:22 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 11:23:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	pipex_p(t_px *px)
 {
 	pid_t				pid;
 	int					i;
+	struct sigaction	sa;
 
 	i = 0;
 	while (i < px->cmd_real_num)

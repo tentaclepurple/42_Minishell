@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 17:18:15 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/14 10:16:23 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 11:24:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int		ft_check_nodes(t_px *nodes);
 void	ft_stat_signaled(void);
 //Bonus
 void	ft_num_node_cmd(t_px *nodes);
+char	**ft_fill_full_cmd(t_px *node, int num_arg, char **str);
 
 /*
 ERROR.C
@@ -172,6 +173,7 @@ void	terminal_options(char *input);
 void	ft_open_outfiles(t_px *nodes);
 int		ft_lines2(char *str, t_info *info, char ***res);
 void	ft_open_outfiles(t_px *nodes);
+void	ft_loop_pipex(t_px *nodes, int *i);
 
 /*
 envutils

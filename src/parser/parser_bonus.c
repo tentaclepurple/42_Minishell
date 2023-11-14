@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 10:33:50 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 12:24:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ t_px	*ft_parse(char **str, t_info *info)
 		i++;
 	}
 	ft_num_node_cmd(nodes);
-	if (ft_check_nodes(nodes))
-		return (ft_free_nodes(nodes), NULL);
+	/* if (ft_check_nodes(nodes))
+		return (ft_free_nodes(nodes), NULL); */
 	return (nodes);
 }
 

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 11:14:09 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 12:55:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ void	terminal(t_info *info)
 		ft_set_sig();
 		input = readline(prompt);
 		if (!input)
+		{
+			printf("exit\n");
 			break ;
+		}
 		terminal_options(input);
 		if (ft_strlen(input))
 		{

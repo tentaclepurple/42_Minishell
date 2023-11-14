@@ -6,12 +6,13 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 11:17:07 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/14 12:24:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parse_bonus.h"
 
+//Function to update the cmd_num && cmd_real_num variables
 void	ft_num_node_cmd(t_px *nodes)
 {
 	int	i;
@@ -92,8 +93,7 @@ int	ft_err_node(t_px node)
 {
 	if (!node.path && (node.type == CMD || node.type == BIc
 			|| node.type == BIp))
-		return (ft_error(NCMD, NULL, 127), node.full_cmd[0] = \
-			ft_strdup("(null)"), 2);
+		return (ft_error(NCMD, NULL, 127), 2);
 	if (!node.full_cmd && (node.type == CMD || node.type == BIc
 			|| node.type == BIp))
 		return (1);
@@ -123,7 +123,7 @@ int	ft_check_nodes(t_px *nodes)
 	int	len;
 	int	i;
 
-	len = (*nodes).info->cmd_amount;
+	len = (*nodes).cmd_real_num;
 	i = 0;
 	while (i < len)
 	{
