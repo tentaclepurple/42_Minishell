@@ -6,7 +6,7 @@
 /*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 16:53:30 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/14 17:04:16 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/15 09:40:26 by jzubizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,11 @@ int	ft_check_inout(char **str)
 	{
 		if (flag == 0 && (!ft_strncmp(*str, ">>", 3)
 				|| !ft_strncmp(*str, ">", 2) || !ft_strncmp(*str, "<<", 3)
-				|| !ft_strncmp(*str, "<", 2) || !ft_strncmp(*str, ")", 2)
-				|| !ft_strncmp(*str, "(", 2) || !ft_strncmp(*str, "&&", 3)))
+				|| !ft_strncmp(*str, "<", 2)))
 			flag = 1;
 		else if (flag == 1 && (!ft_strncmp(*str, ">>", 3)
 				|| !ft_strncmp(*str, ">", 2) || !ft_strncmp(*str, "<<", 3)
-				|| !ft_strncmp(*str, "<", 2) || !ft_strncmp(*str, ")", 2)
-				|| !ft_strncmp(*str, "(", 2) || !ft_strncmp(*str, "&&", 3)))
+				|| !ft_strncmp(*str, "<", 2)))
 			return (ft_error(SYNERR, NULL, 1), 1);
 		else
 			flag = 0;
