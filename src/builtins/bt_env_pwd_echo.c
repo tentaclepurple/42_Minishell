@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bt_env_pwd_echo.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:50:29 by imontero          #+#    #+#             */
-/*   Updated: 2023/11/14 15:41:45 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/15 08:51:28 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_pwd(void)
 	if (cwd == NULL)
 	{
 		perror("pwd:");
-		//exit(-1);
 		return (1);
 	}
 	ft_putendl_fd(cwd, 1);

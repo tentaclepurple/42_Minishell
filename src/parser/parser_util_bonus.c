@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_util_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 19:17:01 by jzubizar          #+#    #+#             */
-/*   Updated: 2023/11/13 10:01:42 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/15 09:16:56 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse_bonus.h"
+#include "../../inc/parsebonus.h"
 
 //Returns the node quantity tto be allocated for the parsing of str
 int	ft_node_quant(char **str)

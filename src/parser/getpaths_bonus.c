@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   getpaths_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:47:42 by imontero          #+#    #+#             */
-/*   Updated: 2023/11/14 10:28:34 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/15 09:16:39 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse_bonus.h"
+#include "../../inc/parsebonus.h"
 
 int	check_slash(char *str)
 {

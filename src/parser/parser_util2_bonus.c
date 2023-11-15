@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_util2_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 17:59:57 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 12:24:09 by codespace        ###   ########.fr       */
+/*   Updated: 2023/11/15 09:16:59 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse_bonus.h"
+#include "../../inc/parsebonus.h"
 
 //Function to update the cmd_num && cmd_real_num variables
 void	ft_num_node_cmd(t_px *nodes)

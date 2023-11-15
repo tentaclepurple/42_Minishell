@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_aux_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:15:07 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/14 15:04:28 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/15 09:17:02 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse_bonus.h"
+#include "../../inc/parsebonus.h"
 
 int	ft_matlen(char **mat)
 {

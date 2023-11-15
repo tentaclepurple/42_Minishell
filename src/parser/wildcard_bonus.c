@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse_bonus.h"
+#include "../../inc/parsebonus.h"
 
 char	**create_exp_cmdargs(char **cmdargs, int *size)
 {

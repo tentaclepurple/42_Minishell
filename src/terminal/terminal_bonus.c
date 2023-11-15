@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   terminal_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 18:49:26 by josu              #+#    #+#             */
-/*   Updated: 2023/11/14 18:31:04 by jzubizar         ###   ########.fr       */
+/*   Updated: 2023/11/15 09:17:28 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse_bonus.h"
+#include "../../inc/parsebonus.h"
 
 //int	ft_lines(char *str, char **env)
 int	ft_lines(char *str, t_info *info)

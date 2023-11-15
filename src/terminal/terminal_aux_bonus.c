@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   terminal_aux_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jzubizar <jzubizar@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: imontero <imontero@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 11:13:07 by codespace         #+#    #+#             */
-/*   Updated: 2023/11/14 15:13:19 by jzubizar         ###   ########.fr       */
+/*   Created: 2023/11/15 08:52:56 by imontero          #+#    #+#             */
+/*   Updated: 2023/11/15 09:17:25 by imontero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parse_bonus.h"
+#include "../../inc/parsebonus.h"
 
 int	ft_lines2(char *str, t_info *info, char ***res)
 {
