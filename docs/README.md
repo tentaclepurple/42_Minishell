@@ -2,11 +2,7 @@ https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a1059
 
 https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
 
-https://github.com/Swoorup/mysh
-
 https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
-
-https://github.com/madebypixel02/minishell/blob/main/README.md
 
 https://www.youtube.com/watch?v=4jYFqFsu03A&list=PLGU1kcPKHMKj5yA0RPb5AK4QAhexmQwrW&index=7
 
